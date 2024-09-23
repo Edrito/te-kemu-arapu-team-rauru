@@ -10,6 +10,9 @@ module.exports = {
         primary_yellow: '#FFD700',
         // Additional custom colors
       },
+      fontFamily: {
+        crayonara: ["Crayonara-Regular", "sans-serif"],
+      },
     },
   },
   plugins: [],
