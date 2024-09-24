@@ -1,0 +1,5 @@
+{
+    "errorCode": "integer",
+    "errorMessage": "string",
+    "timestamp": "ISO8601"
+}
