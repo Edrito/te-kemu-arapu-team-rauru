@@ -1,0 +1,15 @@
+{
+    "gameId": "string",
+    "state": {
+        "turn": "string",
+        "phase": "string",
+        "remainingTime": "integer",
+        "players": [
+            {
+                "playerId": "string",
+                "status": "string",
+                "score": "integer"
+            }
+        ]
+    }
+}
