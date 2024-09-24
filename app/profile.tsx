@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Text, Modal, View, Pressable } from "react-native";
+import { Text, Modal, View, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import Dropdown from "../components/Dropdown";
@@ -138,7 +138,7 @@ const Profile = () => {
         <SelectIcon />
       </View>
 
-      <Pressable onPress={() => router.push("/")}>
+      <Pressable onPress={() => router.push("/loading")}>
         <Text
           style={{
             fontFamily: "Crayonara-Regular",
@@ -152,7 +152,7 @@ const Profile = () => {
             borderRadius: 5,
           }}
         >
-          Close
+          Create
         </Text>
       </Pressable>
     </SafeAreaView>
