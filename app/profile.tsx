@@ -1,15 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  ActivityIndicator,
-  Button,
-  Text,
-  Modal,
-  View,
-  Pressable,
-} from "react-native";
-import { SplashScreen, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { Button, Text, Modal, View, Pressable } from "react-native";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import Dropdown from "../components/Dropdown";
+import SelectIcon from "@/components/SelectIcon";
 import React from "react";
 
 const Profile = () => {
@@ -126,6 +120,7 @@ const Profile = () => {
         </Modal>
       </View>
 
+      {/* This view controls the Dropdown */}
       <View
         style={{
           justifyContent: "center",
@@ -136,15 +131,30 @@ const Profile = () => {
           paddingBottom: 70,
         }}
       >
-        <View
+        <Dropdown />
+      </View>
+      {/* This view controls the icon select */}
+      <View className="w-300px">
+        <SelectIcon />
+      </View>
+
+      <Pressable onPress={() => router.push("/")}>
+        <Text
           style={{
-            maxHeight: 30,
+            fontFamily: "Crayonara-Regular",
+            fontSize: 30,
+            borderWidth: 3,
+            backgroundColor: "orange",
+            padding: 5,
+            paddingLeft: 20,
+            paddingRight: 20,
+            margin: 30,
+            borderRadius: 5,
           }}
         >
-          <Dropdown />
-        </View>
-      </View>
-      <Button title="Return" onPress={() => router.push("/")} />
+          Close
+        </Text>
+      </Pressable>
     </SafeAreaView>
   );
 };

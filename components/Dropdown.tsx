@@ -17,7 +17,7 @@ const Dropdown = () => {
       <Pressable
         onPress={toggleDropdown}
         style={{
-          backgroundColor: "#c97d1a",
+          backgroundColor: "orange",
           paddingVertical: 5,
           paddingHorizontal: 10,
           borderRadius: 5,
@@ -25,7 +25,7 @@ const Dropdown = () => {
           borderColor: "black",
         }}
       >
-        <Text style={{ color: "white", fontSize: 12 }}>{selectedValue}</Text>
+        <Text style={{ color: "black", fontSize: 12 }}>{selectedValue}</Text>
       </Pressable>
 
       {isOpen && (

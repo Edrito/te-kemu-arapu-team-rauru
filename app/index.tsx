@@ -16,11 +16,12 @@ const Start = () => {
         backgroundColor: "#A01D1D",
       }}
     >
-      <Text style={{
-        fontFamily: "Crayonara-Regular",
-        fontSize: 130,
-        padding: 100
-      }}>
+      <Text
+       style={{
+         fontFamily: "Crayonara-Regular",
+         fontSize: 130,
+         padding: 100
+       }}>
         Te kemu Arapu
       </Text>
 
