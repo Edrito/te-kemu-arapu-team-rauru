@@ -1,0 +1,17 @@
+{
+    "lobbyId": "string",
+    "hostId": "string",
+    "gameId": "string",
+    "settings": {
+        "gameMode": "string",
+        "difficulty": "string",
+        "maxPlayers": "integer",
+        "startTime": "ISO8601"
+    },
+    "participants": [
+        {
+            "playerId": "string",
+            "status": "string"
+        }
+    ]
+}
