@@ -26,7 +26,7 @@ const Login: React.FC = () => {
 
   if (user === undefined) {
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center bg-primary_red">
         <ActivityIndicator size="large" color="#FFFFFF" />
       </View>
     );
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
 
   if (!user) {
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center bg-primary_red">
         <Text className="text-xl mb-5 text-white">No user logged in</Text>
         <Pressable onPress={signInAnonymouslyHandler}>
           <Text className="text-xl text-blue-300">Sign in as guest</Text>
