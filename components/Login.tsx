@@ -8,7 +8,7 @@ useContext is used to access the AuthContext, and the signInAnonymously function
 */
 import React, { useContext } from 'react';
 import { View, Text, ActivityIndicator, Pressable } from 'react-native';
-import { AuthContext } from '../context/AuthContext'; // Import the context
+import { AuthContext } from '../context/AuthContext';
 import { signInAnonymously } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import "../global.css"
@@ -26,28 +26,31 @@ const Login: React.FC = () => {
 
   if (user === undefined) {
     return (
-      <View className="flex-1 justify-center items-center bg-primary_red">
-        <ActivityIndicator size="large" color="#FFFFFF" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
 
-  if (!user) {
-    return (
-      <View className="flex-1 justify-center items-center bg-primary_red">
-        <Text className="text-xl mb-5 text-white">No user logged in</Text>
-        <Pressable onPress={signInAnonymouslyHandler}>
-          <Text className="text-xl text-blue-300">Sign in as guest</Text>
-        </Pressable>
-      </View>
-    );
-  }
+ if (!user) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 18, marginBottom: 20 }}>No user logged in</Text>
+      <Pressable
+        onPress={() => {
+          console.log('pressed');
+          signInAnonymouslyHandler(); // Call the sign-in handler here
+        }}
+      >
+        <Text style={{ fontSize: 18, color: 'blue' }}>Sign in as guest</Text>
+      </Pressable>
+    </View>
+  );
+}
 
   return (
-    <View className="flex-1 justify-center items-center">
-      <Text className="text-4xl text-primary_yellow">
-        Welcome, User ID: {user.uid}
-      </Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 18 }}>Welcome, User ID: {user.uid}</Text>
     </View>
   );
 };
