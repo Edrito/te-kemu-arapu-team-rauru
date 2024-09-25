@@ -1,16 +1,7 @@
 {
-    "playerId": "string",
-    "profile": {
-        "username": "string",
-        "level": "integer",
-        "achievements": [
-            "string"
-        ],
-        "rank": "string",
-        "statistics": {
-            "gamesPlayed": "integer",
-            "gamesWon": "integer",
-            "highScore": "integer"
-        }
-    }
+    	"playerId": "string",
+    	"username": "string",
+	"picture" :"string",
+	"difficulty":"string",
+   
 }
