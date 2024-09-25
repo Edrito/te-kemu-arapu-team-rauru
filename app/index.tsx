@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, Pressable } from "react-native";
+import { Text, Pressable, Button } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SplashScreen, useRouter } from "expo-router";
@@ -17,11 +17,12 @@ const Start = () => {
       }}
     >
       <Text
-       style={{
-         fontFamily: "Crayonara-Regular",
-         fontSize: 130,
-         padding: 100
-       }}>
+        style={{
+          fontFamily: "Crayonara-Regular",
+          fontSize: 130,
+          padding: 100,
+        }}
+      >
         Te kemu Arapu
       </Text>
 
@@ -48,6 +49,12 @@ const Start = () => {
           BEGIN!
         </Text>
       </Pressable>
+
+      {/* TODO: DELETE THIS */}
+      <Button
+        title="(TESTING) go to scoreboard screen"
+        onPress={() => router.push("/score")}
+      />
 
       <Text
         style={{
