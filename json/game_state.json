@@ -1,0 +1,37 @@
+{
+    "gameId": "string",
+    "settings": {
+        "endConditions" : {
+		"time" : ISO8601,
+		"score" : int
+	}
+	"games" : {
+    		"0":{
+			"type":"string",
+			"endConditions":{
+				"duration": int,
+				"score": int,
+			},
+		},
+		"1":{},
+	}   
+    },
+    "participants": [
+        {
+            "playerId": "string",
+            "status": "string"
+        }
+    ],
+    "state": {
+        "turn": "string",
+        "phase": "string",
+        "remainingTime": "integer",
+        "players": [
+            {
+                "playerId": "string",
+                "status": "string",
+                "score": "integer"
+            }
+        ]
+    }
+}
