@@ -1,9 +1,0 @@
-{
-    "gameId": "string",
-    "settings": {
-        "gameMode": "string",
-        "difficulty": "string",
-        "maxPlayers": "integer",
-        "startTime": "ISO8601"
-    }   
-}

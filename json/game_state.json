@@ -1,5 +1,6 @@
 {
     "gameId": "string",
+    "isLobbyOpen": boolean,
     "settings": {
         "endConditions" : {
 		"time" : ISO8601,
