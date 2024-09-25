@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
+<<<<<<< HEAD
 const Dropdown = () => {
+=======
+// Define props type for Dropdown
+interface DropdownProps {
+  onSelect: (value: string) => void;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+>>>>>>> 48fdcabb9249a1c40330ea991831f951e1c4547f
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Select");
 
@@ -9,6 +18,10 @@ const Dropdown = () => {
 
   const handleOptionSelect = (value: string) => {
     setSelectedValue(value);
+<<<<<<< HEAD
+=======
+    onSelect(value); // Call the onSelect prop
+>>>>>>> 48fdcabb9249a1c40330ea991831f951e1c4547f
     setIsOpen(false);
   };
 

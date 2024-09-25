@@ -42,4 +42,8 @@ const RootLayout = () => {
   );
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 48fdcabb9249a1c40330ea991831f951e1c4547f
 export default RootLayout;

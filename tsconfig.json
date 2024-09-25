@@ -3,17 +3,19 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
+    "baseUrl": "..",
     "paths": {
       "@/*": [
-        "./*"
+        "../*"
       ]
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "../**/*.ts",
+    "../**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "nativewind-env.d.ts"
+    "../expo-env.d.ts",
+    "nativewind-env.d.ts",
+    "expo-env.d.ts"
   ]
 }

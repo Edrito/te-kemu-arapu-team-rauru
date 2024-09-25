@@ -21,3 +21,6 @@ functions/venv/
 
 expo-env.d.ts
 # @end expo-cli
+firebase-debug.log
+.firebase/hosting.*
+package-lock.json

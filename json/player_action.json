@@ -1,0 +1,12 @@
+{
+    "playerId": "string",
+    "gameId": "string",
+    "action": {
+        "type": "string",
+        "details": {
+            "targetId": "string",
+            "value": "string",
+            "timestamp": "ISO8601"
+        }
+    }
+}
