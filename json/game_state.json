@@ -8,7 +8,7 @@
 	}
 	"games" : {
     		"0":{
-			"type":"string",
+			"type":"string (category, random)",
 			"endConditions":{
 				"duration": int,
 				"score": int,
@@ -18,21 +18,17 @@
 	}   
     },
     "participants": [
-        {
-            "playerId": "string",
-            "status": "string"
-        }
+      
     ],
     "state": {
-        "turn": "string",
+        "currentGame": "string",
         "phase": "string",
-        "remainingTime": "integer",
-        "players": [
-            {
-                "playerId": "string",
-                "status": "string",
-                "score": "integer"
-            }
-        ]
+        "phaseEnd": ISO8601,
+	"gameState": {
+                "phase": "string",
+        	"phaseEnd": ISO8601,
+
+                },
+       
     }
 }
