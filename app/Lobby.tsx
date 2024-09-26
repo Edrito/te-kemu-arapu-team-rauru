@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
+import "../global.css";
 
 export default function Lobby() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   // Load fonts
   const [fontsLoaded] = useFonts({
     Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
@@ -35,98 +42,50 @@ export default function Lobby() {
   // Show a loading indicator or placeholder until fonts are loaded
   if (!fontsLoaded) {
     return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#A01D1D",
-        }}
-      >
+      <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
         <ActivityIndicator size="large" color="#ffffff" />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#A01D1D", // Dark red background
-      }}
-    >
+    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
       {/* Title */}
-      <Text
-        style={{
-          fontSize: 60,
-          fontWeight: "bold",
-          color: "white",
-          marginBottom: 50,
-          fontFamily: "Crayonara", // Use the custom Crayonara font
-        }}
-      >
+      <Text className="text-[60px] font-bold text-white mb-12 font-notosans">
         Te Kēmu Arapū
       </Text>
 
       {/* Input for lobby name */}
       <TextInput
-        style={{
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 1,
-          width: '80%',
-          marginBottom: 20,
-          paddingHorizontal: 10,
-          backgroundColor: "#fff", // White background for the input field
-        }}
+        className="h-[40px] border-gray-500 border w-[80%] mb-5 px-2.5 bg-white"
         placeholder="Enter lobby name"
         value={lobbyName}
         onChangeText={setLobbyName}
       />
 
       {errorMessage ? (
-        <Text style={{ color: "red", marginBottom: 20 }}>{errorMessage}</Text>
+        <Text className="text-red-500 mb-5">{errorMessage}</Text>
       ) : null}
 
       {/* Button Container */}
-      <View style={{ justifyContent: 'center', width: '80%', marginBottom: 20 }}>
+      <View className="justify-center w-[80%] mb-5">
         <TouchableOpacity
-          style={{
-            backgroundColor: "#CD853F",
-            paddingVertical: 15,
-            paddingHorizontal: 30,
-            borderRadius: 10,
-            marginVertical: 10,
-            alignItems: 'center',
-            borderColor: "#000",
-            borderWidth: 2,
-          }}
+          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-black"
           onPress={handleJoinLobby}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>JOIN</Text>
+          <Text className="text-[18px] font-bold text-white">JOIN</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{
-            backgroundColor: "#CD853F",
-            paddingVertical: 15,
-            paddingHorizontal: 30,
-            borderRadius: 10,
-            marginVertical: 10,
-            alignItems: 'center',
-            borderColor: "#000",
-            borderWidth: 2,
-          }}
+          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-black"
           onPress={handleCreateLobby}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>CREATE</Text>
+          <Text className="text-[18px] font-bold text-white">CREATE</Text>
         </TouchableOpacity>
       </View>
 
       {/* Footer */}
-      <Text style={{ marginTop: 100, fontSize: 20, color: "#000" }}>DEMO</Text>
+      <Text className="mt-24 text-[20px] text-black">DEMO</Text>
     </SafeAreaView>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import "../global.css";
 
 // Define types for the icon data
 interface IconData {
@@ -16,7 +17,7 @@ const iconData: IconData[] = [
     color: "lightgreen",
     name: "KORU AIHE",
     description:
-      "A symbol of free spirit, closeness to nature, playfulness, harmony, and friendship",
+      "A symbol of free spirit, closeness to nature, playfulness, harmony, and friendship.",
   },
   {
     icon: "🐟",
@@ -26,7 +27,9 @@ const iconData: IconData[] = [
   },
 ];
 
-const SelectIcon: React.FC<{ onSelect: (icon: string) => void }> = ({ onSelect }) => {
+const SelectIcon: React.FC<{ onSelect: (icon: string) => void }> = ({
+  onSelect,
+}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   // Handlers for navigation
@@ -39,14 +42,16 @@ const SelectIcon: React.FC<{ onSelect: (icon: string) => void }> = ({ onSelect }
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + iconData.length) % iconData.length
     );
-    onSelect(iconData[(currentIndex - 1 + iconData.length) % iconData.length].icon); // Notify parent about the selected icon
+    onSelect(
+      iconData[(currentIndex - 1 + iconData.length) % iconData.length].icon
+    ); // Notify parent about the selected icon
   };
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View className="flex-row items-center w-full">
       {/* Left Arrow */}
       <TouchableOpacity onPress={handlePrevious}>
-        <Text style={{ fontSize: 30, paddingHorizontal: 10 }}>{"<"}</Text>
+        <Text className="text-[30px] px-2.5">{"<<"}</Text>
       </TouchableOpacity>
 
       {/* Icon Display */}
@@ -58,21 +63,24 @@ const SelectIcon: React.FC<{ onSelect: (icon: string) => void }> = ({ onSelect }
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: iconData[currentIndex].color,
-          width: 300,
+          width: "100%",
+          height: 240,
         }}
       >
-        <Text style={{ fontSize: 50 }}>{iconData[currentIndex].icon}</Text>
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginVertical: 10 }}>
+        <Text className="text-[50px]">{iconData[currentIndex].icon}</Text>
+
+        <Text className="text-[20px] font-bold my-2.5">
           {iconData[currentIndex].name}
         </Text>
-        <Text style={{ textAlign: "center" }}>
+
+        <Text className="text-center text-[15px]">
           {iconData[currentIndex].description}
         </Text>
       </View>
 
       {/* Right Arrow */}
       <TouchableOpacity onPress={handleNext}>
-        <Text style={{ fontSize: 30, paddingHorizontal: 10 }}>{">"}</Text>
+        <Text className="text-[30px] px-2.5">{">>"}</Text>
       </TouchableOpacity>
     </View>
   );

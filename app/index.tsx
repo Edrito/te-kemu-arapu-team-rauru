@@ -1,30 +1,20 @@
 import React, { useEffect } from "react";
-import { Text, Pressable, Button } from "react-native";
+import { Text, Pressable, Button, View } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { SplashScreen, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
+import "../global.css";
 
 const Start = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#A01D1D",
-      }}
-    >
-      <Text
-        style={{
-          fontFamily: "Crayonara-Regular",
-          fontSize: 130,
-          padding: 100,
-        }}
-      >
-        Te kemu Arapu
-      </Text>
+    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+      <View>
+        <Text className="font-notosans text-[130px] p-[100px]">
+          Te kēmu Arapū
+        </Text>
+      </View>
 
       <Pressable
         onPress={() => router.push("/profile")}
@@ -35,17 +25,13 @@ const Start = () => {
             borderRadius: 8,
             borderWidth: 2,
             borderColor: "black",
+            borderStyle: "dashed",
+            margin: 10,
           },
         ]}
       >
-        <Text
-          style={{
-            fontSize: 30,
-            fontFamily: "Crayonara-Regular",
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
+        {/* TODO: Maybe change font */}
+        <Text className="text-[30px] font-bold text-white font-notosans">
           BEGIN!
         </Text>
       </Pressable>
@@ -56,15 +42,7 @@ const Start = () => {
         onPress={() => router.push("/score")}
       />
 
-      <Text
-        style={{
-          fontSize: 30,
-          position: "absolute",
-          bottom: 20,
-          alignSelf: "center",
-          fontWeight: "bold",
-        }}
-      >
+      <Text className="text-[30px] absolute bottom-5 self-center font-bold">
         DEMO
       </Text>
     </SafeAreaView>

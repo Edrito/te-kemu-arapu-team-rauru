@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, Modal, View, Pressable, TextInput } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  Modal,
+  View,
+  Pressable,
+  TextInput,
+} from "react-native";
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
+import "../global.css";
 
 interface ProfileData {
   username: string;
@@ -19,43 +27,31 @@ const Profile: React.FC = () => {
 
   const handleCreateProfile = () => {
     const profileData: ProfileData = {
-        username,
-        difficulty,
-        icon,
+      username,
+      difficulty,
+      icon,
     };
 
     console.log("Profile Data:", profileData);
 
     // Navigate to the Lobby with the profile data as a parameter
-    router.push(`/Lobby?username=${encodeURIComponent(username)}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(icon || '')}`);
-};
-
+    router.push(
+      `/Lobby?username=${encodeURIComponent(
+        username
+      )}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(
+        icon || ""
+      )}`
+    );
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-      <Text style={{ fontFamily: "Crayonara-Regular", fontSize: 70, padding: 20 }}>Create Profile</Text>
-      
+    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+      <Text className="font-notosans text-[70px] p-5">Create Profile</Text>
+
       {/* Improved Username Input */}
-      <View style={{ marginBottom: 30, width: '80%' }}>
+      <View className="w-[80%] mb-[70px]">
         <TextInput
-          style={{
-            height: 50,
-            borderColor: 'orange',
-            borderWidth: 2,
-            borderRadius: 10,
-            paddingHorizontal: 15,
-            backgroundColor: "#fff",
-            fontSize: 18,
-            color: "#333",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5, // For Android shadow
-          }}
+          className="h-12 border-2 border-orange-500 rounded-lg px-4 bg-white text-[18px] text-[#333] shadow-md"
           placeholder="Enter your username"
           placeholderTextColor="#888" // Gray color for placeholder
           value={username}
@@ -63,38 +59,58 @@ const Profile: React.FC = () => {
         />
       </View>
 
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ fontSize: 50, marginRight: 10, fontFamily: "Crayonara-Regular" }}>Difficulty</Text>
-        
+      <View className="flex-row items-center">
+        <Text className="text-[50px] mr-10 font-notosans">Difficulty</Text>
+
         <Pressable onPress={() => setIsModalVisible(true)}>
-          <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>?</Text>
+          <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 px-6 m-1 rounded">
+            ?
+          </Text>
         </Pressable>
-        
-        <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="slide" presentationStyle="pageSheet">
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Beginner: Longer time to guess and more access to hints.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Intermediate: Shorter time to guess with access to a single hint.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Pro: Minimal time to guess with no hints available.</Text>
+
+        <Modal
+          visible={isModalVisible}
+          onRequestClose={() => setIsModalVisible(false)}
+          animationType="slide"
+          presentationStyle="pageSheet"
+        >
+          <View className="flex-1 justify-center items-center bg-primary_red">
+            <Text className="text-[30px] m-5 font-notosans">
+              Beginner: Longer time to guess and more access to hints.
+            </Text>
+            <Text className="text-[30px] m-5 font-notosans">
+              Intermediate: Shorter time to guess with access to a single hint.
+            </Text>
+            <Text className="text-[30px] m-5 font-notosans">
+              Pro: Minimal time to guess with no hints available.
+            </Text>
 
             <Pressable onPress={() => setIsModalVisible(false)}>
-              <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>Close</Text>
+              <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                Close
+              </Text>
             </Pressable>
+
           </View>
         </Modal>
       </View>
 
       {/* Dropdown for selecting difficulty */}
-      <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D", margin: 30, width: '100%', paddingBottom: 70 }}>
+      <View className="justify-center items-center bg-primary_red m-7 pb-16">
         <Dropdown onSelect={setDifficulty} />
       </View>
 
       {/* Icon selection */}
-      <View style={{ width: 300 }}>
+      <View className="w-[30%] min-w-[350px]">
         <SelectIcon onSelect={setIcon} />
       </View>
 
+      
+
       <Pressable onPress={handleCreateProfile}>
-        <Text style={{ fontFamily: "Crayonara-Regular", fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 5, paddingLeft: 20, paddingRight: 20, margin: 30, borderRadius: 5 }}>Create</Text>
+        <Text className="font-notosans text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded">
+          Create
+        </Text>
       </Pressable>
     </SafeAreaView>
   );

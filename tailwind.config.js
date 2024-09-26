@@ -8,10 +8,13 @@ module.exports = {
       colors: {
         primary_red: '#A01D1D',
         primary_yellow: '#FFD700',
+        button_orange: '#C97D1A',
+        button_pressed_orange: '#8C4F00'
         // Additional custom colors
       },
       fontFamily: {
         crayonara: ["Crayonara-Regular", "sans-serif"],
+        notosans: ["NotoSans-Regular", "sans-serif"],
       },
     },
   },
