@@ -1,57 +1,61 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { useRoute, RouteProp } from "@react-navigation/native";
-import { GameLobbyParams, RootStackParamList } from "./types"; // Adjust import based on your structure
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function GameLobby() {
-  const route = useRoute<RouteProp<RootStackParamList, 'GameLobby'>>(); // Correctly type the route
-  const { lobbyName, creator, users } = route.params; // Extract the passed params
+const GameLobby: React.FC = () => {
+  const [currentUsers, setCurrentUsers] = useState<string[]>([]);
+  const [lobbyData, setLobbyData] = useState<{ username: string; difficulty: string; icon: string }[]>([]);
+
+  useEffect(() => {
+    // Fetch profile data from AsyncStorage
+    const fetchProfileData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('@profile_data');
+        if (jsonValue) {
+          const profileData = JSON.parse(jsonValue);
+          setLobbyData((prevData) => [...prevData, profileData]);
+        }
+      } catch (e) {
+        console.error('Failed to load profile data', e);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const startGame = () => {
+    if (currentUsers.length === 0) {
+      Alert.alert("Error", "No players in the lobby to start the game!");
+      return;
+    }
+
+    // Logic to start the game goes here
+    Alert.alert("Game Starting", "The game will start now!");
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Lobby: {lobbyName}</Text>
-      <Text style={styles.creator}>Created by: {creator}</Text>
-      <Text style={styles.userListTitle}>Users:</Text>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => (
-          <Text style={styles.userItem}>{item.username}</Text>
-        )}
-        keyExtractor={(item) => item.username}
-      />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
+      <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 50, padding: 20 }}>Game Lobby</Text>
+      
+      {/* Display current users in the lobby */}
+      <View style={{ marginBottom: 30 }}>
+        <Text style={{ fontSize: 30, fontFamily: "NotoSans-Regular" }}>Current Users:</Text>
+        {lobbyData.map((user, index) => (
+          <View key={index} style={{ flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+            <Text style={{ fontSize: 20, marginRight: 10 }}>{user.icon}</Text>
+            <Text style={{ fontSize: 20 }}>{user.username}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Start Game Button */}
+      <Pressable onPress={startGame}>
+        <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 5, paddingLeft: 20, paddingRight: 20, borderRadius: 5 }}>
+          Start Game
+        </Text>
+      </Pressable>
     </View>
   );
-}
+};
 
-// Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#A01D1D", // Adjust background color if needed
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#fff", // Title color
-  },
-  creator: {
-    fontSize: 20,
-    marginBottom: 20,
-    color: "#fff", // Creator color
-  },
-  userListTitle: {
-    fontSize: 24,
-    marginTop: 20,
-    marginBottom: 10,
-    color: "#fff", // User list title color
-  },
-  userItem: {
-    fontSize: 18,
-    color: "#fff", // User item color
-    padding: 5,
-  },
-});
+export default GameLobby;

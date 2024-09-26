@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, Modal, View, Pressable, TextInput } from "react-native";
+import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface ProfileData {
   username: string;
   difficulty: string;
-  icon: string | null;
+  icon: string;
 }
 
 const Profile: React.FC = () => {
@@ -19,10 +19,24 @@ const Profile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
 
   const handleCreateProfile = async () => {
+    // Check for empty username or difficulty selection
+    if (!username) {
+      Alert.alert("Error", "Please enter a username.");
+      return;
+    }
+
+    if (difficulty === "Select") {
+      Alert.alert("Error", "Please select a difficulty level."); // Alert if no difficulty is selected
+      return;
+    }
+
+    // If no icon is selected, set the default dolphin icon
+    const finalIcon = icon || "🐬"; // Default dolphin icon
+
     const profileData: ProfileData = {
       username,
       difficulty,
-      icon,
+      icon: finalIcon,
     };
 
     // Save profile data to AsyncStorage
@@ -35,7 +49,7 @@ const Profile: React.FC = () => {
     }
 
     // Navigate to the Lobby with the profile data as parameters
-    router.push(`/Lobby?username=${encodeURIComponent(username)}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(icon || '')}`);
+    router.push(`/Lobby?username=${encodeURIComponent(username)}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(finalIcon)}`);
   };
 
   return (
