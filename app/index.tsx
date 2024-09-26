@@ -18,12 +18,12 @@ const Start = () => {
     >
       <Text
         style={{
-          fontFamily: "Crayonara-Regular",
+          fontFamily: "NotoSans-Regular",
           fontSize: 130,
           padding: 100,
         }}
       >
-        Te kemu Arapu
+        Te Kēmu Arapū
       </Text>
 
       <Pressable
@@ -41,7 +41,7 @@ const Start = () => {
         <Text
           style={{
             fontSize: 30,
-            fontFamily: "Crayonara-Regular",
+            fontFamily: "NotoSans-Regular",
             fontWeight: "bold",
             color: "white",
           }}

@@ -3,6 +3,7 @@ import { SafeAreaView, Text, Modal, View, Pressable, TextInput } from "react-nat
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ProfileData {
   username: string;
@@ -15,25 +16,31 @@ const Profile: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [difficulty, setDifficulty] = useState("Select");
   const [icon, setIcon] = useState<string | null>(null);
-  const [username, setUsername] = useState<string>(""); // Change default value to empty
+  const [username, setUsername] = useState<string>("");
 
-  const handleCreateProfile = () => {
+  const handleCreateProfile = async () => {
     const profileData: ProfileData = {
-        username,
-        difficulty,
-        icon,
+      username,
+      difficulty,
+      icon,
     };
 
-    console.log("Profile Data:", profileData);
+    // Save profile data to AsyncStorage
+    try {
+      const jsonValue = JSON.stringify(profileData);
+      await AsyncStorage.setItem('@profile_data', jsonValue);
+      console.log("Profile Data saved:", profileData);
+    } catch (e) {
+      console.error('Failed to save profile data', e);
+    }
 
-    // Navigate to the Lobby with the profile data as a parameter
+    // Navigate to the Lobby with the profile data as parameters
     router.push(`/Lobby?username=${encodeURIComponent(username)}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(icon || '')}`);
-};
-
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-      <Text style={{ fontFamily: "Crayonara-Regular", fontSize: 70, padding: 20 }}>Create Profile</Text>
+      <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 70, padding: 20 }}>Create Profile</Text>
       
       {/* Improved Username Input */}
       <View style={{ marginBottom: 30, width: '80%' }}>
@@ -48,23 +55,20 @@ const Profile: React.FC = () => {
             fontSize: 18,
             color: "#333",
             shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
+            shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
-            elevation: 5, // For Android shadow
+            elevation: 5,
           }}
           placeholder="Enter your username"
-          placeholderTextColor="#888" // Gray color for placeholder
+          placeholderTextColor="#888"
           value={username}
-          onChangeText={setUsername} // Update username state on change
+          onChangeText={setUsername}
         />
       </View>
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ fontSize: 50, marginRight: 10, fontFamily: "Crayonara-Regular" }}>Difficulty</Text>
+        <Text style={{ fontSize: 50, marginRight: 10, fontFamily: "NotoSans-Regular" }}>Difficulty</Text>
         
         <Pressable onPress={() => setIsModalVisible(true)}>
           <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>?</Text>
@@ -72,9 +76,9 @@ const Profile: React.FC = () => {
         
         <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="slide" presentationStyle="pageSheet">
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Beginner: Longer time to guess and more access to hints.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Intermediate: Shorter time to guess with access to a single hint.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "Crayonara-Regular" }}>Pro: Minimal time to guess with no hints available.</Text>
+            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Beginner: Longer time to guess and more access to hints.</Text>
+            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Intermediate: Shorter time to guess with access to a single hint.</Text>
+            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Pro: Minimal time to guess with no hints available.</Text>
 
             <Pressable onPress={() => setIsModalVisible(false)}>
               <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>Close</Text>
@@ -94,7 +98,7 @@ const Profile: React.FC = () => {
       </View>
 
       <Pressable onPress={handleCreateProfile}>
-        <Text style={{ fontFamily: "Crayonara-Regular", fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 5, paddingLeft: 20, paddingRight: 20, margin: 30, borderRadius: 5 }}>Create</Text>
+        <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 5, paddingLeft: 20, paddingRight: 20, margin: 30, borderRadius: 5 }}>Create</Text>
       </Pressable>
     </SafeAreaView>
   );

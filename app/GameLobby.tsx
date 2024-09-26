@@ -1,4 +1,3 @@
-// app/GameLobby.tsx
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useRoute, RouteProp } from "@react-navigation/native";
