@@ -1,0 +1,6 @@
+Different State Phases:
+
+Top Level State:
+	loading - intermediary between game modes
+	playing - current playing a game, defer state management to gameState
+	end - show scoreboard

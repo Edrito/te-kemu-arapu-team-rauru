@@ -1,0 +1,48 @@
+{
+    "gameId": "string",
+    "errors": int,
+    "isLobbyOpen": boolean,
+    "settings": {
+        "endConditions" : {
+		"time" : ISO8601,
+		"score" : int
+	}
+	"games" : {
+    		"0":{
+			"type":"string (category, random)",
+			"endConditions":{
+				"duration": int,
+				"score": int,
+			},
+		},
+		"1":{},
+	}   
+    },
+    "participants": [
+      
+    ],
+    "state": {
+        "currentGame": "string",
+        "phase": "string",
+        "phaseEnd": ISO8601,
+	"scores":{
+		"playerId":int,
+		},
+	"gameState": {
+                "phase": "choosingCategory",
+        	"phaseEnd": get_future_time(5).isoformat(),
+        	"positiveVotes":[],
+        	"negativeVotes":[],
+       	 	"neutralVotes":[],
+        	"lettersCovered":[],
+        	"category":None,
+        	"hintWordsUsed":[],
+        	"playerTurn":None,
+		"playersEliminated":[],
+       	 	"categoriesCovered":[],
+        	"currentCategory": None,
+
+                },
+       
+    }
+}

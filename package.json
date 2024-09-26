@@ -11,7 +11,7 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "pre-build": "tailwindcss -i ./global.css -o ./node_modules/nativewind/.cache/global.css.web.css",
-    "predeploy": "npm run pre-build && expo export -p web && npm run post-build",
+    "predeploy": " expo export -p web",
     "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
     "deploy-hosting-test": "npm run predeploy && npx serve dist"
   },

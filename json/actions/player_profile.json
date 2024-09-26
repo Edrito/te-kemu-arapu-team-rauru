@@ -1,0 +1,7 @@
+{
+    	"playerId": "string",
+    	"username": "string",
+	"picture" :"string",
+	"difficulty":"string",
+   
+}
