@@ -7,11 +7,11 @@ interface Player {
   score: number;
 }
 
-// Need to provide array of players when calling this component
 interface ScoreboardProps {
   players: Player[];
 }
 
+// Need to provide array of players when calling this component
 const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
 
   // Creates a new sorted array

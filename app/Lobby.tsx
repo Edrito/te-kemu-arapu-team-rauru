@@ -51,7 +51,7 @@ export default function Lobby() {
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
       {/* Title */}
-      <Text className="text-[60px] font-bold text-white mb-12 font-notosans">
+      <Text className="text-[60px] font-bold text-white mb-12 font-pangolin">
         Te Kēmu Arapū
       </Text>
 
@@ -70,14 +70,14 @@ export default function Lobby() {
       {/* Button Container */}
       <View className="justify-center w-[80%] mb-5">
         <TouchableOpacity
-          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-black"
+          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
           onPress={handleJoinLobby}
         >
           <Text className="text-[18px] font-bold text-white">JOIN</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-black"
+          className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-dashed border-black"
           onPress={handleCreateLobby}
         >
           <Text className="text-[18px] font-bold text-white">CREATE</Text>

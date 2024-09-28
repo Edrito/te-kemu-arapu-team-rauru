@@ -58,7 +58,7 @@ const Start = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
-      <Text className="text-[80px] font-notosans m-7.5">Score</Text>
+      <Text className="text-[80px] font-pangolin m-7.5">Score</Text>
 
       {/* Scoreboard */}
       <View className="border-5">
@@ -73,13 +73,14 @@ const Start = () => {
             backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
             padding: 20,
             borderRadius: 8,
+            borderStyle: "dashed",
             borderWidth: 2,
             borderColor: "black",
             margin: 30,
           },
         ]}
       >
-        <Text className="text-[30px] font-notosans font-bold text-white">
+        <Text className="text-[30px] font-pangolin font-bold text-white">
           Return
         </Text>
       </Pressable>

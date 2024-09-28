@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
-      <Text className="font-notosans text-[70px] p-5">Create Profile</Text>
+      <Text className="font-pangolin text-[70px] p-5">Create Profile</Text>
 
       {/* Improved Username Input */}
       <View className="w-[80%] mb-[70px]">

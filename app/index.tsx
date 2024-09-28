@@ -1,17 +1,26 @@
 import React, { useEffect } from "react";
 import { Text, Pressable, Button, View } from "react-native";
-import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import "../global.css";
+import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 
 const Start = () => {
   const router = useRouter();
 
+  // Path to current player icon
+  const playerIconTest = '../assets/images/react-logo.png';
+
   return (
+    
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+
+      <View className="w-full absolute top-0">
+        <PlayerBar playerIcon={playerIconTest}/>
+      </View>
+    
       <View>
-        <Text className="font-notosans text-[130px] p-[100px]">
+        <Text className="font-pangolin text-[130px] p-[100px]">
           Te kēmu Arapū
         </Text>
       </View>
@@ -30,8 +39,8 @@ const Start = () => {
           },
         ]}
       >
-        {/* TODO: Maybe change font */}
-        <Text className="text-[30px] font-bold text-white font-notosans">
+
+        <Text className="text-[30px] font-bold text-white font-crayonara">
           BEGIN!
         </Text>
       </Pressable>
