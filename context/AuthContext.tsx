@@ -1,32 +1,96 @@
-/**
- * Context API is a way to share data between components without having to pass props down manually at every level. so if its wrapped
- * in the AuthProvider, all the children components will have access to the user object.
- * 
- * This file is responsible for creating the AuthContext and AuthProvider.
- * it passes the user object to the AuthContext.Provider. that is used to pass the user object to the children components.
- * Listens to the onAuthStateChanged event to update the user object when the user logs in or logs out and 
- * it will automatically update the user object in the context.
-*/
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { auth } from '../firebaseConfig';
+import { User } from 'firebase/auth';
+import { onAuthStateChanged, signInAnonymously, signOut } from 'firebase/auth';
+import { ReactNode } from 'react';
+import { getDocs, query, collection, where } from 'firebase/firestore';
+import { firestore } from '../firebaseConfig';
+import { router } from 'expo-router';
 
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { auth } from '../firebaseConfig'; 
-import { onAuthStateChanged, User } from 'firebase/auth';
+interface Profile {
+  userId: string;
+  username: string;
+  icon: string;
+  difficulty: string;
+}
 
-export const AuthContext = createContext<User | null>(null);
+const AuthContext = createContext<{
+  user: User | null;
+  userProfile: Profile | null;
+  setUserProfile: (profile: Profile | null) => void; // Function to set user profile
+  signOutUser: () => void;
+}>({
+  user: null,
+  userProfile: null,
+  setUserProfile: () => {},
+  signOutUser: () => {},
+});
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [userProfile, setProfile] = useState<Profile | null>(null);
+
+  const setUserProfile = (profile: Profile | null) => {
+    setProfile(profile);
+  };
+
+  const checkUserProfile = async (userId: string) => {
+    try {
+      const queryWithUid = query(collection(firestore, "profile"), where("userId", "==", userId));
+      const userSnapshot = await getDocs(queryWithUid);
+      
+      if (!userSnapshot.empty) {
+        setProfile(userSnapshot.docs[0].data() as Profile);
+      } else {
+        console.error("User profile not found");
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    let isMounted = true;
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (isMounted) {
+        if (firebaseUser) {
+          setUser(firebaseUser);
+          await checkUserProfile(firebaseUser.uid);
+        } else {
+          try {
+            const userCredential = await signInAnonymously(auth);
+            if (isMounted) {
+              setUser(userCredential.user);
+            }
+          } catch (error) {
+            console.error("Error during anonymous sign-in:", error);
+          }
+        }
+      }
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
 
+  const signOutUser = async () => {
+    await signOut(auth)
+      .then(() => {
+        console.log('User signed out successfully');
+        setUser(null);
+        setProfile(null);
+        router.push('/');
+      })
+      .catch(console.error);
+  };
+
   return (
-    <AuthContext.Provider value={user}>
+    <AuthContext.Provider value={{ user, signOutUser, userProfile, setUserProfile }}>
       {children}
     </AuthContext.Provider>
   );
