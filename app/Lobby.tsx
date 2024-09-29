@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
-import Profile from "./profile";
 import { router } from "expo-router";
 
 export default function Lobby() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const {user, signOutUser, userProfile} = useAuth();
+
+  useEffect(() => {
+    if (!user || !userProfile) {
+      router.push("/");
+    }
+  }, [user, userProfile]);
   
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -74,6 +79,10 @@ export default function Lobby() {
         }}
       >
         Te Kēmu Arapū
+      </Text>
+
+      <Text style={{ color: "#fff", fontSize: 20, marginBottom: 20 }}>
+        Welcome, {userProfile?.username || "Player"}!
       </Text>
 
       {/* Input for lobby name */}
