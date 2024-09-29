@@ -1,13 +1,36 @@
-import React, { useEffect } from "react";
-import { Text, Pressable, Button } from "react-native";
-import { useFonts } from "expo-font";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { SplashScreen, useRouter } from "expo-router";
+import { Text, Pressable, Button, SafeAreaView } from "react-native";
+import { useRouter } from "expo-router";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { getDoc, getDocs, collection, where, query } from "firebase/firestore";
+import { firestore } from "../firebaseConfig";
+
 
 const Start = () => {
   const router = useRouter();
+  const { user } = useAuth();
+
+ useEffect(() => {
+  const checkUserProfile = async () => {
+    if (user) {
+      try {
+        const queryWithUid = query(collection(firestore, "profile"), where("userId", "==", user.uid));
+        const userSnapshot = await getDocs(queryWithUid);
+
+        if (!userSnapshot.empty) {
+          router.push("/Lobby");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    }
+  };
+
+  if (user) checkUserProfile();
+}, [user]);
 
   return (
+
     <SafeAreaView
       style={{
         flex: 1,

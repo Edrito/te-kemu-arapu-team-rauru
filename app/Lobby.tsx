@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../context/AuthContext";
+import Profile from "./profile";
+import { router } from "expo-router";
 
 export default function Lobby() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const {user, signOutUser, userProfile} = useAuth();
   
   // Load fonts
   const [fontsLoaded] = useFonts({
     Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
   });
+
 
   const handleCreateLobby = () => {
     if (lobbyName.trim() === "") {
@@ -47,6 +52,7 @@ export default function Lobby() {
       </SafeAreaView>
     );
   }
+
 
   return (
     <SafeAreaView
@@ -124,6 +130,10 @@ export default function Lobby() {
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>CREATE</Text>
         </TouchableOpacity>
       </View>
+
+      <Pressable onPress={signOutUser}>
+        <Text style={{ color: "#fff", fontSize: 16 }}>Sign Out</Text>
+      </Pressable>
 
       {/* Footer */}
       <Text style={{ marginTop: 100, fontSize: 20, color: "#000" }}>DEMO</Text>
