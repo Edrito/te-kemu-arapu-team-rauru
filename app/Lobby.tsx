@@ -64,7 +64,7 @@ export default function Lobby() {
       />
 
       {errorMessage ? (
-        <Text className="text-red-500 mb-5">{errorMessage}</Text>
+        <Text className="text-red-400 font-bold text-[15px] mb-5">{errorMessage}</Text>
       ) : null}
 
       {/* Button Container */}
