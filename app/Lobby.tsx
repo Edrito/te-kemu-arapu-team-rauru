@@ -1,23 +1,29 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable } from "react-native";
+import { useAuth } from "../context/AuthContext";
+import { router } from "expo-router";
 
 export default function Lobby() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const {user, signOutUser, userProfile} = useAuth();
+
+  useEffect(() => {
+    if (!user || !userProfile) {
+      router.push("/");
+    }
+  }, [user, userProfile]);
+  
   // Load fonts
   const [fontsLoaded] = useFonts({
     Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
   });
+
 
   const handleCreateLobby = () => {
     if (lobbyName.trim() === "") {
@@ -48,11 +54,16 @@ export default function Lobby() {
     );
   }
 
+
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
       {/* Title */}
       <Text className="text-[60px] font-bold text-white mb-12 font-pangolin">
         Te Kēmu Arapū
+      </Text>
+
+      <Text style={{ color: "#fff", fontSize: 20, marginBottom: 20 }}>
+        Welcome, {userProfile?.username || "Player"}!
       </Text>
 
       {/* Input for lobby name */}
@@ -83,6 +94,10 @@ export default function Lobby() {
           <Text className="text-[18px] font-bold text-white">CREATE</Text>
         </TouchableOpacity>
       </View>
+
+      <Pressable onPress={signOutUser}>
+        <Text style={{ color: "#fff", fontSize: 16 }}>Sign Out</Text>
+      </Pressable>
 
       {/* Footer */}
       <Text className="mt-24 text-[20px] text-black">DEMO</Text>

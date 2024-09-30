@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  Text,
-  Modal,
-  View,
-  Pressable,
-  TextInput,
-} from "react-native";
+import "../global.css";
+import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
-import "../global.css";
+import { addDoc, collection } from "firebase/firestore";
+import { firestore } from "../firebaseConfig";
+import { useAuth } from "../context/AuthContext";
+
 
 interface ProfileData {
   username: string;
@@ -19,30 +16,50 @@ interface ProfileData {
 }
 
 const Profile: React.FC = () => {
+  const { user, setUserProfile } = useAuth();
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [difficulty, setDifficulty] = useState("Select");
   const [icon, setIcon] = useState<string | null>(null);
-  const [username, setUsername] = useState<string>(""); // Change default value to empty
+  const [username, setUsername] = useState<string>("");
 
-  const handleCreateProfile = () => {
-    const profileData: ProfileData = {
-      username,
-      difficulty,
-      icon,
+  const handleCreateProfile = async () => {
+      try {
+          if (!user || !user.uid) {
+            Alert.alert("User ID not found. Please sign in again.");
+            return;
+          }
+
+      const profileData: ProfileData = {
+        username: username.trim() ?? "Player",
+        difficulty: difficulty ?? "Beginner", 
+        icon: icon,
+      };
+
+        await addProfileData(profileData);
+
+        setUserProfile({ userId: user.uid, ...profileData, icon: profileData.icon ?? "default" });
+
+
+        router.push(`/Lobby`);
+      } catch (error) {
+        Alert.alert("Error creating profile: " + error);
+      }
     };
 
-    console.log("Profile Data:", profileData);
 
-    // Navigate to the Lobby with the profile data as a parameter
-    router.push(
-      `/Lobby?username=${encodeURIComponent(
-        username
-      )}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(
-        icon || ""
-      )}`
-    );
-  };
+  const addProfileData = async (profile: ProfileData) => {
+      try {
+        const docRef = await addDoc(collection(firestore, "profile"), {
+          userId: user?.uid,
+          ...profile,
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (error) {
+        console.error("Error adding document:", error);
+        throw error;
+      }
+    };
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
