@@ -2,6 +2,7 @@
     "gameId": "string",
     "errors": int,
     "isLobbyOpen": boolean,
+
     "settings": {
         "endConditions" : {
 		"time" : ISO8601,
@@ -28,7 +29,9 @@
 	"scores":{
 		"playerId":int,
 		},
+
 	"gameState": {
+
                 "phase": "choosingCategory",
         	"phaseEnd": get_future_time(5).isoformat(),
         	"positiveVotes":[],
@@ -41,6 +44,7 @@
 		"playersEliminated":[],
        	 	"categoriesCovered":[],
         	"currentCategory": None,
+		"selectedLetter":"string",
 
                 },
        
