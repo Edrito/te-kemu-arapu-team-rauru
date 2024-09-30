@@ -3,5 +3,5 @@
     	"username": "string",
 	"picture" :"string",
 	"difficulty":"string",
-   
+
 }
