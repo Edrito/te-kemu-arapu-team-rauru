@@ -2,5 +2,6 @@
     "playerId": "string",
     "username": "string",
 	"picture" :"string",
-	"difficulty":"string" 
+	"difficulty":"string",
+
 }
