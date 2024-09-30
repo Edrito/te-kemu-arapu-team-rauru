@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import '../global.css'
 
-// Define props type for Dropdown
+// This component is a dropdown view used for selecting the difficulty level
+// in the create profile screen
+
 interface DropdownProps {
   onSelect: (value: string) => void;
 }

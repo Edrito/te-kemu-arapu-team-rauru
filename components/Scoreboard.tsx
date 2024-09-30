@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, ScrollView} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, Dimensions} from "react-native";
 
 interface Player {
   icon: string;
@@ -17,12 +17,29 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
   // Creates a new sorted array
   const sortedPlayers = [...players].sort((a,b) => b.score - a.score)
 
+  const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
+
+  // This is so that scoreboard changes size in real time when screen size changes
+  useEffect(() => {
+    // Function to handle resizing of the window
+    const resizeScreen = () => {
+      // Update the state with the current window dimensions
+      setWindowDimensions(Dimensions.get('window'));
+    };
+  
+    // Listen to changes in screen size
+    const subscription = Dimensions.addEventListener('change', resizeScreen);
+    
+    // End listener
+    return () => subscription?.remove();
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: "#c97d1a", padding: 20 }}>
       <ScrollView
         style={{
           height: 600,
-          width: 500,
+          minWidth: (windowDimensions.width < 700) ? 300 : 500,
         }}
         contentContainerStyle={{
           paddingBottom: 20,

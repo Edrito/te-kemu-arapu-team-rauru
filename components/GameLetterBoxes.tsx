@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Text, Pressable, Dimensions } from "react-native";
 import '../global.css';
 
-interface CategoryBoxesProps {
+// Letter to display as a prop
+interface LetterBoxesProps {
   initialText: string;
 }
 
-const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ initialText }) => {
+const LetterBoxes: React.FC<LetterBoxesProps> = ({ initialText }) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
@@ -36,17 +37,17 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ initialText }) => {
     <Pressable
       onPress={handlePress}
       style = {{
-        backgroundColor: "green",
+        backgroundColor: "#15803d",
         borderColor: "black",
         borderStyle: "dashed",
         borderWidth: 2,
-        margin: 5,
+        margin: (windowDimensions.width < 1036) ? 5 : 15,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        height: 150,
-        minWidth: (windowDimensions.width < 1036) ? 200 : 500,
-        maxWidth: (windowDimensions.width < 1036) ? 200 : 500,
+        height: (windowDimensions.width < 1036) ? 80 : 170,
+        minWidth: (windowDimensions.width < 1036) ? 80 : 170,
+        maxWidth: (windowDimensions.width < 1036) ? 80 : 170,
       }}
 
     >
@@ -57,4 +58,4 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ initialText }) => {
   );
 };
 
-export default CategoryBoxes;
+export default LetterBoxes;

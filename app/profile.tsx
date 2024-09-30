@@ -90,7 +90,6 @@ const Profile: React.FC = () => {
                 Close
               </Text>
             </Pressable>
-
           </View>
         </Modal>
       </View>
@@ -104,8 +103,6 @@ const Profile: React.FC = () => {
       <View className="w-[30%] min-w-[350px]">
         <SelectIcon onSelect={setIcon} />
       </View>
-
-      
 
       <Pressable onPress={handleCreateProfile}>
         <Text className="font-notosans text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded">

@@ -10,6 +10,7 @@ module.exports = {
         primary_yellow: "#FFD700",
         button_orange: "#C97D1A",
         button_pressed_orange: "#8C4F00",
+        game_buttons_green: "#15803d"
         // Additional custom colors
       },
       fontFamily: {

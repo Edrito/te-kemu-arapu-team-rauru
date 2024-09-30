@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import Scoreboard from "te-kemu-arapu-compx374-team-rauru/components/Scoreboard";
 import '../global.css'
 
+// Testing purposes
 const players = [
   {
     icon: "🐬",
@@ -61,7 +62,7 @@ const Start = () => {
       <Text className="text-[80px] font-pangolin m-7.5">Score</Text>
 
       {/* Scoreboard */}
-      <View className="border-5">
+      <View className="border-2 border-dashed rounded">
         <Scoreboard players={players} />
       </View>
 

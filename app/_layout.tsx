@@ -3,12 +3,11 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import React from "react";
 
-
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+  // This is required to load fonts in other pages
   const [fontsLoaded, error] = useFonts({
     "Crayonara-Regular": require("../assets/fonts/Crayonara-Regular.ttf"),
     "NotoSans-Regular": require("../assets/fonts/NotoSans-Regular.ttf"),
@@ -38,6 +37,5 @@ const RootLayout = () => {
     </Stack>
   );
 };
-
 
 export default RootLayout;
