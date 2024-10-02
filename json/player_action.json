@@ -2,7 +2,7 @@
     "playerId": "string",
     "gameId": "string",
     "action": {
-        "type": "string",
+        "type": "vote",
         "details": {
         }
     }

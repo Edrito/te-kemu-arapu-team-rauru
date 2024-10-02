@@ -2,6 +2,8 @@
     "gameId": "string",
     "errors": int,
     "isLobbyOpen": boolean,
+    "lobbyCode" : "4 digit word containing both letters and numbers from the maori alphabet and regular 0-9",
+
     "settings": {
         "endConditions" : {
 		"time" : ISO8601,
@@ -28,19 +30,20 @@
 	"scores":{
 		"playerId":int,
 		},
+
 	"gameState": {
+
                 "phase": "choosingCategory",
-        	"phaseEnd": get_future_time(5).isoformat(),
+        	"phaseEnd": ISO8601,
         	"positiveVotes":[],
         	"negativeVotes":[],
        	 	"neutralVotes":[],
         	"lettersCovered":[],
-        	"category":None,
-        	"hintWordsUsed":[],
         	"playerTurn":None,
 		"playersEliminated":[],
        	 	"categoriesCovered":[],
         	"currentCategory": None,
+		"selectedLetter":"string",
 
                 },
        

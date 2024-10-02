@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert } from "react-native";
+import "../global.css";
+import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { addDoc, collection } from "firebase/firestore";
+import { firestore } from "../firebaseConfig";
+import { useAuth } from "../context/AuthContext";
+
 
 interface ProfileData {
   username: string;
   difficulty: string;
-  icon: string;
+  icon: string | null;
 }
 
 const Profile: React.FC = () => {
+  const { user, setUserProfile } = useAuth();
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [difficulty, setDifficulty] = useState("Select");
@@ -19,101 +24,110 @@ const Profile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
 
   const handleCreateProfile = async () => {
-    // Check for empty username or difficulty selection
-    if (!username) {
-      Alert.alert("Error", "Please enter a username.");
-      return;
-    }
-
-    if (difficulty === "Select") {
-      Alert.alert("Error", "Please select a difficulty level."); // Alert if no difficulty is selected
-      return;
-    }
-
-    // If no icon is selected, set the default dolphin icon
-    const finalIcon = icon || "🐬"; // Default dolphin icon
-
-    const profileData: ProfileData = {
-      username,
-      difficulty,
-      icon: finalIcon,
-    };
-
-    // Save profile data to AsyncStorage
     try {
-      const jsonValue = JSON.stringify(profileData);
-      await AsyncStorage.setItem('@profile_data', jsonValue);
-      console.log("Profile Data saved:", profileData);
-    } catch (e) {
-      console.error('Failed to save profile data', e);
-    }
+      if (!user || !user.uid) {
+        Alert.alert("User ID not found. Please sign in again.");
+        return;
+      }
 
-    // Navigate to the Lobby with the profile data as parameters
-    router.push(`/Lobby?username=${encodeURIComponent(username)}&difficulty=${encodeURIComponent(difficulty)}&icon=${encodeURIComponent(finalIcon)}`);
+      const profileData: ProfileData = {
+        username: username.trim() ?? "Player",
+        difficulty: difficulty ?? "Beginner",
+        icon: icon,
+      };
+
+      await addProfileData(profileData);
+
+      setUserProfile({ userId: user.uid, ...profileData, icon: profileData.icon ?? "default" });
+
+
+      router.push(`/Lobby`);
+    } catch (error) {
+      Alert.alert("Error creating profile: " + error);
+    }
+  };
+  
+
+  const addProfileData = async (profile: ProfileData) => {
+    try {
+      const docRef = await addDoc(collection(firestore, "profile"), {
+        userId: user?.uid,
+        ...profile,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document:", error);
+      throw error;
+    }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-      <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 70, padding: 20 }}>Create Profile</Text>
-      
-      {/* Improved Username Input */}
-      <View style={{ marginBottom: 30, width: '80%' }}>
-        <TextInput
-          style={{
-            height: 50,
-            borderColor: 'orange',
-            borderWidth: 2,
-            borderRadius: 10,
-            paddingHorizontal: 15,
-            backgroundColor: "#fff",
-            fontSize: 18,
-            color: "#333",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}
-          placeholder="Enter your username"
-          placeholderTextColor="#888"
-          value={username}
-          onChangeText={setUsername}
-        />
-      </View>
+    <SafeAreaView className="flex-1 bg-primary_red">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} keyboardShouldPersistTaps="handled">
+        <Text className="font-pangolin text-[70px] p-5 text-center">Create Profile</Text>
 
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ fontSize: 50, marginRight: 10, fontFamily: "NotoSans-Regular" }}>Difficulty</Text>
-        
-        <Pressable onPress={() => setIsModalVisible(true)}>
-          <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>?</Text>
+        {/* Improved Username Input */}
+        <View className="w-[80%] mb-[70px] self-center">
+          <TextInput
+            className="h-12 border-2 border-orange-500 rounded-lg px-4 bg-white text-[18px] text-[#333] shadow-md"
+            placeholder="Enter your username"
+            placeholderTextColor="#888" // Gray color for placeholder
+            value={username}
+            onChangeText={setUsername} // Update username state on change
+          />
+        </View>
+
+        <View className="flex-row items-center justify-center mb-5">
+          <Text className="text-[50px] mr-10 font-notosans">Difficulty</Text>
+
+          <Pressable onPress={() => setIsModalVisible(true)}>
+            <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 px-6 m-1 rounded">
+              ?
+            </Text>
+          </Pressable>
+
+          <Modal
+            visible={isModalVisible}
+            onRequestClose={() => setIsModalVisible(false)}
+            animationType="slide"
+            presentationStyle="pageSheet"
+          >
+            <View className="flex-1 justify-center items-center bg-primary_red">
+              <Text className="text-[30px] m-5 font-notosans">
+                Beginner: Longer time to guess and more access to hints.
+              </Text>
+              <Text className="text-[30px] m-5 font-notosans">
+                Intermediate: Shorter time to guess with access to a single hint.
+              </Text>
+              <Text className="text-[30px] m-5 font-notosans">
+                Pro: Minimal time to guess with no hints available.
+              </Text>
+
+              <Pressable onPress={() => setIsModalVisible(false)}>
+                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                  Close
+                </Text>
+              </Pressable>
+            </View>
+          </Modal>
+        </View>
+
+        {/* Dropdown for selecting difficulty */}
+        <View className="justify-center items-center bg-primary_red m-7 pb-16">
+          <Dropdown onSelect={setDifficulty} />
+        </View>
+
+        {/* Icon selection */}
+        <View className="w-[30%] min-w-[350px] self-center mb-5">
+          <SelectIcon onSelect={setIcon} />
+        </View>
+
+        <Pressable onPress={handleCreateProfile}>
+          <Text className="font-notosans text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded text-center">
+            Create
+          </Text>
         </Pressable>
-        
-        <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="slide" presentationStyle="pageSheet">
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D" }}>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Beginner: Longer time to guess and more access to hints.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Intermediate: Shorter time to guess with access to a single hint.</Text>
-            <Text style={{ fontSize: 30, margin: 20, fontFamily: "NotoSans-Regular" }}>Pro: Minimal time to guess with no hints available.</Text>
-
-            <Pressable onPress={() => setIsModalVisible(false)}>
-              <Text style={{ fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 3, paddingLeft: 20, paddingRight: 20, margin: 5, borderRadius: 5 }}>Close</Text>
-            </Pressable>
-          </View>
-        </Modal>
-      </View>
-
-      {/* Dropdown for selecting difficulty */}
-      <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#A01D1D", margin: 30, width: '100%', paddingBottom: 70 }}>
-        <Dropdown onSelect={setDifficulty} />
-      </View>
-
-      {/* Icon selection */}
-      <View style={{ width: 300 }}>
-        <SelectIcon onSelect={setIcon} />
-      </View>
-
-      <Pressable onPress={handleCreateProfile}>
-        <Text style={{ fontFamily: "NotoSans-Regular", fontSize: 30, borderWidth: 3, backgroundColor: "orange", padding: 5, paddingLeft: 20, paddingRight: 20, margin: 30, borderRadius: 5 }}>Create</Text>
-      </Pressable>
+      </ScrollView>
     </SafeAreaView>
   );
 };

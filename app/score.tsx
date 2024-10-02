@@ -3,7 +3,9 @@ import { Text, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Scoreboard from "te-kemu-arapu-compx374-team-rauru/components/Scoreboard";
+import '../global.css'
 
+// Testing purposes
 const players = [
   {
     icon: "🐬",
@@ -56,30 +58,11 @@ const Start = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#A01D1D",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 80,
-          fontFamily: "Crayonara-Regular",
-          margin: 30,
-        }}
-      >
-        Score
-      </Text>
+    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+      <Text className="text-[80px] font-pangolin m-7.5">Score</Text>
 
       {/* Scoreboard */}
-      <View
-        style={{
-          borderWidth: 5,
-        }}
-      >
+      <View className="border-2 border-dashed rounded">
         <Scoreboard players={players} />
       </View>
 
@@ -91,20 +74,14 @@ const Start = () => {
             backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
             padding: 20,
             borderRadius: 8,
+            borderStyle: "dashed",
             borderWidth: 2,
             borderColor: "black",
             margin: 30,
           },
         ]}
       >
-        <Text
-          style={{
-            fontSize: 30,
-            fontFamily: "Crayonara-Regular",
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
+        <Text className="text-[30px] font-pangolin font-bold text-white">
           Return
         </Text>
       </Pressable>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import '../global.css'
 
-// Define props type for Dropdown
+// This component is a dropdown view used for selecting the difficulty level
+// in the create profile screen
+
 interface DropdownProps {
   onSelect: (value: string) => void;
 }
@@ -19,41 +22,33 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   };
 
   return (
-    <View style={{ width: 120, position: "relative" }}>
+    <View className="w-full max-w-[600px] min-w-[300px] relative">
       <Pressable
         onPress={toggleDropdown}
-        style={{
-          backgroundColor: "orange",
-          paddingVertical: 5,
-          paddingHorizontal: 10,
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: "black",
-        }}
+        className="bg-orange-500 py-1.5 px-2.5 rounded border border-black"
       >
-        <Text style={{ color: "black", fontSize: 12 }}>{selectedValue}</Text>
+        <Text className="text-black text-[24px]">{selectedValue}</Text>
       </Pressable>
 
       {isOpen && (
-        <View
-          style={{
-            backgroundColor: "orange",
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: "black",
-            marginTop: 2,
-            width: "100%",
-            overflow: "hidden",
-          }}
-        >
+        <View className="bg-orange-500 rounded border border-black mt-0.5 w-full overflow-hidden">
           <Pressable onPress={() => handleOptionSelect("Beginner")}>
-            <Text style={{ padding: 5, fontSize: 12 }}>Beginner</Text>
+            <Text className="p-1.5 pl-2.5 text-[24px]"
+            >
+              Beginner
+            </Text>
           </Pressable>
           <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-            <Text style={{ padding: 5, fontSize: 12 }}>Intermediate</Text>
+            <Text className="p-1.5 pl-2.5 text-[24px]"
+            >
+              Intermediate
+            </Text>
           </Pressable>
           <Pressable onPress={() => handleOptionSelect("Pro")}>
-            <Text style={{ padding: 5, fontSize: 12 }}>Pro</Text>
+            <Text className="p-1.5 pl-2.5 text-[24px]"
+            >
+              Pro
+            </Text>
           </Pressable>
         </View>
       )}
