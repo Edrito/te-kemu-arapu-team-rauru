@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "../global.css";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
-import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { Text, Pressable, Button, SafeAreaView, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
@@ -48,7 +47,7 @@ const Start = () => {
       </View>
 
       <Pressable
-        onPress={() => router.push("/profile")}
+        onPress={() => router.push('/Profile')}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
@@ -71,23 +70,23 @@ const Start = () => {
         <Text>This is an index to goto and test pages</Text>
         <Button
           title="(TESTING) go to scoreboard screen"
-          onPress={() => router.push("/score")}
+          onPress={() => router.push("/Score")}
         />
         <Button
           title="(TESTING) go to loading screen"
-          onPress={() => router.push("/loading")}
+          onPress={() => router.push("/Loading")}
         />
         <Button
           title="(TESTING) go to category screen"
-          onPress={() => router.push("/selectCategory")}
+          onPress={() => router.push("/SelectCategory")}
         />
         <Button
           title="(TESTING) go to letter select screen (Player POV)"
-          onPress={() => router.push("/selectLetterPlayer")}
+          onPress={() => router.push("/SelectLetterPlayer")}
         />
         <Button
           title="(TESTING) go to letter select screen (Spectator POV)"
-          onPress={() => router.push("/selectLetterSpectator")}
+          onPress={() => router.push("/SelectLetterSpectator")}
         />
       </View>
 

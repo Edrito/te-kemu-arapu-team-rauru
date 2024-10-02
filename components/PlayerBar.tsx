@@ -29,7 +29,7 @@ const HeaderBar: React.FC<HeaderBarIcon> = ({ playerIcon }) => {
           style={{ width: 40, height: 40 }}
           resizeMode="contain"
         />
-        <Text className="text-[30px] font-bold font-notosans ml-2">
+        <Text className="text-[30px] font-bold font-pangolin ml-2">
           {language}
         </Text>
       </Pressable>
