@@ -19,7 +19,6 @@ const vote = () => {
         contentContainerStyle={{ alignItems: "center" }}
         className="p-5"
       >
-        {/* Guessing section */}
         <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[300px]">
           <Text className="text-[40px] text-white text-center">
             "Player" is currently guessing a "CATEGORY" starting with the letter
@@ -38,8 +37,7 @@ const vote = () => {
               Did they guess correctly?
             </Text>
           </View>
-
-          {/* Buttons Section */}
+          
           <View className="flex-row justify-between w-[80%]">
             {/* X button */}
             <TouchableOpacity className="border-2 border-dashed bg-red-600 p-5 rounded-xl w-[30%] items-center justify-center">
