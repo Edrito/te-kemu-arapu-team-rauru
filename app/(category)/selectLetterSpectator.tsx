@@ -1,13 +1,14 @@
 import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
 import React from "react";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameLettersGrid from "te-kemu-arapu-compx374-team-rauru/components/GameLettersGrid";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
+import { useLocalSearchParams} from "expo-router";
 
 const selectLetterPlayer = () => {
   // Path to test player icon
   const playerIconTest = "../../assets/images/react-logo.png";
+  const item = useLocalSearchParams();
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
@@ -18,7 +19,7 @@ const selectLetterPlayer = () => {
 
       <View className="w-full items-center justify-center mt-3">
         <Text className="text-[40px] text-white font-pangolin">
-          Category: *INSERT SELECTED CATEGORY HERE
+          Category: *INSERT SELECTED CATEGORY HERE*
         </Text>
       </View>
 

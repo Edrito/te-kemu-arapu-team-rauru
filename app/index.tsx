@@ -71,34 +71,30 @@ const Start = () => {
             </Text>
           </Pressable>
 
-          {/* TODO: DELETE THIS */}
-          <View>
-            <Text>This is an index to goto and test pages</Text>
-            <Button
-              title="(TESTING) go to scoreboard screen"
-              onPress={() => router.push("/score")}
-            />
-            <Button
-              title="(TESTING) go to loading screen"
-              onPress={() => router.push("/loading")}
-            />
-            <Button
-              title="(TESTING) game state with wheel"
-              onPress={() => router.push("/gameState")}
-            />
-            <Button
-              title="(TESTING) go to category screen"
-              onPress={() => router.push("/category")}
-            />
-            <Button
-              title="(TESTING) go to letter select screen (Player POV)"
-              onPress={() => router.push("/selectLetterPlayer")}
-            />
-            <Button
-              title="(TESTING) go to letter select screen (Spectator POV)"
-              onPress={() => router.push("/selectLetterSpectator")}
-            />
-          </View>
+      {/* TODO: DELETE THIS */}
+      <View>
+        <Text>This is an index to goto and test pages</Text>
+        <Button
+          title="(TESTING) go to scoreboard screen"
+          onPress={() => router.push("/score")}
+        />
+        <Button
+          title="(TESTING) go to loading screen"
+          onPress={() => router.push("/loading")}
+        />
+        <Button
+          title="(TESTING) go to category screen"
+          onPress={() => router.push("/category")}
+        />
+        <Button
+          title="(TESTING) go to letter select screen (Player POV)"
+          onPress={() => router.push("/selectLetterPlayer")}
+        />
+        <Button
+          title="(TESTING) go to letter select screen (Spectator POV)"
+          onPress={() => router.push("/selectLetterSpectator")}
+        />
+      </View>
 
           <Text className="text-[30px] absolute bottom-5 self-center font-bold">
             DEMO
