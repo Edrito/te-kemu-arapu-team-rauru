@@ -34,7 +34,7 @@ const selectLetterPlayer = () => {
       </ScrollView>
 
       <View className="w-full items-center justify-center">
-        <Text className="text-[40px] text-white font-pangolin">
+        <Text className="text-[40px] text-center text-white font-pangolin">
           It's your turn to select a letter!
         </Text>
       </View>

@@ -20,7 +20,7 @@ const vote = () => {
         className="p-5"
       >
         <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[300px]">
-          <Text className="text-[40px] text-white text-center">
+          <Text className="text-[40px] text-white text-center font-pangolin">
             "Player" is currently guessing a "CATEGORY" starting with the letter
             "LETTER"
           </Text>
@@ -33,7 +33,7 @@ const vote = () => {
 
           {/* Question section */}
           <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[150px] m-3">
-            <Text className="text-[40px] text-white text-center">
+            <Text className="text-[40px] text-white text-center font-pangolin">
               Did they guess correctly?
             </Text>
           </View>
@@ -46,6 +46,7 @@ const vote = () => {
 
             {/* ? button */}
             <TouchableOpacity className="border-2 border-dashed bg-orange-600 p-5 rounded-xl w-[30%] items-center justify-center">
+              {/* Maybe need to add a modal tooltip here */}
               <Text className="text-white text-[40px]">?</Text>
             </TouchableOpacity>
 
