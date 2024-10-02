@@ -1,13 +1,10 @@
 import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
 import React from "react";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameLettersGrid from "te-kemu-arapu-compx374-team-rauru/components/GameLettersGrid";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 
 const selectLetterPlayer = () => {
-  // Path to test player icon
-  const playerIconTest = "../../assets/images/react-logo.png";
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
