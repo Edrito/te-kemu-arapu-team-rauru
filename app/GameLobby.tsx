@@ -4,13 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { sendPlayerAction } from '../utils/apiServices';
+import { Game } from './types';
 
 export default function GameLobby() {
   const { user } = useAuth();
   const router = useRouter();
   const params = useLocalSearchParams();
   const { lobbyCode } = params as { lobbyCode: string };
-  const [gameState, setGameState] = useState<any>(null);
+  const [gameState, setGameState] = useState<Game | null>(null);
 
   useEffect(() => {
     if (!user || !lobbyCode) {
@@ -95,7 +96,7 @@ export default function GameLobby() {
             : 'Ready'}
         </Text>
       </TouchableOpacity>
-      {gameState.creatorId === user?.uid && (
+      {gameState.gameId === user?.uid && (
         <TouchableOpacity onPress={startGame}>
           <Text>Start Game</Text>
         </TouchableOpacity>
