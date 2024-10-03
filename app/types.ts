@@ -13,6 +13,11 @@ export type GameLobbyParams = {
     GameLobby: GameLobbyParams; // Parameters for the GameLobby screen
   };
   
+  export type GameScreenParams = {
+    gameId: string;
+    lobbyCode: string;
+    mainState: MainState;
+  };
 
   
   export interface GameSettings {
@@ -55,7 +60,7 @@ export type GameLobbyParams = {
     gameState: GameState;
   }
   
-  export interface Game {
+  export interface MainState {
     gameId: string;
     errors: number;
     lobbyCode: string;

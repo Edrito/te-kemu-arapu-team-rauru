@@ -21,7 +21,7 @@ const Start = () => {
         const userSnapshot = await getDocs(queryWithUid);
 
         if (!userSnapshot.empty) {
-          router.push("/Lobby");
+          router.push("/MainPage");
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);

@@ -1,10 +1,10 @@
 import { firestore } from '../firebaseConfig';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { Game, GameSettings, GameState, State } from '../app/types';
+import { MainState, GameSettings, GameState, State } from '../app/types';
 
 export const subscribeToGameState = (
   lobbyCode: string,
-  onGameStateChange: (gameState: Game) => void,
+  onGameStateChange: (gameState: MainState) => void,
   onError: (error: any) => void
 ) => {
   const gamesCollection = collection(firestore, 'games');
@@ -36,7 +36,7 @@ export const subscribeToGameState = (
           gameState: gameState,
         };
 
-        const game: Game = {
+        const game: MainState = {
           gameId: docSnap.id,
           errors: docData.errors || 0,
           lobbyCode: docData.lobbyCode || '',

@@ -9,7 +9,7 @@ import { router } from "expo-router";
 import { createLobbyAction, joinLobbyAction } from "../utils/gamePayload";
 import { sendPlayerAction } from "../utils/apiServices";
 
-export default function Lobby() {
+export default function MainPage() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -35,14 +35,14 @@ export default function Lobby() {
     }
     
     try{
-      const gameType : string = "catagory";
+      const gameType : string = "category";
       const actionPayload = createLobbyAction(user.uid, user.uid, gameType);
 
       const response = await sendPlayerAction(actionPayload);
       const lobbyCode : string = response.lobbyCode
 
       router.push({
-        pathname: "/GameLobby",
+        pathname: "/Game",
         params: { lobbyCode },
       });
 
@@ -70,7 +70,7 @@ const handleJoinLobby = async () => {
         await sendPlayerAction(actionPayload);
 
         router.push({
-          pathname: "/GameLobby",
+          pathname: "/Game",
           params: { lobbyCode },
         });
       } catch (error) {
