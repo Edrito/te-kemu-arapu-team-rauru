@@ -13,13 +13,13 @@ export type GameLobbyParams = {
     GameLobby: GameLobbyParams; // Parameters for the GameLobby screen
   };
   
-  export interface EndConditions {
-    time: string;
-    score: number;
-  }
+
   
   export interface GameSettings {
-    endConditions: EndConditions;
+    endConditions: {
+      time: string;
+      score: number;
+    };
     games: {
       [key: string]: {
         type: string;
