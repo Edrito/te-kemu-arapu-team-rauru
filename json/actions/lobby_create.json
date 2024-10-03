@@ -2,18 +2,18 @@
     "gameId": "string",
     "settings": {
         "endConditions" : {
-		"time" : ISO8601,
-		"score" : int
-	}
+		"time" : "ISO8601",
+		"score" : "int"
+	},
 	"games" : {
     		"0":{
 			"type":"string",
 			"endConditions":{
-				"duration": int,
-				"score": int,
-			},
+				"duration": "int",
+				"score": "int"
+			}
 		},
-		"1":{},
+		"1":{}
 	}   
     }
 }
