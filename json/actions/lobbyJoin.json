@@ -1,5 +1,5 @@
 {
-    "lobbyId": "string",
+    "gameId": "string",
     "playerId": "string",
     "requestTime": "ISO8601"
 }
