@@ -19,6 +19,10 @@ export type GameLobbyParams = {
     mainState: MainState;
   };
 
+  export type ScoresProps = {
+    scores: { [playerId: string]: number };
+  };
+
   
   export interface GameSettings {
     endConditions: {

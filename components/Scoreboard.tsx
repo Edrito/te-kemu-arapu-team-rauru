@@ -1,36 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Dimensions} from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
+import { firestore } from "../firebaseConfig"; // Adjust the path as necessary
+import { collection, query, where, onSnapshot, getDocs } from 'firebase/firestore';
 
-interface Player {
+
+interface PlayerData {
+  id: string;
+  score: number;
   icon: string;
   name: string;
-  score: number;
 }
 
 interface ScoreboardProps {
-  players: Player[];
+  players: { [playerId: string]: number; }
 }
 
-// Need to provide array of players when calling this component
 const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
+  const [playerData, setPlayerData] = useState<PlayerData[]>([]);
+  const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
 
-  // Creates a new sorted array
-  const sortedPlayers = [...players].sort((a,b) => b.score - a.score)
-
-  const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
-
-  // This is so that scoreboard changes size in real time when screen size changes
   useEffect(() => {
-    // Function to handle resizing of the window
-    const resizeScreen = () => {
-      // Update the state with the current window dimensions
-      setWindowDimensions(Dimensions.get('window'));
+    const fetchPlayerData = async () => {
+      const playerDataPromises = Object.keys(players).map(async (playerId) => {
+        const player = { id: playerId, score: players[playerId] };
+        const profilesCollection = collection(firestore, "profiles");
+        const profileQuery = query(profilesCollection, where("userId", "==", player.id));
+        const profileSnapshot = await getDocs(profileQuery);
+
+        const playerInfo = profileSnapshot.docs.length == 0 ? {} : profileSnapshot.docs[0].data();
+
+        return {
+          id: player.id,
+          score: player.score,
+          icon: playerInfo?.icon || "",
+          name: playerInfo?.username || "",
+        };
+      });
+
+      const resolvedPlayerData = await Promise.all(playerDataPromises);
+      setPlayerData(resolvedPlayerData.sort((a, b) => b.score - a.score));
     };
-  
-    // Listen to changes in screen size
-    const subscription = Dimensions.addEventListener('change', resizeScreen);
-    
-    // End listener
+
+    fetchPlayerData();
+  }, [players]);
+
+  useEffect(() => {
+    const resizeScreen = () => {
+      setWindowDimensions(Dimensions.get("window"));
+    };
+
+    const subscription = Dimensions.addEventListener("change", resizeScreen);
+
     return () => subscription?.remove();
   }, []);
 
@@ -39,13 +59,13 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
       <ScrollView
         style={{
           height: 600,
-          minWidth: (windowDimensions.width < 700) ? 300 : 500,
+          minWidth: windowDimensions.width < 700 ? 300 : 500,
         }}
         contentContainerStyle={{
           paddingBottom: 20,
         }}
       >
-        {sortedPlayers.map((player, index) => (
+        {playerData.map((player, index) => (
           <View
             key={index}
             style={{
@@ -60,9 +80,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
             }}
           >
             <Text style={{ fontSize: 24 }}>{player.icon}</Text>
-            <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-              {player.name}
-            </Text>
+            <Text style={{ fontSize: 24, fontWeight: "bold" }}>{player.name}</Text>
             <Text style={{ fontSize: 24 }}>{player.score}</Text>
           </View>
         ))}

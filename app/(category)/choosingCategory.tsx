@@ -3,17 +3,15 @@ import React from "react";
 import GameCheckBoxes from "te-kemu-arapu-compx374-team-rauru/components/GameCheckBoxes";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
+import { GameScreenParams } from "../types";
 
-const Category = () => {
+const CategorySelect: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState }) => {
   // Path to test player icon
   const playerIconTest = "../../assets/images/react-logo.png";
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      {/* This view holds the header bar */}
-      <View className="w-full">
-        <GameBar />
-      </View>
+   
 
       <ScrollView className="w-full mt-5">
         <View className="flex-wrap flex-row justify-center">
@@ -41,4 +39,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategorySelect;

@@ -2,58 +2,9 @@ import React, { useState } from "react";
 import { View, Text, Pressable, Image, Modal } from "react-native";
 import Scoreboard from "te-kemu-arapu-compx374-team-rauru/components/Scoreboard";
 import "../global.css";
+import { GameScreenParams } from "../app/types";
 
-// This component is the game bar that displays during an active game.
-
-const players = [
-    {
-      icon: "🐬",
-      name: "Koru Aihe",
-      score: 53,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 53,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 34,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 22,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 4,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 54,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 52,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 32,
-    },
-    {
-      icon: "🍎",
-      name: "Āporo",
-      score: 100,
-    },
-  ];
-
-const GameBar: React.FC = () => {
+const GameBar: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState }) => {
   const [language, setLanguage] = useState("English");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -79,7 +30,7 @@ const GameBar: React.FC = () => {
         <View className="flex-1 items-center justify-center p-[20px] bg-primary_red">
 
           <View className="border-2 border-dashed m-10">
-            <Scoreboard players={players} />
+            <Scoreboard players={mainState.state.scores} />
           </View>
 
           <Pressable onPress={() => setIsModalVisible(false)}>
