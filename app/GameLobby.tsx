@@ -11,8 +11,6 @@ import { isLobbyHost } from './helpers';
 
 const GameLobby: React.FC<GameScreenParams> = ({gameId, lobbyCode, mainState }) => {
   const { user } = useAuth();
-  console.log('GameLobby:', mainState);
-  console.log('User:', user);
 
   const startGame = async () => {
     if (!mainState || !user) {

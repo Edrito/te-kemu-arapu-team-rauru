@@ -38,9 +38,9 @@ export const subscribeToGameState = (
 
         const game: MainState = {
           gameId: docSnap.id,
-          errors: docData.errors || 0,
+          errors: docData?.errors ?? 0,
           lobbyCode: docData.lobbyCode || '',
-          isLobbyOpen: docData.isLobbyOpen || true,
+          isLobbyOpen: docData?.isLobbyOpen ?? true,
           settings: settings || {},
           state: state,
           participants: docData.participants || [],

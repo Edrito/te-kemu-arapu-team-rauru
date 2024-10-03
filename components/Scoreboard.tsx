@@ -20,6 +20,9 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
 
   useEffect(() => {
+    if(players == null) {
+      return;
+    }
     const fetchPlayerData = async () => {
       const playerDataPromises = Object.keys(players).map(async (playerId) => {
         const player = { id: playerId, score: players[playerId] };
