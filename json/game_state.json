@@ -8,7 +8,7 @@
         "endConditions" : {
 		"time" : ISO8601,
 		"score" : int
-	}
+	},
 	"games" : {
     		"0":{
 			"type":"string (category, random)",
@@ -46,6 +46,5 @@
 		"selectedLetter":"string",
 
                 },
-       
     }
 }

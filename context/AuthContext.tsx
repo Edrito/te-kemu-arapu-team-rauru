@@ -17,7 +17,7 @@ interface Profile {
 const AuthContext = createContext<{
   user: User | null;
   userProfile: Profile | null;
-  setUserProfile: (profile: Profile | null) => void; // Function to set user profile
+  setUserProfile: (profile: Profile | null) => void;
   signOutUser: () => void;
 }>({
   user: null,

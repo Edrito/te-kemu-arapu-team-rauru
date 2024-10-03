@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { router } from "expo-router";
+import { createLobbyAction, joinLobbyAction } from "../utils/gamePayload";
+import { sendPlayerAction } from "../utils/apiServices";
 
 export default function Lobby() {
   const [lobbyName, setLobbyName] = useState("");
@@ -21,31 +23,62 @@ export default function Lobby() {
   
   // Load fonts
   const [fontsLoaded] = useFonts({
-    Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
+    Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"),
   });
 
 
-  const handleCreateLobby = () => {
-    if (lobbyName.trim() === "") {
-      setErrorMessage("Please enter a lobby name.");
-    } else {
-      setErrorMessage("");
-      console.log("Lobby Created:", lobbyName);
-      // Add your create lobby functionality here
+  const handleCreateLobby = async () => {
+
+    if (!user) {
+      console.error("User is not authenticated");
+      return;
+    }
+    
+    try{
+      const gameType : string = "catagory";
+      const actionPayload = createLobbyAction(user.uid, user.uid, gameType);
+
+      const response = await sendPlayerAction(actionPayload);
+      const lobbyCode : string = response.lobbyCode
+
+      router.push({
+        pathname: "/GameLobby",
+        params: { lobbyCode },
+      });
+
+      }catch(error){
+        console.error("Error creating lobby:", error);
+        setErrorMessage("Failed to create lobby");
     }
   };
 
-  const handleJoinLobby = () => {
-    if (lobbyName.trim() === "") {
-      setErrorMessage("Please enter a lobby name.");
-    } else {
-      setErrorMessage("");
-      console.log("Joining Lobby:", lobbyName);
-      // Add your join lobby functionality here
-    }
+const handleJoinLobby = async () => {
+      if (lobbyName.trim() === "") {
+        setErrorMessage("Please enter a lobby code.");
+        return;
+      }
+
+      if (!user) {
+        console.error("User is not authenticated");
+        return;
+      }
+
+      try {
+        const lobbyCode: string = lobbyName.trim();
+        const actionPayload = joinLobbyAction(user.uid, lobbyCode);
+        console.log("Joining Lobby:", lobbyCode);
+        await sendPlayerAction(actionPayload);
+
+        router.push({
+          pathname: "/GameLobby",
+          params: { lobbyCode },
+        });
+      } catch (error) {
+        console.error("Error joining lobby:", error);
+        setErrorMessage("Failed to join lobby");
+      }
   };
 
-  // Show a loading indicator or placeholder until fonts are loaded
   if (!fontsLoaded) {
     return (
       <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
