@@ -1,58 +1,105 @@
-// app/GameLobby.tsx
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { useRoute, RouteProp } from "@react-navigation/native";
-import { GameLobbyParams, RootStackParamList } from "./types"; // Adjust import based on your structure
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { useAuth } from '../context/AuthContext';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { subscribeToGameState } from '../context/gameStateListener';
+import { sendPlayerAction } from '../utils/apiServices';
 
 export default function GameLobby() {
-  const route = useRoute<RouteProp<RootStackParamList, 'GameLobby'>>(); // Correctly type the route
-  const { lobbyName, creator, users } = route.params; // Extract the passed params
+  const { user } = useAuth();
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  const { lobbyCode } = params as { lobbyCode: string };
+  const [gameState, setGameState] = useState<any>(null);
+
+  useEffect(() => {
+    if (!user || !lobbyCode) {
+      router.push('/');
+      return;
+    }
+
+    const unsubscribe = subscribeToGameState(
+      lobbyCode,
+      (gameState) => setGameState(gameState),
+      (error) => {
+        console.error('Error subscribing to game state:', error);
+        Alert.alert('Error', 'Unable to load game lobby.');
+      }
+    );
+
+    return () => unsubscribe();
+  }, [user, lobbyCode]);
+
+  const toggleReadyStatus = async () => {
+    if (!gameState || !user) {
+      return;
+    }
+    try {
+      const actionPayload = {
+        playerId: user.uid,
+        gameId: gameState.gameId, // Get gameId from gameState
+        action: { type: 'lobbyToggleReady', details: {} },
+      };
+      await sendPlayerAction(actionPayload);
+    } catch (error) {
+      console.error('Error toggling ready status:', error);
+      Alert.alert('Error', 'Unable to change ready status.');
+    }
+  };
+
+  const startGame = async () => {
+    if (!gameState || !user) {
+      return;
+    }
+    if (gameState.creatorId !== user.uid) {
+      Alert.alert('Error', 'Only the lobby creator can start the game.');
+      return;
+    }
+    try {
+      const actionPayload = {
+        playerId: user.uid,
+        gameId: gameState.gameId,
+        action: { type: 'lobbyStart', details: {} },
+      };
+      await sendPlayerAction(actionPayload);
+    } catch (error) {
+      console.error('Error starting game:', error);
+      Alert.alert('Error', 'Unable to start the game.');
+    }
+  };
+
+  if (!gameState) {
+    return <Text>Loading lobby...</Text>;
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Lobby: {lobbyName}</Text>
-      <Text style={styles.creator}>Created by: {creator}</Text>
-      <Text style={styles.userListTitle}>Users:</Text>
+    <View>
+      <Text>Game Lobby</Text>
+      <Text>Lobby Code: {gameState.lobbyCode}</Text>
+      <Text>Game ID: {gameState.gameId}</Text>
+      <Text>Creator: {gameState.creatorId}</Text>
+      <Text>Players:</Text>
       <FlatList
-        data={users}
+        data={gameState.participants || []}
+        keyExtractor={(item) => item.playerId}
         renderItem={({ item }) => (
-          <Text style={styles.userItem}>{item.username}</Text>
+          <Text>
+            {item.username} - {item.ready ? 'Ready' : 'Not Ready'}
+          </Text>
         )}
-        keyExtractor={(item) => item.username}
       />
+      <TouchableOpacity onPress={toggleReadyStatus}>
+        <Text>
+          {gameState.participants?.find((p: any) => p.playerId === user?.uid)?.ready
+            ? 'Unready'
+            : 'Ready'}
+        </Text>
+      </TouchableOpacity>
+      {gameState.creatorId === user?.uid && (
+        <TouchableOpacity onPress={startGame}>
+          <Text>Start Game</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
-
-// Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#A01D1D", // Adjust background color if needed
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#fff", // Title color
-  },
-  creator: {
-    fontSize: 20,
-    marginBottom: 20,
-    color: "#fff", // Creator color
-  },
-  userListTitle: {
-    fontSize: 24,
-    marginTop: 20,
-    marginBottom: 10,
-    color: "#fff", // User list title color
-  },
-  userItem: {
-    fontSize: 18,
-    color: "#fff", // User item color
-    padding: 5,
-  },
-});
