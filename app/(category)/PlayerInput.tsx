@@ -39,7 +39,9 @@ const PlayerInput = () => {
 
           {/* First hint */}
           <View className="flex-row justify-between m-1">
-            <Text className="text-[30px] text-white m-2 font-pangolin">Partial Word</Text>
+            <Text className="text-[30px] text-white m-2 font-pangolin">
+              Partial Word
+            </Text>
             <TouchableOpacity className="border-2 border-dashed bg-green-700 p-2">
               <Text className="text-[30px] text-white">Use</Text>
             </TouchableOpacity>
@@ -47,7 +49,9 @@ const PlayerInput = () => {
 
           {/* Second hint */}
           <View className="flex-row justify-between m-1">
-            <Text className="text-[30px] text-white m-2 font-pangolin">Full Word</Text>
+            <Text className="text-[30px] text-white m-2 font-pangolin">
+              Full Word
+            </Text>
             <TouchableOpacity className="border-2 border-dashed bg-green-700 p-2">
               <Text className="text-[30px] text-white">Use</Text>
             </TouchableOpacity>
