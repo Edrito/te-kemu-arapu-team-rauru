@@ -23,13 +23,17 @@ const Start = () => {
           );
           const userSnapshot = await getDocs(queryWithUid);
 
-        if (!userSnapshot.empty) {
-          router.push("/MainPage");
+          if (!userSnapshot.empty) {
+            router.push("/MainPage");
+          }
+        } catch (error) {
+          console.error("Error getting user profile:", error);
         }
       }
-    };
 
-    if (user) checkUserProfile();
+      if (user) checkUserProfile();
+
+    };
   }, [user]);
 
   // Path to current player icon
@@ -38,7 +42,7 @@ const Start = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* GameBar at the top */}
-   
+
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} style={{ marginTop: 100 }}>
         <View className="flex-1 justify-center items-center">
@@ -46,18 +50,25 @@ const Start = () => {
             Te kēmu Arapū
           </Text>
 
-
-      {/* TODO: DELETE THIS */}
-      <View>
-        <Text>This is an index to goto and test pages</Text>
-
-        <Button
-          title="(TESTING) go to loading screen"
-          onPress={() => router.push("/loading")}
-        />
-     
-      </View>
-
+          <Pressable
+            onPress={() => router.push("/profile")}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
+                padding: 20,
+                borderRadius: 8,
+                borderWidth: 2,
+                borderColor: "black",
+                borderStyle: "dashed",
+                margin: 10,
+              },
+            ]}
+          >
+            <Text className="text-[30px] font-bold text-white font-crayonara">
+              BEGIN!
+            </Text>
+          </Pressable>
+         
           {/* TODO: DELETE THIS */}
           <View>
             <Text>This is an index to goto and test pages</Text>
