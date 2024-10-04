@@ -2,7 +2,7 @@
     "gameId": "string",
     "errors": int,
     "isLobbyOpen": boolean,
-    "lobbyCode" : "4 digit word containing both letters and numbers from the maori alphabet and regular 0-9",
+    "lobbyCode" : "4 digit word containing both letters and numbers from the alphabet and regular 0-9",
 
     "settings": {
         "endConditions" : {
@@ -35,11 +35,15 @@
 
                 "phase": "choosingCategory",
         	"phaseEnd": ISO8601,
-        	"positiveVotes":[],
-        	"negativeVotes":[],
-       	 	"neutralVotes":[],
+        	"votes":{
+			"playerId":"voteType"},
+		"categoryVotes":{
+			"playerId":"voteType"},
+
         	"lettersCovered":[],
         	"playerTurn":None,
+        	"playerPassed": True/False,
+
 		"playersEliminated":[],
        	 	"categoriesCovered":[],
         	"currentCategory": None,

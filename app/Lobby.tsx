@@ -18,7 +18,6 @@ export default function Lobby() {
       router.push("/");
     }
   }, [user, userProfile]);
-
   // Load fonts
   const [fontsLoaded] = useFonts({
     Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
