@@ -4,61 +4,28 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { sendPlayerAction } from '../utils/apiServices';
+import { MainState ,GameScreenParams} from './types';
+import './helpers';
+import { isLobbyHost } from './helpers';
 
-export default function GameLobby() {
+
+const GameLobby: React.FC<GameScreenParams> = ({gameId, lobbyCode, mainState }) => {
   const { user } = useAuth();
-  const router = useRouter();
-  const params = useLocalSearchParams();
-  const { lobbyCode } = params as { lobbyCode: string };
-  const [gameState, setGameState] = useState<any>(null);
-
-  useEffect(() => {
-    if (!user || !lobbyCode) {
-      router.push('/');
-      return;
-    }
-
-    const unsubscribe = subscribeToGameState(
-      lobbyCode,
-      (gameState) => setGameState(gameState),
-      (error) => {
-        console.error('Error subscribing to game state:', error);
-        Alert.alert('Error', 'Unable to load game lobby.');
-      }
-    );
-
-    return () => unsubscribe();
-  }, [user, lobbyCode]);
-
-  const toggleReadyStatus = async () => {
-    if (!gameState || !user) {
-      return;
-    }
-    try {
-      const actionPayload = {
-        playerId: user.uid,
-        gameId: gameState.gameId, // Get gameId from gameState
-        action: { type: 'lobbyToggleReady', details: {} },
-      };
-      await sendPlayerAction(actionPayload);
-    } catch (error) {
-      console.error('Error toggling ready status:', error);
-      Alert.alert('Error', 'Unable to change ready status.');
-    }
-  };
 
   const startGame = async () => {
-    if (!gameState || !user) {
+    if (!mainState || !user) {
       return;
     }
-    if (gameState.creatorId !== user.uid) {
+    const isUserLobbyHost = isLobbyHost(mainState, user?.uid);
+
+    if (!isUserLobbyHost) {
       Alert.alert('Error', 'Only the lobby creator can start the game.');
       return;
     }
     try {
       const actionPayload = {
         playerId: user.uid,
-        gameId: gameState.gameId,
+        gameId: mainState.gameId,
         action: { type: 'lobbyStart', details: {} },
       };
       await sendPlayerAction(actionPayload);
@@ -68,34 +35,32 @@ export default function GameLobby() {
     }
   };
 
-  if (!gameState) {
-    return <Text>Loading lobby...</Text>;
-  }
+
+
 
   return (
     <View>
       <Text>Game Lobby</Text>
-      <Text>Lobby Code: {gameState.lobbyCode}</Text>
-      <Text>Game ID: {gameState.gameId}</Text>
-      <Text>Creator: {gameState.creatorId}</Text>
+      <Text>Lobby Code: {mainState.lobbyCode}</Text>
+      <Text>Game ID: {mainState.gameId}</Text>
+      <Text>Creator: {mainState.gameId}</Text>
       <Text>Players:</Text>
       <FlatList
-        data={gameState.participants || []}
-        keyExtractor={(item) => item.playerId}
+        data={mainState.participants || []}
         renderItem={({ item }) => (
           <Text>
-            {item.username} - {item.ready ? 'Ready' : 'Not Ready'}
+            {item} - {item ? 'Ready' : 'Not Ready'}
           </Text>
         )}
       />
-      <TouchableOpacity onPress={toggleReadyStatus}>
+      {/* <TouchableOpacity onPress={toggleReadyStatus}>
         <Text>
           {gameState.participants?.find((p: any) => p.playerId === user?.uid)?.ready
             ? 'Unready'
             : 'Ready'}
         </Text>
-      </TouchableOpacity>
-      {gameState.creatorId === user?.uid && (
+      </TouchableOpacity> */}
+      {mainState.gameId === user?.uid && (
         <TouchableOpacity onPress={startGame}>
           <Text>Start Game</Text>
         </TouchableOpacity>
@@ -103,3 +68,5 @@ export default function GameLobby() {
     </View>
   );
 }
+
+export default GameLobby;

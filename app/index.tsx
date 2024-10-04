@@ -21,7 +21,7 @@ const Start = () => {
         const userSnapshot = await getDocs(queryWithUid);
 
         if (!userSnapshot.empty) {
-          router.push("/Lobby");
+          router.push("/MainPage");
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -69,26 +69,12 @@ const Start = () => {
       {/* TODO: DELETE THIS */}
       <View>
         <Text>This is an index to goto and test pages</Text>
-        <Button
-          title="(TESTING) go to scoreboard screen"
-          onPress={() => router.push("/score")}
-        />
+
         <Button
           title="(TESTING) go to loading screen"
           onPress={() => router.push("/loading")}
         />
-        <Button
-          title="(TESTING) go to category screen"
-          onPress={() => router.push("/category")}
-        />
-        <Button
-          title="(TESTING) go to letter select screen (Player POV)"
-          onPress={() => router.push("/selectLetterPlayer")}
-        />
-        <Button
-          title="(TESTING) go to letter select screen (Spectator POV)"
-          onPress={() => router.push("/selectLetterSpectator")}
-        />
+     
       </View>
 
       <Text className="text-[30px] absolute bottom-5 self-center font-bold">
