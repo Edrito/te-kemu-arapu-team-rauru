@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../global.css";
-import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert } from "react-native";
+import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import Dropdown from "../components/Dropdown";
 import SelectIcon from "../components/SelectIcon";
