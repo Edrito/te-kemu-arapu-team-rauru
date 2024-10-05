@@ -4,7 +4,6 @@ export const createLobbyAction = (playerId: string, gameId: string, gameType: st
   action: {
     type: 'lobbyUpsert',
     details: {
-      gameId,
       settings: {
         endConditions: {
           time: 0,
