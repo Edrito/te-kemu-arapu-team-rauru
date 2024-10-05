@@ -31,7 +31,7 @@ export default function MainPage() {
   try {
     const actionPayload = createLobbyAction(user.uid, user.uid, "category");
     const response = await sendPlayerAction(actionPayload);
-    const lobbyCode = response.gameId;
+    const lobbyCode = response.lobbyCode;
 
     router.push({
       pathname: "/Game",
