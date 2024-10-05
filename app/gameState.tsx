@@ -2,10 +2,12 @@ import { View, Text, SafeAreaView, Pressable, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import Wheel from "../components/Wheel"; // Assuming the Wheel component is imported from your wheel implementation
 import GameBar from "../components/GameBar"; // Assuming GameBar is a custom component
+import { MainState } from "./types";
 
 const GameState = () => {
   const [timer, setTimer] = useState(60); // Initialize timer with 60 seconds
   const [hint, setHint] = useState(false); // State to track if hint is shown or not
+  const [mainState, setGameState] = useState<MainState | null>(null);
 
   // Function to handle hint button press
   const onHintPress = () => {
@@ -26,7 +28,9 @@ const GameState = () => {
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* Game Bar at the top */}
       <View className="w-full">
-        <GameBar />
+        {mainState && (
+          <GameBar gameId={mainState.gameId} lobbyCode={mainState.lobbyCode} mainState={mainState} />
+        )}
       </View>
 
       {/* ScrollView to enable mouse-wheel scrolling */}

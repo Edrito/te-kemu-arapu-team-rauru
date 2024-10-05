@@ -4,7 +4,7 @@ import Scoreboard from "te-kemu-arapu-compx374-team-rauru/components/Scoreboard"
 import "../global.css";
 import { GameScreenParams } from "../app/types";
 
-const GameBar: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState }) => {
+const GameBar: React.FC  <GameScreenParams>  = ({gameId, lobbyCode}) => {
   const [language, setLanguage] = useState("English");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -29,9 +29,9 @@ const GameBar: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState })
       >
         <View className="flex-1 items-center justify-center p-[20px] bg-primary_red">
 
-          <View className="border-2 border-dashed m-10">
+          {/* <View className="border-2 border-dashed m-10">
             <Scoreboard players={mainState.state.scores} />
-          </View>
+          </View> */}
 
           <Pressable onPress={() => setIsModalVisible(false)}>
             <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-7">

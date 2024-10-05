@@ -1,13 +1,13 @@
 import { useFonts } from "expo-font";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
-import React, { useState, useEffect } from "react";
+import { useProfileNavigation } from "../hooks/useProfilenav";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable, ScrollView } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { router } from "expo-router";
-import { createLobbyAction, joinLobbyAction } from "../utils/gamePayload";
-import { sendPlayerAction } from "../utils/apiServices";
+import { createLobbyAction } from "../utils/apiFunctions";
+import { sendPlayerAction } from "../utils/apiCall";
 
 export default function MainPage() {
   const [lobbyName, setLobbyName] = useState("");
@@ -15,11 +15,7 @@ export default function MainPage() {
 
   const { user, signOutUser, userProfile } = useAuth();
 
-  useEffect(() => {
-    if (!user || !userProfile) {
-      router.push("/");
-    }
-  }, [user, userProfile]);
+  useProfileNavigation();
   // Load fonts
   const [fontsLoaded] = useFonts({
     Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"),
@@ -27,56 +23,59 @@ export default function MainPage() {
 
 
   const handleCreateLobby = async () => {
+  if (!user) {
+    console.error("User is not authenticated");
+    return;
+  }
 
-    if (!user) {
-      console.error("User is not authenticated");
-      return;
-    }
-    
-    try{
-      const gameType : string = "category";
-      const actionPayload = createLobbyAction(user.uid, user.uid, gameType);
+  try {
+    const actionPayload = createLobbyAction(user.uid, user.uid, "category");
+    const response = await sendPlayerAction(actionPayload);
+    const lobbyCode = response.gameId;
 
-      const response = await sendPlayerAction(actionPayload);
-      const lobbyCode : string = response.lobbyCode
-
-      router.push({
-        pathname: "/Game",
-        params: { lobbyCode },
-      });
-
-      }catch(error){
-        console.error("Error creating lobby:", error);
-        setErrorMessage("Failed to create lobby");
-    }
-  };
+    router.push({
+      pathname: "/Game",
+      params: { lobbyCode },
+    });
+  } catch (error) {
+    console.error("Error creating lobby:", error);
+    setErrorMessage("Failed to create lobby");
+  }
+};
 
 const handleJoinLobby = async () => {
-      if (lobbyName.trim() === "") {
-        setErrorMessage("Please enter a lobby code.");
-        return;
-      }
+  if (lobbyName.trim() === "") {
+    setErrorMessage("Please enter a lobby code.");
+    return;
+  }
 
-      if (!user) {
-        console.error("User is not authenticated");
-        return;
-      }
+  if (!user) {
+    console.error("User is not authenticated");
+    return;
+  }
 
-      try {
-        const lobbyCode: string = lobbyName.trim();
-        const actionPayload = joinLobbyAction(user.uid, lobbyCode);
-        console.log("Joining Lobby:", lobbyCode);
-        await sendPlayerAction(actionPayload);
+  try {
+    const lobbyCode: string = lobbyName.trim();
+    const actionPayload = {
+      playerId: user.uid,
+      gameId: lobbyCode,
+      action: {
+        type: 'lobbyJoin',
+        details: {},
+      },
+    };
+    console.log("Joining Lobby:", lobbyCode);
+    await sendPlayerAction(actionPayload);
 
-        router.push({
-          pathname: "/Game",
-          params: { lobbyCode },
-        });
-      } catch (error) {
-        console.error("Error joining lobby:", error);
-        setErrorMessage("Failed to join lobby");
-      }
-  };
+    router.push({
+      pathname: "/Game",
+      params: { lobbyCode },
+    });
+  } catch (error) {
+    console.error("Error joining lobby:", error);
+    setErrorMessage("Failed to join lobby");
+  }
+};
 
   if (!fontsLoaded) {
     return (
@@ -96,7 +95,7 @@ const handleJoinLobby = async () => {
         </Text>
 
         <Text style={{ color: "#fff", fontSize: 20, marginBottom: 20, textAlign: "center" }}>
-          Welcome, {userProfile?.username || "Player"}!
+          Welcome, {userProfile?.username ?? "Player"}!
         </Text>
 
         {/* Input for lobby name */}

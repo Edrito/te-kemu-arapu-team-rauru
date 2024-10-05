@@ -1,6 +1,7 @@
 import { SplashScreen, Stack } from "expo-router";
 import React from "react";
-import { useAuth, AuthProvider } from "../context/AuthContext";
+import { AuthProvider } from "../context/AuthContext";
+import { GameProvider } from "../context/GameContext";
 import {useFonts} from "expo-font";
 import { useEffect } from "react";
 
@@ -35,10 +36,13 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
+      <GameProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="(category)" />
+        <Stack.Screen name="Game" />
       </Stack>
+      </GameProvider>
     </AuthProvider>
   );
 }

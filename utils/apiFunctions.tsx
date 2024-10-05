@@ -24,13 +24,11 @@ export const createLobbyAction = (playerId: string, gameId: string, gameType: st
   },
 });
 
-export const joinLobbyAction = (playerId: string, lobbyCode: string) => ({
+export const playerAction = (playerId: string, lobbyCode: string, playerAction : string, details: {}) => ({
   playerId,
   lobbyCode,
   action: {
-    type: 'lobbyJoin',
-    details: {
-      lobbyCode,
-    },
+    type: playerAction,
+    details,
   },
 });

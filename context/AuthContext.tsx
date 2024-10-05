@@ -1,11 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../firebaseConfig';
-import { User } from 'firebase/auth';
-import { onAuthStateChanged, signInAnonymously, signOut } from 'firebase/auth';
-import { ReactNode } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { onAuthStateChanged, signInAnonymously, signOut, User } from 'firebase/auth';
+import { auth, firestore } from '../firebaseConfig';
 import { getDocs, query, collection, where } from 'firebase/firestore';
-import { firestore } from '../firebaseConfig';
-import { router } from 'expo-router';
+import { router } from "expo-router";
 
 interface Profile {
   userId: string;
@@ -78,8 +75,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const signOutUser = async () => {
-    await signOut(auth)
+  const signOutUser = () => {
+    signOut(auth)
       .then(() => {
         console.log('User signed out successfully');
         setUser(null);
@@ -89,8 +86,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .catch(console.error);
   };
 
+  const contextValue = useMemo(() => ({
+    user,
+    signOutUser,
+    userProfile,
+    setUserProfile,
+  }), [user, userProfile]);
+
   return (
-    <AuthContext.Provider value={{ user, signOutUser, userProfile, setUserProfile }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,72 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { subscribeToGameState } from '../context/gameStateListener';
-import { sendPlayerAction } from '../utils/apiServices';
-import { MainState ,GameScreenParams} from './types';
-import './helpers';
 import { isLobbyHost } from './helpers';
+import { useGame } from '../context/GameContext';
 
-
-const GameLobby: React.FC<GameScreenParams> = ({gameId, lobbyCode, mainState }) => {
+const GameLobby: React.FC = () => {
+  const { gameState, startGame } = useGame();
   const { user } = useAuth();
 
-  const startGame = async () => {
-    if (!mainState || !user) {
+  const handleStartGame = async () => {
+    if (!gameState || !user) {
       return;
     }
-    const isUserLobbyHost = isLobbyHost(mainState, user?.uid);
+
+    const isUserLobbyHost = isLobbyHost(gameState, user.uid);
 
     if (!isUserLobbyHost) {
       Alert.alert('Error', 'Only the lobby creator can start the game.');
       return;
     }
     try {
-      const actionPayload = {
-        playerId: user.uid,
-        gameId: mainState.gameId,
-        action: { type: 'lobbyStart', details: {} },
-      };
-      await sendPlayerAction(actionPayload);
+      await startGame();
+      Alert.alert('Success', 'The game has started!');
     } catch (error) {
-      console.error('Error starting game:', error);
-      Alert.alert('Error', 'Unable to start the game.');
+      console.error('Failed to start the game:', error);
+      Alert.alert('Error', 'Failed to start the game.');
     }
   };
-
-
-
 
   return (
     <View>
       <Text>Game Lobby</Text>
-      <Text>Lobby Code: {mainState.lobbyCode}</Text>
-      <Text>Game ID: {mainState.gameId}</Text>
-      <Text>Creator: {mainState.gameId}</Text>
+      <Text>Lobby Code: {gameState?.lobbyCode}</Text>
       <Text>Players:</Text>
-      <FlatList
-        data={mainState.participants || []}
-        renderItem={({ item }) => (
-          <Text>
-            {item} - {item ? 'Ready' : 'Not Ready'}
-          </Text>
-        )}
-      />
-      {/* <TouchableOpacity onPress={toggleReadyStatus}>
-        <Text>
-          {gameState.participants?.find((p: any) => p.playerId === user?.uid)?.ready
-            ? 'Unready'
-            : 'Ready'}
-        </Text>
-      </TouchableOpacity> */}
-      {mainState.gameId === user?.uid && (
-        <TouchableOpacity onPress={startGame}>
+      {gameState?.participants.map((playerId) => (
+        <Text key={playerId}>{playerId}</Text>
+      ))}
+      
+      {/* Conditional rendering to ensure `gameState` is not null */}
+      {gameState && user && isLobbyHost(gameState, user?.uid) && (
+        <TouchableOpacity onPress={handleStartGame}>
           <Text>Start Game</Text>
         </TouchableOpacity>
       )}
     </View>
   );
-}
+};
 
 export default GameLobby;

@@ -7,9 +7,9 @@ export const sendPlayerAction = async (actionPayload: any) => {
     try {
         const token = await getIdToken();
         const response = await fetch(BACKEND_FUNCTION_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
+            mode: 'no-cors',
+            method: 'POST',
+            headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
