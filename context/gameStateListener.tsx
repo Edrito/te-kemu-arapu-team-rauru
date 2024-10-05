@@ -67,6 +67,7 @@ export const subscribeToGameState = (
 
         onGameStateChange(game);
       } else {
+        //TODO Return an empty game state instead of erroring out, so the UI can handle it!
         const errorMessage = `No game found with lobbyCode: ${lobbyCode}`;
         console.error(errorMessage);
         onError(new Error(errorMessage));
