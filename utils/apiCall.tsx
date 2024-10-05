@@ -1,13 +1,13 @@
 
 import { getIdToken } from '../context/AuthToken';
 
-const BACKEND_FUNCTION_URL = 'https://on-player-action-5koq7jxpyq-uc.a.run.app/';
+const BACKEND_FUNCTION_URL = "https://on-player-action-5koq7jxpyq-uc.a.run.app";
 
 export const sendPlayerAction = async (actionPayload: any) => {
     try {
         const token = await getIdToken();
         const response = await fetch(BACKEND_FUNCTION_URL, {
-            mode: 'no-cors',
+            // mode: 'no-cors',
             method: 'POST',
             headers: {
             'Authorization': `Bearer ${token}`,
@@ -17,8 +17,7 @@ export const sendPlayerAction = async (actionPayload: any) => {
         });
 
         if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error from backend:', errorText);
+            console.error('Error sending player action:', response);
         throw new Error('Failed to send player action');
         }
 
