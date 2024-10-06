@@ -90,6 +90,7 @@ const Start = () => {
               title="(TESTING) go to category screen"
               onPress={() => router.push("/category")}
             />
+         
             <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}
