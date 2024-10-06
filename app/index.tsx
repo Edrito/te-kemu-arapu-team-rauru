@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import "../global.css";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { Text, Pressable, Button, SafeAreaView, View, ScrollView } from "react-native";
 =======
+=======
+>>>>>>> 5228e85ee26c80a3c323e36ce8e8e59e71daa7be
 import { Text, Pressable, Button, SafeAreaView, View } from "react-native";
 >>>>>>> 402a4b6 (Created player input screen for category gamemode)
 import { useRouter } from "expo-router";
@@ -110,10 +113,14 @@ const Start = () => {
         <Button
           title="(TESTING) go to category screen"
 <<<<<<< HEAD
+<<<<<<< HEAD
           onPress={() => router.push("/category")}
 =======
           onPress={() => router.push("/SelectCategory")}
 >>>>>>> 402a4b6 (Created player input screen for category gamemode)
+=======
+          onPress={() => router.push("/SelectCategory")}
+>>>>>>> 5228e85ee26c80a3c323e36ce8e8e59e71daa7be
         />
         <Button
           title="(TESTING) go to letter select screen (Player POV)"
