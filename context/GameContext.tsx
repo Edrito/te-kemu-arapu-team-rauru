@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { sendPlayerAction } from '../utils/apiCall';
 import { MainState } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
@@ -7,8 +7,9 @@ import { playerAction } from 'te-kemu-arapu-compx374-team-rauru/utils/apiFunctio
 
 interface GameContextType {
   gameState: MainState | null;
-  subscribeToGame: (lobbyCode: string) => void; // Added this line
+  subscribeToGame: (lobbyCode: string) => void;
   unsubscribeFromGame: () => void;
+  resetGameState: () => void;
   startGame: () => Promise<void>;
   leaveLobby: () => Promise<void>;
   deleteLobby: () => Promise<void>;
@@ -23,6 +24,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const playerId = user?.uid;
 
+  // Function to subscribe to a game
   const subscribeToGame = (lobbyCode: string) => {
     if (unsubscribe) {
       unsubscribe();
@@ -36,19 +38,27 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setUnsubscribe(() => unsubscribeFn);
   };
 
-  const unsubscribeFromGame = () => {
+  // Function to reset game state and unsubscribe
+  const resetGameState = () => {
     if (unsubscribe) {
       unsubscribe();
-      setUnsubscribe(null);
-      setGameState(null);
     }
+    setUnsubscribe(null);
+    setGameState(null);
   };
 
+  // Unsubscribe from the game state
+  const unsubscribeFromGame = () => {
+    resetGameState();
+  };
+
+  // Create a game action
   const createGameAction = (actionType: string, details: any = {}) => {
     if (!playerId || !gameState?.gameId) return null;
     return playerAction(playerId, gameState.gameId, actionType, details);
   };
 
+  // Send player action to the server
   const sendAction = async (actionPayload: any) => {
     if (!actionPayload) return;
     try {
@@ -58,32 +68,37 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // Start a new game
   const startGame = async () => {
     const actionPayload = createGameAction('lobbyStart');
     await sendAction(actionPayload);
   };
 
-
+  // Leave the lobby
   const leaveLobby = async () => {
     const actionPayload = createGameAction('lobbyLeave');
     await sendAction(actionPayload);
   };
 
+  // Delete the lobby
   const deleteLobby = async () => {
     const actionPayload = createGameAction('lobbyDelete');
     await sendAction(actionPayload);
   };
 
+  // Vote on a category
   const categoryVote = async (voteType: string) => {
     const actionPayload = createGameAction('categoryVote', { voteType });
     await sendAction(actionPayload);
   };
 
+  // Context value to be provided to children components
   const contextValue = React.useMemo(
     () => ({
       gameState,
       subscribeToGame,
       unsubscribeFromGame,
+      resetGameState,
       startGame,
       leaveLobby,
       deleteLobby,
@@ -95,6 +110,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
 };
 
+// Hook to use the GameContext
 export const useGame = (): GameContextType => {
   const context = useContext(GameContext);
   if (context === undefined) {

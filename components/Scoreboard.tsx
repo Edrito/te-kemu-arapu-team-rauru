@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Dimensions } from "react-native";
-import { firestore } from "../firebaseConfig"; // Adjust the path as necessary
-import { collection, query, where, onSnapshot, getDocs } from 'firebase/firestore';
+import { View, Text, ScrollView, Dimensions, Pressable } from "react-native";
+import { firestore } from "../firebaseConfig";
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { useRouter } from "expo-router";
+import '../global.css';
+import { useGame } from "../context/GameContext";
 
 
 interface PlayerData {
@@ -18,6 +21,8 @@ interface ScoreboardProps {
 const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
   const [playerData, setPlayerData] = useState<PlayerData[]>([]);
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
+  const { resetGameState } = useGame();
+  const router = useRouter();
 
   useEffect(() => {
     if(players == null) {
@@ -57,6 +62,11 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
     return () => subscription?.remove();
   }, []);
 
+  const handlePress = () => {
+    resetGameState();
+    router.push('/MainPage');
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#c97d1a", padding: 20 }}>
       <ScrollView
@@ -85,11 +95,18 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
             <Text style={{ fontSize: 24 }}>{player.icon}</Text>
             <Text style={{ fontSize: 24, fontWeight: "bold" }}>{player.name}</Text>
             <Text style={{ fontSize: 24 }}>{player.score}</Text>
+            
           </View>
         ))}
+        <Pressable
+          onPress={handlePress}
+          className="bg-yellow-500 p-4 rounded-lg border-2 border-black mt-5 mx-auto w-3/4"
+        >
+          <Text className="text-xl font-bold text-center">Go to MainPage</Text>
+        </Pressable>
       </ScrollView>
     </View>
   );
 };
-
 export default Scoreboard;
+

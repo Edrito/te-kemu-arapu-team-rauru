@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getCurrentGameType } from './helpers';
@@ -12,23 +12,33 @@ import SelectLetter from './(category)/selectLetter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLobbyNavigation } from '../hooks/useLobbynav';
 import { useGame } from '../context/GameContext';
+import AwaitPlayer from './AwaitPlayer';
 
 export default function Game() {
   const { user } = useAuth();
   const { gameState, subscribeToGame } = useGame();
   const { lobbyCode } = useLocalSearchParams() as { lobbyCode: string };
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const router = useRouter();
 
   useLobbyNavigation(lobbyCode);
 
+  
   useEffect(() => {
     if (!user || !lobbyCode) {
       router.push('/');
       return;
     }
-
+    
     subscribeToGame(lobbyCode);
   }, [user, lobbyCode]);
+
+  useEffect(() => {
+    if (gameState && user && !isInitialLoadComplete) {
+      setIsInitialLoadComplete(true);
+    }
+  }, [gameState, user]);
+
 
   if (!gameState || !user) {
     return <Loading />;
@@ -39,9 +49,7 @@ export default function Game() {
       return <GameLobby />;
     }
 
-    if (!gameState.state || !gameState.state.phase) {
-      return <Loading />;
-    }
+    if (!isInitialLoadComplete) return <Loading />;
 
     const phase = gameState.state.phase;
     const gamePhase = gameState.state.gameState?.phase || '';
@@ -58,7 +66,8 @@ export default function Game() {
             />
           );
         case 'choosingPlayer':
-          return <Loading />;
+          setTimeout(() => { }, 3000);
+          return <AwaitPlayer />;
         case 'letterSelection':
           return (
             <SelectLetter
@@ -87,11 +96,14 @@ export default function Game() {
       case 'loading':
         return <Loading />;
       case 'end':
-      case 'endLobby':
+      case 'lobbyEnd':
         return <Scoreboard players={gameState.state.scores} />;
       case 'playing':
         return manageGame();
       default:
+        if (gameState) {
+          return <Text>Unknown phase: {gameState.state.phase}</Text>;
+        }
         return <Text>Unknown phase</Text>;
     }
   };

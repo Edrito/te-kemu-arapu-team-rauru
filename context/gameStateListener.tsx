@@ -1,6 +1,7 @@
 import { firestore } from '../firebaseConfig';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, DocumentChange, DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { MainState, GameSettings, GameState, State } from '../app/types';
+import _ from 'lodash';
 
 export const subscribeToGameState = (
   lobbyCode: string,
@@ -11,12 +12,40 @@ export const subscribeToGameState = (
   const q = query(gamesCollection, where('lobbyCode', '==', lobbyCode));
   console.log('Subscribing to game state with lobbyCode:', lobbyCode);
 
-  const subscribe = onSnapshot(
-    q,
-    (querySnapshot) => {
-      if (!querySnapshot.empty) {
-        const docSnap = querySnapshot.docs[0];
-        const docData = docSnap.data();
+  let previousDocData: Record<string, DocumentData> = {};
+const subscribe = onSnapshot(
+  q,
+  (querySnapshot: QuerySnapshot<DocumentData>) => {
+    if (!querySnapshot.empty) {
+      const docChanges = querySnapshot.docChanges();
+      docChanges.forEach((change: DocumentChange<DocumentData>) => {
+        const docId = change.doc.id;
+        const currentData = change.doc.data();
+        const previousData = previousDocData[docId] || {};
+
+        if (change.type === 'added') {
+          console.log('New game:', currentData);
+        }
+
+        if (change.type === 'modified') {
+          const differences = getDifferences(previousData, currentData);
+          console.log('Modified game (changes only):', differences);
+        }
+
+        if (change.type === 'removed') {
+          console.log('Removed game:', currentData);
+        }
+
+        if (change.type !== 'removed') {
+          previousDocData[docId] = currentData;
+        } else {
+          delete previousDocData[docId];
+        }
+      });
+
+      // Handle snapshot data as you were doing before
+      const docSnap = querySnapshot.docs[0];
+      const docData = docSnap.data();
         
         // Safely extract nested data from Firestore with default fallbacks
         const settingsData = docData.settings || {};
@@ -78,6 +107,16 @@ export const subscribeToGameState = (
       onError(error);
     }
   );
+
+  function getDifferences(obj1: DocumentData, obj2: DocumentData): DocumentData {
+  const changes: DocumentData = {};
+  for (const key in obj2) {
+    if (!_.isEqual(obj1[key], obj2[key])) {
+      changes[key] = obj2[key];
+    }
+  }
+  return changes;
+}
 
   return subscribe;
 };
