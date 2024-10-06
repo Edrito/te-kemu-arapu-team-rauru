@@ -58,7 +58,7 @@ const handleJoinLobby = async () => {
     const lobbyCode: string = lobbyName.trim();
     const actionPayload = {
       playerId: user.uid,
-      gameId: lobbyCode,
+      lobbyCode: lobbyCode,
       action: {
         type: 'lobbyJoin',
         details: {},
