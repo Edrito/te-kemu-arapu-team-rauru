@@ -9,23 +9,77 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
-import Dropdown from "react-dropdown";
-import 'react-dropdown/style.css'
+import GameModeDropdown from "te-kemu-arapu-compx374-team-rauru/components/GameModeDropdown";
 
 const CreateLobby = () => {
   // Path to current player icon
   const playerIconTest = "../assets/images/react-logo.png";
 
-  // So textboxes can use numbers
-  const [number, onChangeNumber] = React.useState("");
-
+  // Handles the add game to list
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [gameMode, setGameMode] = useState("Select Game Mode");
+  // Array holds the game modes that the user has added to the lobby
+  const [selectedGameModes, SetSelectedGameModes] = useState<string[]>([]);
 
-  const options = ["Option 1", "Option 2", "Option 3"];
-  const [selectedOption, setSelectedOption] = React.useState(options[0]);
+  const [lobbyName, setLobbyName] = useState("");
 
-  const handleSelect = (option: any) => {
-    setSelectedOption(option.value);
+  // State for end conditions
+  // TODO: somehow make text input accept numbers only
+  const [maxScore, setMaxScore] = useState("");
+  const [timeLimit, setTimeLimit] = useState("");
+  const [maxCategories, setMaxCategories] = useState("");
+
+  const [maxLobbyScore, setMaxLobbyScore] = useState("");
+  const [maxLobbyPlayerScore, setMaxLobbyPlayerScore] = useState("");
+  const [lobbyTimeLimit, setLobbyTimeLimit] = useState("");
+
+  // Handles create button press
+  // This is used to create the lobby once the user has selected all the configurations for a gamemode
+  const createGameMode = () => {
+    if (gameMode !== "Select Game Mode") {
+      SetSelectedGameModes([...selectedGameModes, gameMode]);
+    }
+    setIsModalVisible(false);
+  };
+
+  // Handles max number of categories allowed
+  // const [inputMaxCategories, setinputMaxCategories] = useState("");
+  // const MAX_CATEGORIES = 10;
+  // const handleMaxCategories = (text: any) => {
+  //   const value = Number(text);
+  //   if (!isNaN(value) && value <= MAX_CATEGORIES) {
+  //     setinputMaxCategories(text);
+  //   }
+  // };
+
+  // Renders Game Modes into list
+  const renderGameModeView = (mode: any, index: number) => {
+    switch (mode) {
+      case "Category":
+        return (
+          <View className="w-full flex-row justify-start items-center border-2 bg-green-950">
+            <Text className="font-pangolin text-[30px] text-white border-2 border-dashed p-1 text-center">
+              {index + 1}
+            </Text>
+            <Text className="font-pangolin text-[30px] text-white text-center ml-2">
+              {mode}
+            </Text>
+          </View>
+        );
+      case "Random":
+        return (
+          <View className="w-full flex-row justify-start items-center border-2 bg-green-950">
+            <Text className="font-pangolin text-[30px] text-white border-2 border-dashed p-1 text-center">
+              {index + 1}
+            </Text>
+            <Text className="font-pangolin text-[30px] text-white text-center ml-2">
+              {mode}
+            </Text>
+          </View>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -52,10 +106,9 @@ const CreateLobby = () => {
         </Text>
 
         <ScrollView className="border-2 border-dashed rounded-lg bg-orange-500 p-3 w-full flex-1">
-          {/* Insert list of game objects here??? */}
-          <View>
-            <Text className="text-[30px] text-center">TESTING</Text>
-          </View>
+          {selectedGameModes.map((gameMode, index) => (
+            <View key={index}>{renderGameModeView(gameMode, index)}</View>
+          ))}
         </ScrollView>
 
         <TouchableOpacity
@@ -71,21 +124,80 @@ const CreateLobby = () => {
           animationType="slide"
           presentationStyle="pageSheet"
         >
-          <View className="flex-1 justify-center items-center bg-primary_red">
-            <Dropdown className="font-pangolin bg-orange-500"
-              options={options}
-              onChange={handleSelect}
-              value={{ value: selectedOption, label: selectedOption }}
-              controlClassName="bg-orange-600 text-white text-lg p-4 border-2 rounded-lg border-black" // Styling for the control
-              menuClassName="bg-green-600 border border-black rounded-md shadow-lg" // Styling for the dropdown menu
-              placeholder="Select an option"
-            />
+          {/* This view holds the contents of 'Add Game Mode' screen */}
+          <View className="flex-1 justify-center items-center bg-primary_red p-10">
+            <GameModeDropdown onSelect={setGameMode} />
 
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-              <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
-                Close
-              </Text>
-            </TouchableOpacity>
+            {/* This is the view that holds GAME end conditions */}
+            <ScrollView
+              className="flex-1 max-w-[50%] p-2"
+              contentContainerStyle={{
+                alignItems: "center",
+                paddingBottom: 20,
+              }}
+            >
+              {/* Each view here holds a row */}
+
+              {/* Only display inputs if a valid game mode is selected */}
+              {gameMode !== "Select Game Mode" && (
+                <>
+                  {/* Max Score row */}
+                  <View className="flex-row p-1 justify-between items-center">
+                    <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
+                      Max Score:
+                    </Text>
+                    <TextInput
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      onChangeText={setMaxScore}
+                      value={maxScore}
+                      placeholder="-"
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  {/* Time Limit row */}
+                  <View className="flex-row p-1 justify-between items-center">
+                    <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
+                      Time Limit:
+                    </Text>
+                    <TextInput
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      onChangeText={setTimeLimit}
+                      value={timeLimit}
+                      placeholder="-"
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  {/* Max Categories row */}
+                  <View className="flex-row p-1 justify-between items-center">
+                    <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
+                      Max Categories:
+                    </Text>
+                    <TextInput
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      onChangeText={setMaxCategories} // Use your max categories handler
+                      value={maxCategories} // Update to use the right state
+                      placeholder="-"
+                      keyboardType="numeric"
+                    />
+                  </View>
+                </>
+              )}
+            </ScrollView>
+
+            <View className="flex-row p-1 justify-between items-center">
+              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => createGameMode()}>
+                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                  Add
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
 
@@ -103,8 +215,8 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={onChangeNumber}
-              value={number}
+              onChangeText={setMaxLobbyScore}
+              value={maxLobbyScore}
               placeholder="-"
               keyboardType="numeric"
             />
@@ -117,8 +229,8 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={onChangeNumber}
-              value={number}
+              onChangeText={setMaxLobbyPlayerScore}
+              value={maxLobbyPlayerScore}
               placeholder="-"
               keyboardType="numeric"
             />
@@ -131,13 +243,25 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={onChangeNumber}
-              value={number}
+              onChangeText={setLobbyTimeLimit}
+              value={lobbyTimeLimit}
               placeholder="-"
               keyboardType="numeric"
             />
           </View>
         </ScrollView>
+        <View className="flex-row">
+          <TextInput
+            className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 min-w-[80%]"
+            onChangeText={setLobbyName}
+            value={lobbyName}
+            placeholder="-"
+          />
+          {/* TODO: add an onpress to direct to next page */}
+          <TouchableOpacity className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[20%]">
+            Submit
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

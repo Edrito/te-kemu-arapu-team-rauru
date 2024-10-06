@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../global.css";
 import { SafeAreaView, Text, Modal, View, Pressable, TextInput, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import Dropdown from "../components/Dropdown";
+import DifficultyDropdown from "../components/DifficultyDropdown";
 import SelectIcon from "../components/SelectIcon";
 import { addDoc, collection } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
 
       {/* Dropdown for selecting difficulty */}
       <View className="justify-center items-center bg-primary_red m-7 pb-16">
-        <Dropdown onSelect={setDifficulty} />
+        <DifficultyDropdown onSelect={setDifficulty} />
       </View>
 
       {/* Icon selection */}

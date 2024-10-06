@@ -9,7 +9,7 @@ interface DropdownProps {
   onSelect: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Select");
 
@@ -56,4 +56,4 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   );
 };
 
-export default Dropdown;
+export default DifficultyDropdown;

@@ -1,15 +1,7 @@
 import React, { useEffect } from "react";
 import "../global.css";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { Text, Pressable, Button, SafeAreaView, View, ScrollView } from "react-native";
-=======
-=======
->>>>>>> 5228e85ee26c80a3c323e36ce8e8e59e71daa7be
-import { Text, Pressable, Button, SafeAreaView, View } from "react-native";
->>>>>>> 402a4b6 (Created player input screen for category gamemode)
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import { getDocs, collection, where, query } from "firebase/firestore";
@@ -58,29 +50,8 @@ const Start = () => {
             Te kēmu Arapū
           </Text>
 
-<<<<<<< HEAD
-
-          <Pressable
-            onPress={() => router.push("/profile")}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
-                padding: 20,
-                borderRadius: 8,
-                borderWidth: 2,
-                borderColor: "black",
-                borderStyle: "dashed",
-                margin: 10,
-              },
-            ]}
-          >
-            <Text className="text-[30px] font-bold text-white font-crayonara">
-              BEGIN!
-            </Text>
-          </Pressable>
-=======
       <Pressable
-        onPress={() => router.push('/Profile')}
+        onPress={() => router.push('/profile')}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
@@ -97,50 +68,16 @@ const Start = () => {
           BEGIN!
         </Text>
       </Pressable>
->>>>>>> 402a4b6 (Created player input screen for category gamemode)
-
-      {/* TODO: DELETE THIS */}
-      <View>
-        <Text>This is an index to goto and test pages</Text>
-        <Button
-          title="(TESTING) go to scoreboard screen"
-          onPress={() => router.push("/Score")}
-        />
-        <Button
-          title="(TESTING) go to loading screen"
-          onPress={() => router.push("/Loading")}
-        />
-        <Button
-          title="(TESTING) go to category screen"
-<<<<<<< HEAD
-<<<<<<< HEAD
-          onPress={() => router.push("/category")}
-=======
-          onPress={() => router.push("/SelectCategory")}
->>>>>>> 402a4b6 (Created player input screen for category gamemode)
-=======
-          onPress={() => router.push("/SelectCategory")}
->>>>>>> 5228e85ee26c80a3c323e36ce8e8e59e71daa7be
-        />
-        <Button
-          title="(TESTING) go to letter select screen (Player POV)"
-          onPress={() => router.push("/SelectLetterPlayer")}
-        />
-        <Button
-          title="(TESTING) go to letter select screen (Spectator POV)"
-          onPress={() => router.push("/SelectLetterSpectator")}
-        />
-      </View>
           {/* TODO: DELETE THIS */}
           <View>
             <Text>This is an index to goto and test pages</Text>
             <Button
               title="(TESTING) go to scoreboard screen"
-              onPress={() => router.push("/score")}
+              onPress={() => router.push("/Score")}
             />
             <Button
               title="(TESTING) go to loading screen"
-              onPress={() => router.push("/loading")}
+              onPress={() => router.push("/Loading")}
             />
             <Button
               title="(TESTING) game state with wheel"
@@ -148,9 +85,8 @@ const Start = () => {
             />
             <Button
               title="(TESTING) go to category screen"
-              onPress={() => router.push("/category")}
+              onPress={() => router.push("/selectCategory")}
             />
-         
             <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}
@@ -158,6 +94,10 @@ const Start = () => {
             <Button
               title="(TESTING) go to letter select screen (Spectator POV)"
               onPress={() => router.push("/selectLetterSpectator")}
+            />
+            <Button
+              title="(TESTING) go to vote screen"
+              onPress={() => router.push("/vote")}
             />
           </View>
 
