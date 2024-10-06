@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameModeDropdown from "te-kemu-arapu-compx374-team-rauru/components/GameModeDropdown";
@@ -41,6 +42,24 @@ const CreateLobby = () => {
     }
     setIsModalVisible(false);
   };
+
+  // This is so that the page changes size in real time when screen size changes
+  const [windowDimensions, setWindowDimensions] = useState(
+    Dimensions.get("window")
+  );
+  useEffect(() => {
+    // Function to handle resizing of the window
+    const resizeScreen = () => {
+      // Update the state with the current window dimensions
+      setWindowDimensions(Dimensions.get("window"));
+    };
+
+    // Listen to changes in screen size
+    const subscription = Dimensions.addEventListener("change", resizeScreen);
+
+    // End listener
+    return () => subscription?.remove();
+  }, []);
 
   // Handles max number of categories allowed
   // const [inputMaxCategories, setinputMaxCategories] = useState("");
@@ -91,7 +110,12 @@ const CreateLobby = () => {
 
       {/* This view contains the content of the page */}
       <ScrollView
-        className="flex-1 max-w-[50%] p-2"
+        style={{
+          flex: 1,
+          padding: 2,
+          minWidth: windowDimensions.width < 1036 ? "90%" : "40%",
+          maxWidth: windowDimensions.width < 1036 ? "90%" : "40%",
+        }}
         contentContainerStyle={{
           alignItems: "center",
           paddingBottom: 20,
@@ -105,11 +129,13 @@ const CreateLobby = () => {
           Games
         </Text>
 
-        <ScrollView className="border-2 border-dashed rounded-lg bg-orange-500 p-3 w-full flex-1">
-          {selectedGameModes.map((gameMode, index) => (
-            <View key={index}>{renderGameModeView(gameMode, index)}</View>
-          ))}
-        </ScrollView>
+        <View className="w-full max-h-[300px]">
+          <ScrollView className="border-2 border-dashed rounded-lg bg-orange-500 p-3 w-full flex-1">
+            {selectedGameModes.map((gameMode, index) => (
+              <View key={index}>{renderGameModeView(gameMode, index)}</View>
+            ))}
+          </ScrollView>
+        </View>
 
         <TouchableOpacity
           onPress={() => setIsModalVisible(true)}
@@ -176,8 +202,8 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={setMaxCategories} // Use your max categories handler
-                      value={maxCategories} // Update to use the right state
+                      onChangeText={setMaxCategories}
+                      value={maxCategories}
                       placeholder="-"
                       keyboardType="numeric"
                     />
@@ -206,7 +232,7 @@ const CreateLobby = () => {
         </Text>
 
         {/* This view holds the Lobby end condition items */}
-        <ScrollView className="border-2 border-dashed rounded-lg bg-green-700 p-3 w-full flex-1">
+        <ScrollView className="border-2 border-dashed rounded-lg bg-green-700 p-3 w-full flex-grow">
           {/* Each view here holds a row */}
           {/* Max Total Score row */}
           <View className="flex-row p-1 justify-between items-center">
@@ -250,7 +276,7 @@ const CreateLobby = () => {
             />
           </View>
         </ScrollView>
-        <View className="flex-row">
+        <View className=" flex-wrap items-center m-10">
           <TextInput
             className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 min-w-[80%]"
             onChangeText={setLobbyName}
@@ -258,7 +284,7 @@ const CreateLobby = () => {
             placeholder="-"
           />
           {/* TODO: add an onpress to direct to next page */}
-          <TouchableOpacity className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[20%]">
+          <TouchableOpacity className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]">
             Submit
           </TouchableOpacity>
         </View>

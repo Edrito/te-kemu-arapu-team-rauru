@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 import "../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
-import { Text, Pressable, Button, SafeAreaView, View, ScrollView } from "react-native";
+import {
+  Text,
+  Pressable,
+  Button,
+  SafeAreaView,
+  View,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
-
 
 const Start = () => {
   const router = useRouter();
@@ -44,30 +50,34 @@ const Start = () => {
         <GameBar />
       </View>
 
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} style={{ marginTop: 100 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={true}
+        style={{ marginTop: 100 }}
+      >
         <View className="flex-1 justify-center items-center">
           <Text className="font-pangolin text-[130px] p-[100px]">
             Te kēmu Arapū
           </Text>
 
-      <Pressable
-        onPress={() => router.push('/profile')}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
-            padding: 20,
-            borderRadius: 8,
-            borderWidth: 2,
-            borderColor: "black",
-            borderStyle: "dashed",
-            margin: 10,
-          },
-        ]}
-      >
-        <Text className="text-[30px] font-bold text-white font-crayonara">
-          BEGIN!
-        </Text>
-      </Pressable>
+          <Pressable
+            onPress={() => router.push("/profile")}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
+                padding: 20,
+                borderRadius: 8,
+                borderWidth: 2,
+                borderColor: "black",
+                borderStyle: "dashed",
+                margin: 10,
+              },
+            ]}
+          >
+            <Text className="text-[30px] font-bold text-white font-crayonara">
+              BEGIN!
+            </Text>
+          </Pressable>
           {/* TODO: DELETE THIS */}
           <View>
             <Text>This is an index to goto and test pages</Text>

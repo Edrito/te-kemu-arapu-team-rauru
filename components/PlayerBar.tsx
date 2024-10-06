@@ -23,7 +23,6 @@ const HeaderBar: React.FC<HeaderBarIcon> = ({ playerIcon }) => {
       />
 
       <Pressable onPress={changeLanguage} className="flex-row items-center">
-        {/* Need to use inline stlying here. Nativewind does not work for Image component */}
         <Image
           source={require("../assets/images/rotating_icon.png")}
           style={{ width: 40, height: 40 }}
