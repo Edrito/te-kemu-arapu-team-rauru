@@ -1,6 +1,5 @@
 import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
 import React from "react";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameLettersGrid from "te-kemu-arapu-compx374-team-rauru/components/GameLettersGrid";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
@@ -36,7 +35,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({gameId, lobbyCode, mainState 
       </ScrollView>
 
       <View className="w-full items-center justify-center">
-        <Text className="text-[40px] text-white font-pangolin">
+        <Text className="text-[40px] text-center text-white font-pangolin">
           It's your turn to select a letter!
         </Text>
       </View>

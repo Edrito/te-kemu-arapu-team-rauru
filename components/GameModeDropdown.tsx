@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
-import '../global.css'
+import "../global.css";
 
 // This component is a dropdown view used for selecting the difficulty level
 // in the create profile screen
@@ -9,9 +9,9 @@ interface DropdownProps {
   onSelect: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+const GameModeDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("Select");
+  const [selectedValue, setSelectedValue] = useState("Select Game Mode");
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -27,27 +27,21 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
         onPress={toggleDropdown}
         className="bg-orange-500 py-1.5 px-2.5 rounded border border-black"
       >
-        <Text className="text-black text-[24px]">{selectedValue}</Text>
+        <Text className="text-black text-[24px] font-pangolin">
+          {selectedValue}
+        </Text>
       </Pressable>
 
       {isOpen && (
         <View className="bg-orange-500 rounded border border-black mt-0.5 w-full overflow-hidden">
-          <Pressable onPress={() => handleOptionSelect("Beginner")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
-            >
-              Beginner
+          <Pressable onPress={() => handleOptionSelect("Category")}>
+            <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin">
+              Category
             </Text>
           </Pressable>
-          <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
-            >
-              Intermediate
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => handleOptionSelect("Pro")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
-            >
-              Pro
+          <Pressable onPress={() => handleOptionSelect("Random")}>
+            <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin">
+              Random
             </Text>
           </Pressable>
         </View>
@@ -56,4 +50,4 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   );
 };
 
-export default Dropdown;
+export default GameModeDropdown;
