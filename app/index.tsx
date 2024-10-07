@@ -19,26 +19,28 @@ const Start = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const checkUserProfile = async () => {
-      if (user) {
-        try {
-          const queryWithUid = query(
-            collection(firestore, "profile"),
-            where("userId", "==", user.uid)
-          );
-          const userSnapshot = await getDocs(queryWithUid);
+  const checkUserProfile = async () => {
+    if (user) {
+      try {
+        const queryWithUid = query(
+          collection(firestore, "profile"),
+          where("userId", "==", user.uid)
+        );
+        const userSnapshot = await getDocs(queryWithUid);
 
-          if (!userSnapshot.empty) {
-            router.push("/Lobby");
-          }
-        } catch (error) {
-          console.error("Error fetching user profile:", error);
+        if (!userSnapshot.empty) {
+          router.push("/MainPage");
         }
+      } catch (error) {
+        console.error("Error getting user profile:", error);
       }
-    };
+    }
+  };
 
-    if (user) checkUserProfile();
-  }, [user]);
+  if (user) {
+    checkUserProfile();
+  }
+}, [user]);
 
   // Path to current player icon
   const playerIconTest = "../assets/images/react-logo.png";
@@ -46,9 +48,7 @@ const Start = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* GameBar at the top */}
-      <View className="w-full absolute top-0">
-        <GameBar />
-      </View>
+
 
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}

@@ -1,7 +1,8 @@
 import { SplashScreen, Stack } from "expo-router";
 import React from "react";
-import { useAuth, AuthProvider } from "../context/AuthContext";
-import { useFonts } from "expo-font";
+import { AuthProvider } from "../context/AuthContext";
+import { GameProvider } from "../context/GameContext";
+import {useFonts} from "expo-font";
 import { useEffect } from "react";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -32,10 +33,13 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
+      <GameProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="(category)" />
+        <Stack.Screen name="Game" />
       </Stack>
+      </GameProvider>
     </AuthProvider>
   );
 }

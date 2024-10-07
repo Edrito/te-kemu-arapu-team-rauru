@@ -1,50 +1,82 @@
 import { useFonts } from "expo-font";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
-import React, { useState, useEffect } from "react";
+import { useProfileNavigation } from "../hooks/useProfilenav";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Pressable, ScrollView } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { router } from "expo-router";
+import { createLobbyAction } from "../utils/apiFunctions";
+import { sendPlayerAction } from "../utils/apiCall";
 
-export default function Lobby() {
+export default function MainPage() {
   const [lobbyName, setLobbyName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const { user, signOutUser, userProfile } = useAuth();
 
-  useEffect(() => {
-    if (!user || !userProfile) {
-      router.push("/");
-    }
-  }, [user, userProfile]);
+  useProfileNavigation();
   // Load fonts
   const [fontsLoaded] = useFonts({
-    Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"), // Adjust path as needed
+    Crayonara: require("../assets/fonts/Crayonara-Regular.ttf"),
   });
 
 
-  const handleCreateLobby = () => {
-    if (lobbyName.trim() === "") {
-      setErrorMessage("Please enter a lobby name.");
-    } else {
-      setErrorMessage("");
-      console.log("Lobby Created:", lobbyName);
-      // Add your create lobby functionality here
-    }
-  };
+  const handleCreateLobby = async () => {
+  if (!user) {
+    console.error("User is not authenticated");
+    return;
+  }
 
-  const handleJoinLobby = () => {
-    if (lobbyName.trim() === "") {
-      setErrorMessage("Please enter a lobby name.");
-    } else {
-      setErrorMessage("");
-      console.log("Joining Lobby:", lobbyName);
-      // Add your join lobby functionality here
-    }
-  };
+  try {
+    const actionPayload = createLobbyAction(user.uid, user.uid, "category");
+    const response = await sendPlayerAction(actionPayload);
+    const lobbyCode = response.lobbyCode;
 
-  // Show a loading indicator or placeholder until fonts are loaded
+    router.push({
+      pathname: "/Game",
+      params: { lobbyCode },
+    });
+  } catch (error) {
+    console.error("Error creating lobby:", error);
+    setErrorMessage("Failed to create lobby");
+  }
+};
+
+const handleJoinLobby = async () => {
+  if (lobbyName.trim() === "") {
+    setErrorMessage("Please enter a lobby code.");
+    return;
+  }
+
+  if (!user) {
+    console.error("User is not authenticated");
+    return;
+  }
+
+  try {
+    const lobbyCode: string = lobbyName.trim();
+    const actionPayload = {
+      playerId: user.uid,
+      lobbyCode: lobbyCode,
+      action: {
+        type: 'lobbyJoin',
+        details: {},
+      },
+    };
+    console.log("Joining Lobby:", lobbyCode);
+    await sendPlayerAction(actionPayload);
+
+    router.push({
+      pathname: "/Game",
+      params: { lobbyCode },
+    });
+  } catch (error) {
+    console.error("Error joining lobby:", error);
+    setErrorMessage("Failed to join lobby");
+  }
+};
+
   if (!fontsLoaded) {
     return (
       <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
@@ -63,7 +95,7 @@ export default function Lobby() {
         </Text>
 
         <Text style={{ color: "#fff", fontSize: 20, marginBottom: 20, textAlign: "center" }}>
-          Welcome, {userProfile?.username || "Player"}!
+          Welcome, {userProfile?.username ?? "Player"}!
         </Text>
 
         {/* Input for lobby name */}

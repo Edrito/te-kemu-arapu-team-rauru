@@ -41,7 +41,7 @@ const Profile: React.FC = () => {
         setUserProfile({ userId: user.uid, ...profileData, icon: profileData.icon ?? "default" });
 
 
-        router.push(`/Lobby`);
+        router.push(`/MainPage`);
       } catch (error) {
         Alert.alert("Error creating profile: " + error);
       }
