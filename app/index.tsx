@@ -81,14 +81,14 @@ const Start = () => {
           {/* TODO: DELETE THIS */}
           <View>
             <Text>This is an index to goto and test pages</Text>
-            <Button
+            {/* <Button
               title="(TESTING) go to scoreboard screen"
               onPress={() => router.push("/Score")}
             />
             <Button
               title="(TESTING) go to loading screen"
               onPress={() => router.push("/Loading")}
-            />
+            /> */}
             <Button
               title="(TESTING) game state with wheel"
               onPress={() => router.push("/gameState")}
@@ -97,14 +97,14 @@ const Start = () => {
               title="(TESTING) go to category screen"
               onPress={() => router.push("/selectCategory")}
             />
-            <Button
+            {/* <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}
             />
             <Button
               title="(TESTING) go to letter select screen (Spectator POV)"
               onPress={() => router.push("/selectLetterSpectator")}
-            />
+            /> */}
             <Button
               title="(TESTING) go to vote screen"
               onPress={() => router.push("/vote")}
