@@ -5,6 +5,7 @@ import "../global.css";
 
 // This component is the game bar that displays during an active game.
 
+// Testing
 const players = [
     {
       icon: "🐬",
@@ -97,7 +98,7 @@ const GameBar: React.FC = () => {
           style={{ width: 40, height: 40 }}
           resizeMode="contain"
         />
-        <Text className="text-[30px] font-bold font-notosans ml-2">
+        <Text className="text-[30px] font-bold font-pangolin ml-2">
           {language}
         </Text>
       </Pressable>

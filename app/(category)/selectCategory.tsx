@@ -1,13 +1,11 @@
 import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
 import React from "react";
-import GameCheckBoxes from "te-kemu-arapu-compx374-team-rauru/components/GameCheckBoxes";
+import GameCheckBoxes from "te-kemu-arapu-compx374-team-rauru/components/GameCategoryBoxes";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 
 const Category = () => {
-  // Path to test player icon
-  const playerIconTest = "../../assets/images/react-logo.png";
-
+  
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* This view holds the header bar */}
@@ -17,14 +15,14 @@ const Category = () => {
 
       <ScrollView className="w-full mt-5">
         <View className="flex-wrap flex-row justify-center">
-          <GameCheckBoxes initialText="Landmarks" />
-          <GameCheckBoxes initialText="Food" />
-          <GameCheckBoxes initialText="TEST" />
-          <GameCheckBoxes initialText="TEST" />
-          <GameCheckBoxes initialText="TEST" />
-          <GameCheckBoxes initialText="TEST" />
-          <GameCheckBoxes initialText="TEST" />
-          <GameCheckBoxes initialText="TEST" />
+          <GameCheckBoxes category="Landmarks" />
+          <GameCheckBoxes category="Food" />
+          <GameCheckBoxes category="TEST" />
+          <GameCheckBoxes category="TEST" />
+          <GameCheckBoxes category="TEST" />
+          <GameCheckBoxes category="TEST" />
+          <GameCheckBoxes category="TEST" />
+          <GameCheckBoxes category="TEST" />
         </View>
       </ScrollView>
 

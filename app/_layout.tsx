@@ -1,15 +1,13 @@
 import { SplashScreen, Stack } from "expo-router";
 import React from "react";
 import { useAuth, AuthProvider } from "../context/AuthContext";
-import {useFonts} from "expo-font";
+import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-
 export default function RootLayout() {
-
   const [fontsLoaded, error] = useFonts({
     "Crayonara-Regular": require("../assets/fonts/Crayonara-Regular.ttf"),
     "NotoSans-Regular": require("../assets/fonts/NotoSans-Regular.ttf"),
@@ -31,7 +29,6 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) {
     return null;
   }
-
 
   return (
     <AuthProvider>

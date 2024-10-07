@@ -1,13 +1,18 @@
 import React, { useEffect } from "react";
 import "../global.css";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
-import { Text, Pressable, Button, SafeAreaView, View, ScrollView } from "react-native";
+import {
+  Text,
+  Pressable,
+  Button,
+  SafeAreaView,
+  View,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
-
 
 const Start = () => {
   const router = useRouter();
@@ -45,12 +50,15 @@ const Start = () => {
         <GameBar />
       </View>
 
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true} style={{ marginTop: 100 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={true}
+        style={{ marginTop: 100 }}
+      >
         <View className="flex-1 justify-center items-center">
           <Text className="font-pangolin text-[130px] p-[100px]">
             Te kēmu Arapū
           </Text>
-
 
           <Pressable
             onPress={() => router.push("/profile")}
@@ -70,17 +78,16 @@ const Start = () => {
               BEGIN!
             </Text>
           </Pressable>
-
           {/* TODO: DELETE THIS */}
           <View>
             <Text>This is an index to goto and test pages</Text>
             <Button
               title="(TESTING) go to scoreboard screen"
-              onPress={() => router.push("/score")}
+              onPress={() => router.push("/Score")}
             />
             <Button
               title="(TESTING) go to loading screen"
-              onPress={() => router.push("/loading")}
+              onPress={() => router.push("/Loading")}
             />
             <Button
               title="(TESTING) game state with wheel"
@@ -88,9 +95,8 @@ const Start = () => {
             />
             <Button
               title="(TESTING) go to category screen"
-              onPress={() => router.push("/category")}
+              onPress={() => router.push("/selectCategory")}
             />
-         
             <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}
@@ -98,6 +104,10 @@ const Start = () => {
             <Button
               title="(TESTING) go to letter select screen (Spectator POV)"
               onPress={() => router.push("/selectLetterSpectator")}
+            />
+            <Button
+              title="(TESTING) go to vote screen"
+              onPress={() => router.push("/vote")}
             />
           </View>
 
