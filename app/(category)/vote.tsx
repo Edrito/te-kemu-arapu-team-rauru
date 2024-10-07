@@ -11,9 +11,7 @@ import {
 const vote = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      <View className="w-full">
-        <GameBar />
-      </View>
+   
 
       <ScrollView
         contentContainerStyle={{ alignItems: "center" }}

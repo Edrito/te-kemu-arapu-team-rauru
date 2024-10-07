@@ -7,9 +7,7 @@ const PlayerInput = () => {
   return (
     <SafeAreaView className="flex-1 w-full items-center bg-primary_red">
       {/* Gamebar */}
-      <View className="w-full">
-        <GameBar />
-      </View>
+   
 
       <ScrollView
         contentContainerStyle={{ alignItems: "center" }}

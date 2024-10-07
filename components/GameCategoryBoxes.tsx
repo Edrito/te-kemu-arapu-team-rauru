@@ -9,7 +9,7 @@ interface CategoryBoxesProps {
   onPress?: () => void;
 }
 
-const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected , handlePress}) => {
+const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected , onPress}) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
   // This is so that buttons change size in real time when screen size changes
   useEffect(() => {
@@ -30,7 +30,7 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSe
 
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={onPress}
       style={{
         backgroundColor: "green",
         borderColor: "black",

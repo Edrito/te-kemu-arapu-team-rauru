@@ -34,3 +34,20 @@ export const getCurrentCategory = (game: MainState) => {
 export const getPlayerTurn = (game: MainState) => {
   return game.state.gameState.playerTurn;
 };
+
+
+export const getTimeRemaining = (game: MainState, gameState:boolean) => {
+  try {
+    const currentTime = new Date().getTime();
+    var phaseEndString =gameState? game.state.gameState.phaseEnd
+    : game.state.phaseEnd;
+    ;
+    var phaseEnd = new Date(phaseEndString).getTime();
+    var timeLeft = phaseEnd - currentTime;
+    var clampedTime = Math.max(0, timeLeft);
+    return clampedTime;
+  } catch (error) {
+    return 0;
+  }
+
+}
