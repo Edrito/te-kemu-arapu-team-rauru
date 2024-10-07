@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
 interface LettersGridProps {
   selectedLetters: string[];
+  allLetters: string[];
   selectLetter: () => void;
 }
 
 const LettersGrid: React.FC<LettersGridProps> = ({
   selectedLetters, 
+  allLetters,
   selectLetter
 
 }) => {
@@ -26,7 +28,7 @@ const LettersGrid: React.FC<LettersGridProps> = ({
 ;
   return (
     <View className="w-full h-full justify-center items-center flex-1 flex-row flex-wrap">
-      {selectedLetters.map((letter) => (
+      {allLetters.map((letter) => (
         <GameLetterBoxes
           letter={letter}
           isSelected={selectedLetter === letter}

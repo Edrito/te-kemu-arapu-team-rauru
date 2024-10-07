@@ -20,7 +20,7 @@ const Loading = () => {
           Did you know:
         </Text>
       </View>
-      <Text className="font-pangolin text-[60px] p-10 border-2 bg-green-500">
+      <Text className="font-pangolin text-[60px] p-50 border-2 bg-green-500">
         {randomFact}
       </Text>
     </SafeAreaView>

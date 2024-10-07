@@ -6,12 +6,12 @@ import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { GameScreenParams } from "../types";
 import { getTimeRemaining } from "../helpers";
 import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
+import  {Timer} from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 
 const SelectLetter: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }) => {
   // Path to test player icon
 
   const selectedCategory = mainState.state.gameState.currentCategory;
-  const timeRemaining = getTimeRemaining(mainState, true);
   const gameContext = useGame();
   const [hasPassed, setHasPassed] = React.useState(false);
   const [isRandom, setIsRandom] = React.useState(false);
@@ -32,7 +32,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState
         <View className="flex-wrap flex-row justify-center">
           <GameLettersGrid
             selectedLetters={mainState.state.gameState.lettersCovered ?? []}
-            
+            allLetters={mainState.alphabet ?? []}
             selectLetter= {() => {
            
               setHasPassed(false);
@@ -43,7 +43,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState
         </View>
 
         <View className="w-full items-center justify-center m-5">
-          <Pressable className="border-2 border-dashed bg-green-700 items-center justify-center p-3 w-[40%]"
+          <Pressable className="border-2 border-dashed bg-orange-500 items-center justify-center p-3 w-[40%]"
             onPress={() =>{
               gameContext.selectLetter("random");
               setHasPassed(false);
@@ -64,9 +64,11 @@ const SelectLetter: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState
 
       {/* This view holds the timer and the pass button */}
       <View className="flex-row items-center justify-between p-2">
-        <Text className="text-[40px] m-2 p-6 border-2 border-dashed bg-green-900">
-          {timeRemaining}
-        </Text>
+      {Timer({
+          timeRemaining: getTimeRemaining(mainState, true),
+          onTimeUp: () => {
+          },
+        })}
 
         <Pressable className="m-2 p-6 border-2 border-dashed bg-orange-500 items-center"
           onPress={() => {

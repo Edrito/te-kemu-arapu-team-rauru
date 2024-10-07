@@ -93,10 +93,10 @@ const Start = () => {
               title="(TESTING) game state with wheel"
               onPress={() => router.push("/gameState")}
             />
-            <Button
+            {/* <Button
               title="(TESTING) go to category screen"
               onPress={() => router.push("/selectCategory")}
-            />
+            /> */}
             {/* <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}

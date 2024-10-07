@@ -36,18 +36,15 @@ export const getPlayerTurn = (game: MainState) => {
 };
 
 
-export const getTimeRemaining = (game: MainState, gameState:boolean) => {
+export const getTimeRemaining = (game: MainState, gameState: boolean) => {
   try {
     const currentTime = new Date().getTime();
-    var phaseEndString =gameState? game.state.gameState.phaseEnd
-    : game.state.phaseEnd;
-    ;
-    var phaseEnd = new Date(phaseEndString).getTime();
-    var timeLeft = phaseEnd - currentTime;
-    var clampedTime = Math.max(0, timeLeft);
-    return clampedTime;
+    const phaseEndString = gameState ? game.state.gameState.phaseEnd : game.state.phaseEnd;
+    const phaseEnd = new Date(phaseEndString).getTime();
+    const timeLeft = phaseEnd - currentTime;
+    const clampedTime = Math.max(0, timeLeft);
+    return Math.floor(clampedTime / 1000); // Convert milliseconds to seconds
   } catch (error) {
     return 0;
   }
-
-}
+};
