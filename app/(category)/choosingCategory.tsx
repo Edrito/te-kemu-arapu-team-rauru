@@ -19,8 +19,8 @@ const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainSta
   const { user } = useAuth();
   const gameContext = useGame();
 
-  const categories = mainState.categories;
-  const categoriesCovered = mainState.state.gameState.categoriesCovered;
+  const categories = mainState.categories ?? [];
+  const categoriesCovered = mainState.state.gameState.categoriesCovered ?? [];
   const timeRemaining = getTimeRemaining(mainState, true);
 
   const handlePress = (category: string) => {
