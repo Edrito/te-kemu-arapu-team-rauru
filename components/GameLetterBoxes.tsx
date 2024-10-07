@@ -4,11 +4,15 @@ import '../global.css';
 
 // Letter to display as a prop
 interface LetterBoxesProps {
-  initialText: string;
+  letter: string;
+  isCovered?: boolean;
+  isSelected?: boolean;
+  onPress?: () => void;
 }
 
-const LetterBoxes: React.FC<LetterBoxesProps> = ({ initialText }) => {
-  const [isPressed, setIsPressed] = useState(false);
+const LetterBoxes: React.FC<LetterBoxesProps> = ({ letter, 
+    isCovered, isSelected,onPress }) => {
+
 
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
 
@@ -29,13 +33,10 @@ const LetterBoxes: React.FC<LetterBoxesProps> = ({ initialText }) => {
   
   
 
-  const handlePress = () => {
-    setIsPressed(true);
-  };
 
   return (
     <Pressable
-      onPress={handlePress}
+      onPress={onPress}
       style = {{
         backgroundColor: "#15803d",
         borderColor: "black",
@@ -52,7 +53,10 @@ const LetterBoxes: React.FC<LetterBoxesProps> = ({ initialText }) => {
 
     >
       <Text className="text-white text-[30px]">
-        {isPressed ? "✔️" : initialText}
+      {
+          isSelected ? "✅" :
+
+          (  isCovered ? "🔴" : letter)}
       </Text>
     </Pressable>
   );

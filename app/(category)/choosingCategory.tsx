@@ -55,9 +55,9 @@ const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainSta
         <Text className="text-[40px] m-2 p-6 border-2 border-dashed bg-green-900">
           {timeRemaining}
         </Text>
-        <Pressable className="m-2 p-6 border-2 border-dashed bg-orange-500 items-center">
+        {/* <Pressable className="m-2 p-6 border-2 border-dashed bg-orange-500 items-center">
           <Text className="text-[40px] text-white">PASS</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </SafeAreaView>
   );

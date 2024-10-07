@@ -14,6 +14,8 @@ interface GameContextType {
   leaveLobby: () => Promise<void>;
   deleteLobby: () => Promise<void>;
   categoryVote: (voteType: string) => Promise<void>;
+  selectLetter: (letter: string) => Promise<void>;
+  passTurn: () => Promise<void>;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -92,6 +94,16 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   };
 
+  const selectLetter = async (letter: string) => {
+    const actionPayload = createGameAction('letterSelect', { letter });
+    await sendAction(actionPayload);
+  }
+
+  const passTurn = async () => {
+    const actionPayload = createGameAction('pass');
+    await sendAction(actionPayload);
+  }
+
   // Context value to be provided to children components
   const contextValue = React.useMemo(
     () => ({
@@ -102,9 +114,15 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       startGame,
       leaveLobby,
       deleteLobby,
+      selectLetter,
+      passTurn,
       categoryVote,
     }),
-    [gameState, unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
+    [gameState,
+      selectLetter,
+      passTurn,
+
+      unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
