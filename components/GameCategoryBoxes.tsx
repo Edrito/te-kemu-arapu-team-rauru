@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Text, Pressable, Dimensions } from "react-native";
 import '../global.css';
-import { useRouter } from "expo-router";
 
 interface CategoryBoxesProps {
   category: string;
+  isCovered?: boolean;
+  isSelected?: boolean;
+  onPress?: () => void;
 }
 
-const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category }) => {
-  const [isPressed, setIsPressed] = useState(false);
+const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected , handlePress}) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
-  const router = useRouter();
-
   // This is so that buttons change size in real time when screen size changes
   useEffect(() => {
     // Function to handle resizing of the window
@@ -19,25 +18,20 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category }) => {
       // Update the state with the current window dimensions
       setWindowDimensions(Dimensions.get('window'));
     };
-  
+
     // Listen to changes in screen size
     const subscription = Dimensions.addEventListener('change', resizeScreen);
-    
+
     // End listener
     return () => subscription?.remove();
   }, []);
-  
-  const handlePress = () => {
-    setIsPressed(true);
-    router.push({
-      pathname: '/(category)/selectLetterPlayer',
-    })
-  };
+
+
 
   return (
     <Pressable
       onPress={handlePress}
-      style = {{
+      style={{
         backgroundColor: "green",
         borderColor: "black",
         borderStyle: "dashed",
@@ -52,8 +46,12 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category }) => {
       }}
 
     >
+
       <Text className="text-white text-[30px]">
-        {isPressed ? "✔️" : category}
+        {
+          isSelected ? "✅" :
+
+          (  isCovered ? "🔴" : category)}
       </Text>
     </Pressable>
   );

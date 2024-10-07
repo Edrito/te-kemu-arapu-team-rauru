@@ -1,33 +1,48 @@
 import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import { playerAction } from "te-kemu-arapu-compx374-team-rauru/utils/apiFunctions";
+import { useAuth } from "te-kemu-arapu-compx374-team-rauru/context/AuthContext";
+import { sendPlayerAction } from "te-kemu-arapu-compx374-team-rauru/utils/apiCall";
+
 import GameCheckBoxes from "te-kemu-arapu-compx374-team-rauru/components/GameCategoryBoxes";
 import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { GameScreenParams } from "../types";
+import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
 
-<<<<<<<< HEAD:app/(category)/choosingCategory.tsx
 const CategorySelect: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState }) => {
-  // Path to test player icon
-  const playerIconTest = "../../assets/images/react-logo.png";
-
-========
-const Category = () => {
+  const [votedCategory, setVoted] = useState("");
+  const { user } = useAuth();
+  const gameContext = useGame();
   
->>>>>>>> 617e4d2bdee6c1b382f7847bd6677c8312f84e56:app/(category)/selectCategory.tsx
+  const categories = mainState.categories;
+  const categoriesCovered = mainState.state.gameState.categoriesCovered;
+  const alphabet = mainState.alphabet;
+
+  const handlePress = (category:string) => {
+    if (!user) {
+      return;
+    }
+    setVoted(category);
+    gameContext.categoryVote(category);
+  };
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
    
 
       <ScrollView className="w-full mt-5">
         <View className="flex-wrap flex-row justify-center">
+          {categories.map((category) => (
+            <GameCheckBoxes
+              category={category}
+              isSelected={votedCategory === category}
+              isCovered={categoriesCovered.includes(category)}
+              onPress={() => handlePress(category)}
+            />
+          ))}
           <GameCheckBoxes category="Landmarks" />
-          <GameCheckBoxes category="Food" />
-          <GameCheckBoxes category="TEST" />
-          <GameCheckBoxes category="TEST" />
-          <GameCheckBoxes category="TEST" />
-          <GameCheckBoxes category="TEST" />
-          <GameCheckBoxes category="TEST" />
-          <GameCheckBoxes category="TEST" />
+
         </View>
       </ScrollView>
 

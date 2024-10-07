@@ -5,15 +5,11 @@ import "../../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import { GameScreenParams } from "../types";
 
-<<<<<<<< HEAD:app/(category)/choosingCategory.tsx
 const CategorySelect: React.FC  <GameScreenParams>  = ({gameId, lobbyCode, mainState }) => {
   // Path to test player icon
   const playerIconTest = "../../assets/images/react-logo.png";
 
-========
-const Category = () => {
   
->>>>>>>> 617e4d2bdee6c1b382f7847bd6677c8312f84e56:app/(category)/selectCategory.tsx
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
    

@@ -84,5 +84,7 @@ export interface MainState {
   isLobbyOpen: boolean;
   settings: GameSettings;
   participants: string[];
+  categories: string[];
+  alphabet: string[];
   state: State;
 }
