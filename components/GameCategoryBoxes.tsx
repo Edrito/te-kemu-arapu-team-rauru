@@ -29,9 +29,9 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category }) => {
   
   const handlePress = () => {
     setIsPressed(true);
-    router.push({
-      pathname: '/(category)/selectLetterPlayer',
-    })
+    // router.push({
+    //   pathname: '/(category)/selectLetterPlayer',
+    // })
   };
 
   return (
