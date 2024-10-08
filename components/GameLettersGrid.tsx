@@ -19,7 +19,6 @@ const LettersGrid: React.FC<LettersGridProps> = ({
 
   const [selectedLetter, setSelectedLetter] = useState<string>("");
   const gameContext = useGame();
-
   const letterSelected = (letter: string) => {
     setSelectedLetter(letter);
     selectLetter();

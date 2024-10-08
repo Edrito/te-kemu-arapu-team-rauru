@@ -9,6 +9,8 @@ import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
 
 import { getTimeRemaining } from "../helpers";
 import  {Timer} from "te-kemu-arapu-compx374-team-rauru/components/Timer";
+
+
 //Shows possible categories from the mainstate, and allows the user to vote on a category
 const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }) => {
   const [votedCategory, setVoted] = useState("");

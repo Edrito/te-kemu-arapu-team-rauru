@@ -4,7 +4,6 @@ import { MainState } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { useAuth } from './AuthContext';
 import { playerAction } from 'te-kemu-arapu-compx374-team-rauru/utils/apiFunctions';
-
 interface GameContextType {
   gameState: MainState | null;
   subscribeToGame: (lobbyCode: string) => void;
@@ -16,6 +15,7 @@ interface GameContextType {
   categoryVote: (voteType: string) => Promise<void>;
   selectLetter: (letter: string) => Promise<void>;
   passTurn: () => Promise<void>;
+  playerVote: (voteType: VoteType) => Promise<void>;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -104,6 +104,11 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   }
 
+  const playerVote = async (voteType: VoteType) => {
+    const actionPayload = createGameAction('playerVote', { voteType });
+    await sendAction(actionPayload);
+  }
+
   // Context value to be provided to children components
   const contextValue = React.useMemo(
     () => ({
@@ -117,10 +122,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       selectLetter,
       passTurn,
       categoryVote,
+      playerVote,
     }),
     [gameState,
       selectLetter,
       passTurn,
+      playerVote,
 
       unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
   );

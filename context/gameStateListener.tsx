@@ -1,7 +1,6 @@
 import { firestore } from '../firebaseConfig';
 import { collection, query, where, onSnapshot, DocumentChange, DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { MainState, GameSettings, GameState, State } from '../app/types';
-import _ from 'lodash';
 
 export const subscribeToGameState = (
   lobbyCode: string,
@@ -28,8 +27,10 @@ const subscribe = onSnapshot(
         }
 
         if (change.type === 'modified') {
-          const differences = getDifferences(previousData, currentData);
-          console.log('Modified game (changes only):', differences);
+          // const differences = getDifferences(previousData, currentData);
+          // console.log('Modified game (changes only):', differences);
+          console.log('modified game:', currentData);
+
         }
 
         if (change.type === 'removed') {
@@ -91,6 +92,8 @@ const subscribe = onSnapshot(
           isLobbyOpen: docData?.isLobbyOpen ?? true,
           settings: settings,
           state: state,
+          categories: docData.categories || [],
+          alphabet: docData.alphabet || [],
           participants: docData.participants || [],
         };
 
@@ -108,15 +111,15 @@ const subscribe = onSnapshot(
     }
   );
 
-  function getDifferences(obj1: DocumentData, obj2: DocumentData): DocumentData {
-  const changes: DocumentData = {};
-  for (const key in obj2) {
-    if (!_.isEqual(obj1[key], obj2[key])) {
-      changes[key] = obj2[key];
-    }
-  }
-  return changes;
-}
+//   function getDifferences(obj1: DocumentData, obj2: DocumentData): DocumentData {
+//   const changes: DocumentData = {};
+//   for (const key in obj2) {
+//     if (!_.isEqual(obj1[key], obj2[key])) {
+//       changes[key] = obj2[key];
+//     }
+//   }
+//   return changes;
+// }
 
   return subscribe;
 };

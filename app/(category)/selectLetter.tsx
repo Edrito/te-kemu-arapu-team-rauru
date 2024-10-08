@@ -16,6 +16,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState
   const [hasPassed, setHasPassed] = React.useState(false);
   const [isRandom, setIsRandom] = React.useState(false);
 
+
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* This view holds the header bar */}
