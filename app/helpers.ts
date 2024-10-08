@@ -14,7 +14,7 @@ export const getCurrentGame = (game: MainState) => {
 
 
 export const getCurrentGameType = (game: MainState) => {
-    return getCurrentGame(game).type;
+    return getCurrentGame(game)?.type??'';
     }
 
 
@@ -40,6 +40,10 @@ export const getTimeRemaining = (game: MainState, gameState: boolean) => {
   try {
     const currentTime = new Date().getTime();
     const phaseEndString = gameState ? game.state.gameState.phaseEnd : game.state.phaseEnd;
+    if (!phaseEndString) {
+      return 20;
+    }
+    
     const phaseEnd = new Date(phaseEndString).getTime();
     const timeLeft = phaseEnd - currentTime;
     const clampedTime = Math.max(0, timeLeft);

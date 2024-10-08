@@ -1,5 +1,6 @@
 // app/types.ts
 
+
 // Define the parameters for the GameLobby screen
 export type GameLobbyParams = {
   lobbyName: string; // Name of the lobby

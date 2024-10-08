@@ -3,7 +3,7 @@ import { sendPlayerAction } from '../utils/apiCall';
 import { MainState } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { useAuth } from './AuthContext';
-import { playerAction } from 'te-kemu-arapu-compx374-team-rauru/utils/apiFunctions';
+
 interface GameContextType {
   gameState: MainState | null;
   subscribeToGame: (lobbyCode: string) => void;
@@ -15,8 +15,10 @@ interface GameContextType {
   categoryVote: (voteType: string) => Promise<void>;
   selectLetter: (letter: string) => Promise<void>;
   passTurn: () => Promise<void>;
-  playerVote: (voteType: VoteType) => Promise<void>;
+  playerVote: (voteType: string) => Promise<void>;
 }
+
+
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
@@ -57,7 +59,16 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   // Create a game action
   const createGameAction = (actionType: string, details: any = {}) => {
     if (!playerId || !gameState?.gameId) return null;
-    return playerAction(playerId, gameState.gameId, actionType, details);
+    return  ({
+      "action":{
+        "type": actionType,
+      details,
+
+      },
+      gameId: gameState.gameId,
+      playerId,
+      lobbyCode: gameState.lobbyCode,
+    });
   };
 
   // Send player action to the server
@@ -104,7 +115,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   }
 
-  const playerVote = async (voteType: VoteType) => {
+  const playerVote = async (voteType: string) => {
     const actionPayload = createGameAction('playerVote', { voteType });
     await sendAction(actionPayload);
   }

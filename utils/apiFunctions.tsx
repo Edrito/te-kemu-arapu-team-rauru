@@ -1,3 +1,4 @@
+
 export const createLobbyAction = (playerId: string, gameId: string, gameType: string) => ({
   playerId,
   gameId,
@@ -23,11 +24,3 @@ export const createLobbyAction = (playerId: string, gameId: string, gameType: st
   },
 });
 
-export const playerAction = (playerId: string, lobbyCode: string, playerAction : string, details: {}) => ({
-  playerId,
-  lobbyCode,
-  action: {
-    type: playerAction,
-    details,
-  },
-});

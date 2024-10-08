@@ -17,10 +17,9 @@ import  {Timer} from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 import { getTimeRemaining } from "../helpers";
 
 
-
 const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }) => {
 
-  const [voteType, setVoted] = useState<VoteType>();
+  const [voteType, setVoted] = useState<string>("");
   const { user } = useAuth();
   const gameContext = useGame();
 
@@ -53,7 +52,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
     fetchPlayerName();
   }, [playerTurn]);
 
-  const vote = (voteType: VoteType) => {
+  const vote = (voteType: string) => {
     if (!user) {
       return;
     }
@@ -97,22 +96,21 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
           {/* X button */}
           <VoteBox
             voteType={"❌"}
-            isSelected={voteType == VoteType.negative}
-            onPress={() => setVoted(VoteType.negative)}
+            isSelected={voteType == "negative"}
+            onPress={() => vote("negative")}
           />
-
           <VoteBox
             voteType={"❔"}
-            isSelected={voteType == VoteType.neutral}
-            onPress={() => setVoted(VoteType.neutral)}
+            isSelected={voteType == "neutral"}
+            onPress={() => vote("neutral")}
           />
 
 
 
           <VoteBox
             voteType={"✔️"}
-            isSelected={voteType == VoteType.positive}
-            onPress={() => setVoted(VoteType.positive)}
+            isSelected={voteType == "positive"}
+            onPress={() => vote("positive")}
           />
 
 

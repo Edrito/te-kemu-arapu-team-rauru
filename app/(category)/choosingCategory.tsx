@@ -29,10 +29,6 @@ const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainSta
     gameContext.categoryVote(category);
   };
 
-
-
-
-
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       <ScrollView className="w-full mt-5">
