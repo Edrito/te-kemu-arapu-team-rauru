@@ -31,7 +31,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
     const fetchPlayerData = async () => {
       const playerDataPromises = Object.keys(players).map(async (playerId) => {
         const player = { id: playerId, score: players[playerId] };
-        const profilesCollection = collection(firestore, "profiles");
+        const profilesCollection = collection(firestore, "profile");
         const profileQuery = query(profilesCollection, where("userId", "==", player.id));
         const profileSnapshot = await getDocs(profileQuery);
 

@@ -5,9 +5,9 @@ const BACKEND_FUNCTION_URL = "https://on-player-action-5koq7jxpyq-uc.a.run.app";
 
 export const sendPlayerAction = async (actionPayload: any) => {
     try {
+        console.log('Sending player action:', actionPayload);
         const token = await getIdToken();
         const response = await fetch(BACKEND_FUNCTION_URL, {
-            // mode: 'no-cors',
             method: 'POST',
             headers: {
             'Authorization': `Bearer ${token}`,

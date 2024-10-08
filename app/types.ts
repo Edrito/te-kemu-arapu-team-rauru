@@ -1,5 +1,6 @@
 // app/types.ts
 
+
 // Define the parameters for the GameLobby screen
 export type GameLobbyParams = {
   lobbyName: string; // Name of the lobby
@@ -84,5 +85,7 @@ export interface MainState {
   isLobbyOpen: boolean;
   settings: GameSettings;
   participants: string[];
+  categories: string[];
+  alphabet: string[];
   state: State;
 }

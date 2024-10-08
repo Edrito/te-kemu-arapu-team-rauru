@@ -12,7 +12,8 @@ import SelectLetter from './(category)/selectLetter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLobbyNavigation } from '../hooks/useLobbynav';
 import { useGame } from '../context/GameContext';
-import AwaitPlayer from './AwaitPlayer';
+import ChoosingPlayer from './ChoosingPlayer';
+import VotingPage from './(category)/voting';
 
 export default function Game() {
   const { user } = useAuth();
@@ -67,7 +68,11 @@ export default function Game() {
           );
         case 'choosingPlayer':
           setTimeout(() => { }, 3000);
-          return <AwaitPlayer />;
+          return <ChoosingPlayer 
+          gameId={gameState.gameId}
+          lobbyCode={lobbyCode}
+          mainState={gameState}
+          />;
         case 'letterSelection':
           return (
             <SelectLetter
@@ -76,6 +81,16 @@ export default function Game() {
               mainState={gameState}
             />
           );
+
+          case 'voting':
+            return (
+              <VotingPage
+                gameId={gameState.gameId}
+                lobbyCode={lobbyCode}
+                mainState={gameState}
+              />
+            );
+            return 
         default:
           return <Text>Unknown game phase</Text>;
       }

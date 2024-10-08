@@ -3,7 +3,6 @@ import { sendPlayerAction } from '../utils/apiCall';
 import { MainState } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { useAuth } from './AuthContext';
-import { playerAction } from 'te-kemu-arapu-compx374-team-rauru/utils/apiFunctions';
 
 interface GameContextType {
   gameState: MainState | null;
@@ -14,7 +13,12 @@ interface GameContextType {
   leaveLobby: () => Promise<void>;
   deleteLobby: () => Promise<void>;
   categoryVote: (voteType: string) => Promise<void>;
+  selectLetter: (letter: string) => Promise<void>;
+  passTurn: () => Promise<void>;
+  playerVote: (voteType: string) => Promise<void>;
 }
+
+
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
@@ -55,7 +59,16 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   // Create a game action
   const createGameAction = (actionType: string, details: any = {}) => {
     if (!playerId || !gameState?.gameId) return null;
-    return playerAction(playerId, gameState.gameId, actionType, details);
+    return  ({
+      "action":{
+        "type": actionType,
+      details,
+
+      },
+      gameId: gameState.gameId,
+      playerId,
+      lobbyCode: gameState.lobbyCode,
+    });
   };
 
   // Send player action to the server
@@ -87,10 +100,25 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Vote on a category
-  const categoryVote = async (voteType: string) => {
-    const actionPayload = createGameAction('categoryVote', { voteType });
+  const categoryVote = async (category: string) => {
+    const actionPayload = createGameAction('categoryVote', { category });
     await sendAction(actionPayload);
   };
+
+  const selectLetter = async (letter: string) => {
+    const actionPayload = createGameAction('letterSelect', { letter });
+    await sendAction(actionPayload);
+  }
+
+  const passTurn = async () => {
+    const actionPayload = createGameAction('pass');
+    await sendAction(actionPayload);
+  }
+
+  const playerVote = async (voteType: string) => {
+    const actionPayload = createGameAction('vote', { voteType });
+    await sendAction(actionPayload);
+  }
 
   // Context value to be provided to children components
   const contextValue = React.useMemo(
@@ -102,9 +130,17 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       startGame,
       leaveLobby,
       deleteLobby,
+      selectLetter,
+      passTurn,
       categoryVote,
+      playerVote,
     }),
-    [gameState, unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
+    [gameState,
+      selectLetter,
+      passTurn,
+      playerVote,
+
+      unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
