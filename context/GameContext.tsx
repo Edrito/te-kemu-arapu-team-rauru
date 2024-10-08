@@ -100,8 +100,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Vote on a category
-  const categoryVote = async (voteType: string) => {
-    const actionPayload = createGameAction('categoryVote', { voteType });
+  const categoryVote = async (category: string) => {
+    const actionPayload = createGameAction('categoryVote', { category });
     await sendAction(actionPayload);
   };
 
@@ -116,7 +116,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const playerVote = async (voteType: string) => {
-    const actionPayload = createGameAction('playerVote', { voteType });
+    const actionPayload = createGameAction('vote', { voteType });
     await sendAction(actionPayload);
   }
 
