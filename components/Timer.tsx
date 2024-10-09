@@ -4,12 +4,15 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 interface TimerProps {
-    timeRemaining: number;
+    newTime: number;
     onTimeUp: () => void;
 }
 
 export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
-    const [timeRemaining, setTimeRemaining] = useState(props.timeRemaining);
+    const [timeRemaining, setTimeRemaining] = useState(props.newTime);
+
+    setTimeRemaining(props.newTime);
+
     useEffect(() => {
         // Update timeRemaining every second
         const interval = setInterval(() => {
