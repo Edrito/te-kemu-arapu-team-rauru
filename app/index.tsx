@@ -64,7 +64,7 @@ const Start = () => {
             onPress={() => router.push("/profile")}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? "#8c4f00" : "#c97d1a",
+                backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
                 padding: 20,
                 borderRadius: 8,
                 borderWidth: 2,

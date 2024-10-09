@@ -128,7 +128,7 @@ export default function MainPage() {
         <View className="justify-center w-[80%] mb-5 self-center">
           {/* JOIN Button */}
           <TouchableOpacity
-            className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
+            className="bg-green-700 py-3.5 px-7.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
             onPress={() => setIsJoinModalVisible(true)}
           >
             <Text className="text-[18px] font-bold text-white">JOIN</Text>
@@ -136,7 +136,7 @@ export default function MainPage() {
 
           {/* CREATE Button */}
           <TouchableOpacity
-            className="bg-[#CD853F] py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-dashed border-black"
+            className="bg-green-700 py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-dashed border-black"
             onPress={() => setIsCreateModalVisible(true)}
           >
             <Text className="text-[18px] font-bold text-white">CREATE</Text>
