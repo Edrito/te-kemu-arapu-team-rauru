@@ -12,12 +12,17 @@ interface LetterBoxesProps {
 const LetterBoxes: React.FC<LetterBoxesProps> = ({ letter, isCovered, isSelected, onPress }) => {
   const windowDimensions = useWindowDimensions();
 
+  let backgroundColor = 'bg-game_buttons_green';
+  if (isCovered) {
+    backgroundColor = 'bg-gray-400';
+  } else if (isSelected) {
+    backgroundColor = 'bg-[#34b134]';
+  }
+
   return (
     <Pressable
       onPress={isCovered ? undefined : onPress} 
-      className={`border-dashed border-2 flex-1 items-center justify-center ${
-        isCovered ? 'bg-gray-400' : isSelected ? 'bg-[#34b134]' : 'bg-game_buttons_green'
-      }`} // Conditional background color
+      className={`border-dashed border-2 flex-1 items-center justify-center ${backgroundColor}`} // Conditional background color
       style={{
         margin: windowDimensions.width < 1036 ? 5 : 15,
         height: windowDimensions.width < 1036 ? 80 : 170,

@@ -12,12 +12,17 @@ interface CategoryBoxesProps {
 const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected, onPress }) => {
   const windowDimensions = useWindowDimensions();
 
+  let backgroundColorClass = 'bg-game_buttons_green';
+  if (isCovered) {
+    backgroundColorClass = 'bg-gray-400';
+  } else if (isSelected) {
+    backgroundColorClass = 'bg-[#34b134]';
+  }
+
   return (
     <Pressable
       onPress={isCovered ? undefined : onPress}
-      className={`border-dashed border-2 flex-1 items-center justify-center ${
-        isCovered ? 'bg-gray-400' : isSelected ? 'bg-[#34b134]' : 'bg-game_buttons_green'
-      }`}
+      className={`border-dashed border-2 flex-1 items-center justify-center ${backgroundColorClass}`}
       style={{
         margin: 5,
         height: 150,
@@ -26,7 +31,7 @@ const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSe
       }}
     >
       <Text className={`text-[30px] ${isCovered ? 'text-red-500' : 'text-white'}`}>
-        {category} {/* Show red dot if covered */}
+        {category}
       </Text>
     </Pressable>
   );
