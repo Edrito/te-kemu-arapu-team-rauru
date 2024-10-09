@@ -12,16 +12,23 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameModeDropdown from "te-kemu-arapu-compx374-team-rauru/components/GameModeDropdown";
 import { router } from "expo-router";
+import { Game, Games, GameEndConditions, GameSettings, LobbyEndConditions } from "./types";
+import { useGame } from '../context/GameContext';
+
+
 
 const CreateLobby = () => {
   // Path to current player icon
   const playerIconTest = "../assets/images/react-logo.png";
+  const { gameState, lobbyUpsert } = useGame();
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   // Handles the add game to list
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameMode, setGameMode] = useState("Select Game Mode");
   // Array holds the game modes that the user has added to the lobby
-  const [selectedGameModes, SetSelectedGameModes] = useState<string[]>([]);
+  const [selectedGameModes, setSelectedGameModes] = useState<Game[]>([]);
 
   const [lobbyName, setLobbyName] = useState("");
 
@@ -34,10 +41,87 @@ const CreateLobby = () => {
   const [maxLobbyPlayerScore, setMaxLobbyPlayerScore] = useState("");
   const [lobbyTimeLimit, setLobbyTimeLimit] = useState("");
 
+
+  const submit = async () => {
+    try {
+    const name = lobbyName;
+    const maxScore = parseInt(maxLobbyScore);
+    const maxPlayerScore = parseInt(maxLobbyPlayerScore);
+    const timeLimit = parseInt(lobbyTimeLimit);
+
+
+
+    const games: Games = {};
+      for (let i = 0; i < selectedGameModes.length; i++) {
+        const game = selectedGameModes[i];
+        games[i.toString()] = game;
+      }
+    console.log("Games: ", games);
+    const lobbyEndConditions: LobbyEndConditions = {
+
+      score: maxScore,
+      playerScore: maxPlayerScore,
+      time: timeLimit
+    };
+
+    console .log("Lobby End Conditions: ", lobbyEndConditions);
+    const gameSettings: GameSettings = {
+        games: games,
+        endConditions: lobbyEndConditions,
+        lobbyName: name
+    };
+    console.log("Game Settings: ", gameSettings);
+    const data: { lobbyCode: string } = await lobbyUpsert(gameSettings);
+
+
+    router.push({
+      pathname: "/Game",
+      params: data,
+    }
+    );
+
+  } catch (error) {
+    console.error("Error creating lobby:", error);
+    setErrorMessage("Failed to create lobby");
+  }
+
+
+  };
+
   // This is used to create the lobby once the user has selected all the configurations for a gamemode
   const createGameMode = () => {
     if (gameMode !== "Select Game Mode") {
-      SetSelectedGameModes([...selectedGameModes, gameMode]);
+
+      //Try parse int for the values
+      const tempMaxScore = parseInt(maxScore);
+      const tempTimeLimit = parseInt(timeLimit);
+      const tempMaxCategories = parseInt(maxCategories);
+
+      const tempEndConditions: GameEndConditions = {
+        score: tempMaxScore,
+        time: tempTimeLimit,
+        maxCategories: tempMaxCategories
+      };
+
+
+      const tempGame: Game = {
+        type: gameMode,
+        endConditions: tempEndConditions
+      };
+
+     
+
+      
+      setSelectedGameModes([...selectedGameModes, tempGame]);
+
+      console.log("Game Mode: ", selectedGameModes);
+
+      // Reset the values
+      setGameMode("Select Game Mode");
+      setMaxScore("");
+      setTimeLimit("");
+      setMaxCategories("");
+
     }
     setIsModalVisible(false);
   };
@@ -60,14 +144,14 @@ const CreateLobby = () => {
     return () => subscription?.remove();
   }, []);
 
-// Function to only allow numbers into game options
+  // Function to only allow numbers into game options
   const numbersOnly = (input: any, setOption: any) => {
     const numericText = input.replace(/[^0-9]/g, "");
     setOption(numericText);
   };
 
   // Function to only allow numbers into game option with a max number
-  const numbersOnlyWithMax = (input: any, setOption:any) => {
+  const numbersOnlyWithMax = (input: any, setOption: any) => {
     const numericText = input.replace(/[^0-9]/g, "");
     const numericValue = parseInt(numericText, 10);
 
@@ -79,8 +163,8 @@ const CreateLobby = () => {
   };
 
   // Renders Game Modes into list
-  const renderGameModeView = (mode: any, index: number) => {
-    switch (mode) {
+  const renderGameModeView = (mode: Game, index: number) => {
+    switch (mode.type) {
       case "Category":
         return (
           <View className="w-full flex-row justify-start items-center border-2 bg-green-950">
@@ -88,7 +172,7 @@ const CreateLobby = () => {
               {index + 1}
             </Text>
             <Text className="font-pangolin text-[30px] text-white text-center ml-2">
-              {mode}
+              {mode.type}
             </Text>
           </View>
         );
@@ -99,7 +183,7 @@ const CreateLobby = () => {
               {index + 1}
             </Text>
             <Text className="font-pangolin text-[30px] text-white text-center ml-2">
-              {mode}
+            {mode.type}
             </Text>
           </View>
         );
@@ -272,7 +356,7 @@ const CreateLobby = () => {
           {/* Time Limit row */}
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Time Limit (s):
+              Time Limit (m):
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
@@ -283,15 +367,21 @@ const CreateLobby = () => {
             />
           </View>
         </ScrollView>
-        <View className=" flex-wrap items-center m-10">
-          <TextInput
-            className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 min-w-[80%]"
-            onChangeText={setLobbyName}
-            value={lobbyName}
-            placeholder="-"
-          />
-          {/* TODO: add an onpress to direct to next page */}
-          <TouchableOpacity onPress={() => router.push("/PreGameLobby")} className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]">
+        <View className=" flex-col items-center m-10">
+          <View className="flex-row justify-between items-center">
+            <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
+              Lobby Name
+            </Text>
+            <TextInput
+              className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 min-w-[80%]"
+              onChangeText={setLobbyName}
+              value={lobbyName}
+              placeholder="-"
+            />
+            <View />
+            {/* TODO: add an onpress to direct to next page */}
+          </View>
+          <TouchableOpacity onPress={submit} className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]">
             Submit
           </TouchableOpacity>
         </View>

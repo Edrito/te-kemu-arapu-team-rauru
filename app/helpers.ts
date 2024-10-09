@@ -1,8 +1,8 @@
 // helpers.ts
 import { MainState } from './types';
 
-export const isLobbyHost = (game: MainState, playerId: string) => {
-    return game.gameId === playerId;
+export const isLobbyHost = (game: MainState | null, playerId: string) => {
+    return game?.gameId === playerId;
     }
 
 

@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { getCurrentGameType } from './helpers';
-import GameBar from '../components/GameBar';
-import GameLobby from './(intermediary)/GameLobby';
-import Loading from './loading';
-import Scoreboard from '../components/Scoreboard';
-import CategorySelect from './(category)/choosingCategory';
-import SelectLetter from './(category)/selectLetter';
+import { getCurrentGameType } from '../helpers';
+import GameBar from '../../components/GameBar';
+import GameLobby from '../(intermediary)/GameLobby';
+import Loading from '../(intermediary)/Loading';
+import Scoreboard from '../../components/Scoreboard';
+import CategorySelect from '../(category)/choosingCategory';
+import SelectLetter from '../(category)/selectLetter';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLobbyNavigation } from '../hooks/useLobbynav';
-import { useGame } from '../context/GameContext';
-import ChoosingPlayer from './(intermediary)/ChoosingPlayer';
-import VotingPage from './(category)/voting';
+import { useLobbyNavigation } from '../../hooks/useLobbynav';
+import { useGame } from '../../context/GameContext';
+import ChoosingPlayer from '../(intermediary)/ChoosingPlayer';
+import VotingPage from '../(category)/voting';
 
 export default function Game() {
   const { user } = useAuth();
-  const { gameState, subscribeToGame } = useGame();
+  const { gameState, subscribeToGame , unsubscribeFromGame} = useGame();
   const { lobbyCode } = useLocalSearchParams() as { lobbyCode: string };
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const router = useRouter();

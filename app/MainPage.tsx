@@ -34,7 +34,7 @@ export default function MainPage() {
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   
   
-  const handleCreateLobby = async (lobbyName: string) => {
+  const handleCreateLobby =  () => {
     if (!user) {
       console.error("User is not authenticated");
       setErrorMessage("You must be signed in to create a lobby.");
@@ -42,13 +42,13 @@ export default function MainPage() {
     }
 
     try {
-      const actionPayload = createLobbyAction(user.uid, lobbyName, "category");
-      const response = await sendPlayerAction(actionPayload);
-      const lobbyCode = response.lobbyCode;
+      // const actionPayload = createLobbyAction(user.uid, lobbyName, "category");
+      // const response = await sendPlayerAction(actionPayload);
+      // const lobbyCode = response.lobbyCode;
 
       router.push({
-        pathname: "/Game",
-        params: { lobbyCode },
+        pathname: "/CreateLobby",
+        // params: { lobbyCode },
       });
     } catch (error) {
       console.error("Error creating lobby:", error);
@@ -137,7 +137,7 @@ export default function MainPage() {
           {/* CREATE Button */}
           <TouchableOpacity
             className="bg-green-700 py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-dashed border-black"
-            onPress={() => setIsCreateModalVisible(true)}
+            onPress={handleCreateLobby}
           >
             <Text className="text-[18px] font-bold text-white">CREATE</Text>
           </TouchableOpacity>
@@ -166,14 +166,14 @@ export default function MainPage() {
       />
 
       {/* Create Lobby Modal */}
-      <CreateLobbyModal
+      {/* <CreateLobbyModal
         visible={isCreateModalVisible}
         onClose={() => setIsCreateModalVisible(false)}
         onCreate={(lobbyName) => {
           setIsCreateModalVisible(false);
           handleCreateLobby(lobbyName);
         }}
-      />
+      /> */}
     </SafeAreaView>
   );
 }

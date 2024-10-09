@@ -59,7 +59,7 @@ const Start = () => {
           </Text>
 
           <Pressable
-            onPress={() => router.push("/profile")}
+            onPress={() => router.push("/Profile")}
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
@@ -78,7 +78,7 @@ const Start = () => {
           </Pressable>
           {/* TODO: DELETE THIS */}
           <View>
-            <Text>This is an index to goto and test pages</Text>
+            {/* <Text>This is an index to goto and test pages</Text> */}
             {/* <Button
               title="(TESTING) go to scoreboard screen"
               onPress={() => router.push("/Score")}
@@ -87,10 +87,10 @@ const Start = () => {
               title="(TESTING) go to loading screen"
               onPress={() => router.push("/Loading")}
             /> */}
-            <Button
+            {/* <Button
               title="(TESTING) game state with wheel"
               onPress={() => router.push("/gameState")}
-            />
+            /> */}
             {/* <Button
               title="(TESTING) go to category screen"
               onPress={() => router.push("/selectCategory")}
@@ -103,10 +103,10 @@ const Start = () => {
               title="(TESTING) go to letter select screen (Spectator POV)"
               onPress={() => router.push("/selectLetterSpectator")}
             /> */}
-            <Button
+            {/* <Button
               title="(TESTING) go to vote screen"
               onPress={() => router.push("/voting")}
-            />
+            /> */}
           </View>
 
           <Text className="text-[30px] absolute bottom-5 self-center font-bold">

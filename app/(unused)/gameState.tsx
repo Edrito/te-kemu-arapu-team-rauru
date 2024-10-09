@@ -1,8 +1,8 @@
 import { View, Text, SafeAreaView, Pressable, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import Wheel from "../components/Wheel"; // Assuming the Wheel component is imported from your wheel implementation
-import GameBar from "../components/GameBar"; // Assuming GameBar is a custom component
-import { MainState } from "./types";
+import Wheel from "te-kemu-arapu-compx374-team-rauru/components/Wheel";
+import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
+import { MainState } from "../types";
 
 const GameState = () => {
   const [timer, setTimer] = useState(60); // Initialize timer with 60 seconds

@@ -30,15 +30,23 @@ export type ScoresProps = {
 };
 
 // Interface for game end conditions
-export interface EndConditions {
-  time: string; // ISO8601 time format
+export interface GameEndConditions {
+  time: number; // seconds
   score: number;
+  maxCategories: number;
 }
+
+export interface LobbyEndConditions {
+  time: number; // seconds
+  score: number;
+  playerScore: number;
+}
+
 
 // Interface for individual game settings
 export interface Game {
   type: string; // Game type (e.g., "category", "random")
-  endConditions: EndConditions;
+  endConditions: GameEndConditions;
 }
 
 // Interface for all game settings
@@ -48,8 +56,11 @@ export interface Games {
 
 // Interface for overall game settings
 export interface GameSettings {
-  endConditions: EndConditions;
+  endConditions: LobbyEndConditions;
+  lobbyName: string;
   games: Games;
+
+
 }
 
 // Interface for internal game state

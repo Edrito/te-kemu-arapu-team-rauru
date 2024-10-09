@@ -9,14 +9,14 @@ interface TimerProps {
 }
 
 export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
-    const [timeRemaining, setTimeRemaining] = useState(props.newTime);
-
-    setTimeRemaining(props.newTime);
+    // const [timeRemaining, setTimeRemaining] = useState(props.newTime);
+    var timeRemaining = props.newTime;
+    // setTimeRemaining(props.newTime);
 
     useEffect(() => {
         // Update timeRemaining every second
         const interval = setInterval(() => {
-            setTimeRemaining(prevTime => Math.max(prevTime - 1, 0));
+            timeRemaining =  Math.max(timeRemaining - 1, 0);
         }, 1000);
 
         // Clear interval on component unmount

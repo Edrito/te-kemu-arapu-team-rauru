@@ -1,8 +1,8 @@
 import { Text, View, ActivityIndicator } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import '../global.css'
-import {FACTS} from '../constants/MaoriFacts'
+import 'te-kemu-arapu-compx374-team-rauru/global.css'
+import {FACTS} from 'te-kemu-arapu-compx374-team-rauru/constants/MaoriFacts'
 
 const Loading = () => {
   const randomFact = FACTS[Math.floor(Math.random() * FACTS.length)];

@@ -79,7 +79,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
         {/* Timer */}
         <View className="border-2 border-dashed bg-green-950 p-4 items-center justify-center rounded-xl m-3 w-[80%] mb-5">
         {Timer({
-          timeRemaining: getTimeRemaining(mainState, true),
+          newTime: getTimeRemaining(mainState, true),
           onTimeUp: () => {
           },
         })}

@@ -3,6 +3,7 @@ import { sendPlayerAction } from '../utils/apiCall';
 import { MainState } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { useAuth } from './AuthContext';
+import { GameSettings } from '../app/types';
 
 interface GameContextType {
   gameState: MainState | null;
@@ -16,6 +17,7 @@ interface GameContextType {
   selectLetter: (letter: string) => Promise<void>;
   passTurn: () => Promise<void>;
   playerVote: (voteType: string) => Promise<void>;
+  lobbyUpsert: (lobbyConfig: GameSettings) => Promise<any>;
 }
 
 
@@ -36,7 +38,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
     const unsubscribeFn = subscribeToGameState(
       lobbyCode,
-      (newGameState: MainState) => setGameState(newGameState),
+      (newGameState: MainState | null) => setGameState(newGameState),
       (error: any) => console.error('Error in game subscription:', error)
     );
     setUnsubscribe(() => unsubscribeFn);
@@ -99,6 +101,21 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   };
 
+  const lobbyUpsert = async (lobbyConfig: GameSettings) => {
+    const actionPayload = {
+      gameId: gameState?.gameId,
+      playerId,
+      action: {
+        type: 'lobbyUpsert',
+        details: {
+          "settings":lobbyConfig
+        },
+      },
+    };
+    console.log('Upserting lobby:', actionPayload);
+    return await sendPlayerAction(actionPayload);
+  }
+
   // Vote on a category
   const categoryVote = async (category: string) => {
     const actionPayload = createGameAction('categoryVote', { category });
@@ -134,13 +151,14 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       passTurn,
       categoryVote,
       playerVote,
+      lobbyUpsert,
     }),
     [gameState,
       selectLetter,
       passTurn,
       playerVote,
 
-      unsubscribeFromGame, startGame, leaveLobby, deleteLobby, categoryVote]
+      unsubscribeFromGame,lobbyUpsert, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;

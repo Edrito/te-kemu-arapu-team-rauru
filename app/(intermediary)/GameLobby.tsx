@@ -17,6 +17,8 @@ const GameLobby: React.FC = () => {
   const { gameState, startGame } = useGame();
   const { user } = useAuth();
 
+  const isLobbyHostValue = isLobbyHost(gameState, user?.uid ?? '');
+
   const handleStartGame = async () => {
     if (!gameState || !user) {
       return;

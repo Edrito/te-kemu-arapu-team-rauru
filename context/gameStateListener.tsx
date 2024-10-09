@@ -4,7 +4,7 @@ import { MainState, GameSettings, GameState, State } from '../app/types';
 
 export const subscribeToGameState = (
   lobbyCode: string,
-  onGameStateChange: (gameState: MainState) => void,
+  onGameStateChange: (gameState: MainState | null) => void,
   onError: (error: any) => void
 ) => {
   const gamesCollection = collection(firestore, 'games');
@@ -57,7 +57,9 @@ const subscribe = onSnapshot(
           endConditions: {
             time: settingsData?.endConditions?.time || '',
             score: settingsData?.endConditions?.score || 0,
+            playerScore: settingsData?.endConditions?.playerScore || 0,
           },
+          lobbyName: settingsData?.lobbyName || '',
           games: settingsData?.games || {},
         };
 
@@ -102,7 +104,7 @@ const subscribe = onSnapshot(
         //TODO Return an empty game state instead of erroring out, so the UI can handle it!
         const errorMessage = `No game found with lobbyCode: ${lobbyCode}`;
         console.error(errorMessage);
-        onError(new Error(errorMessage));
+        onGameStateChange(null);
       }
     },
     (error) => {
