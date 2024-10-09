@@ -47,9 +47,7 @@ const Start = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      {/* GameBar at the top */}
-
-
+      
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={true}

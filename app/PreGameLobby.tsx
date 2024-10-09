@@ -77,7 +77,6 @@ const PreGameLobby = () => {
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 2" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 3" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 4" />
-
           </ScrollView>
         </View>
 
