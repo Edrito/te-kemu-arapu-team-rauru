@@ -25,7 +25,6 @@ const CreateLobby = () => {
   const [lobbyName, setLobbyName] = useState("");
 
   // State for end conditions
-  // TODO: somehow make text input accept numbers only
   const [maxScore, setMaxScore] = useState("");
   const [timeLimit, setTimeLimit] = useState("");
   const [maxCategories, setMaxCategories] = useState("");
@@ -61,15 +60,23 @@ const CreateLobby = () => {
     return () => subscription?.remove();
   }, []);
 
-  // Handles max number of categories allowed
-  // const [inputMaxCategories, setinputMaxCategories] = useState("");
-  // const MAX_CATEGORIES = 10;
-  // const handleMaxCategories = (text: any) => {
-  //   const value = Number(text);
-  //   if (!isNaN(value) && value <= MAX_CATEGORIES) {
-  //     setinputMaxCategories(text);
-  //   }
-  // };
+// Function to only allow numbers into game options
+  const numbersOnly = (input: any, setOption: any) => {
+    const numericText = input.replace(/[^0-9]/g, "");
+    setOption(numericText);
+  };
+
+  // Function to only allow numbers into game option with a max number
+  const numbersOnlyWithMax = (input: any, setOption:any) => {
+    const numericText = input.replace(/[^0-9]/g, "");
+    const numericValue = parseInt(numericText, 10);
+
+    if (!isNaN(numericValue) && numericValue <= 10) {
+      setOption(numericText);
+    } else if (numericText === "") {
+      setOption("");
+    }
+  };
 
   // Renders Game Modes into list
   const renderGameModeView = (mode: any, index: number) => {
@@ -174,7 +181,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={setMaxScore}
+                      onChangeText={(input) => numbersOnly(input, setMaxScore)}
                       value={maxScore}
                       placeholder="-"
                       keyboardType="numeric"
@@ -188,7 +195,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={setTimeLimit}
+                      onChangeText={(input) => numbersOnly(input, setTimeLimit)}
                       value={timeLimit}
                       placeholder="-"
                       keyboardType="numeric"
@@ -202,7 +209,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={setMaxCategories}
+                      onChangeText={(input) => numbersOnlyWithMax(input, setMaxCategories)}
                       value={maxCategories}
                       placeholder="-"
                       keyboardType="numeric"
@@ -237,11 +244,11 @@ const CreateLobby = () => {
           {/* Max Total Score row */}
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Max Total Score
+              Max Total Score:
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={setMaxLobbyScore}
+              onChangeText={(input) => numbersOnly(input, setMaxLobbyScore)}
               value={maxLobbyScore}
               placeholder="-"
               keyboardType="numeric"
@@ -251,11 +258,11 @@ const CreateLobby = () => {
           {/* Max Player Score row */}
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Max Player Score
+              Max Player Score:
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={setMaxLobbyPlayerScore}
+              onChangeText={(input) => numbersOnly(input, setMaxLobbyPlayerScore)}
               value={maxLobbyPlayerScore}
               placeholder="-"
               keyboardType="numeric"
@@ -265,11 +272,11 @@ const CreateLobby = () => {
           {/* Time Limit row */}
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Time Limit
+              Time Limit (s):
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={setLobbyTimeLimit}
+              onChangeText={(input) => numbersOnly(input, setLobbyTimeLimit)}
               value={lobbyTimeLimit}
               placeholder="-"
               keyboardType="numeric"

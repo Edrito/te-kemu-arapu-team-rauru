@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import '../global.css'
@@ -8,7 +8,7 @@ const Loading = () => {
   const randomFact = FACTS[Math.floor(Math.random() * FACTS.length)];
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-[#A01D1D]">
-      <View style={{ margin: 50 }}>
+      <View className="m-[50px]">
         <Text className="font-pangolin text-[70px] p-5">
           Loading
         </Text>
@@ -28,5 +28,3 @@ const Loading = () => {
 };
 
 export default Loading;
-
-const styles = StyleSheet.create({});

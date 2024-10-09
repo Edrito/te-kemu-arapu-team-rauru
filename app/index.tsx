@@ -107,7 +107,7 @@ const Start = () => {
             /> */}
             <Button
               title="(TESTING) go to vote screen"
-              onPress={() => router.push("/vote")}
+              onPress={() => router.push("/voting")}
             />
           </View>
 

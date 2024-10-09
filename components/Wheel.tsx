@@ -104,7 +104,7 @@ const Wheel: React.FC<WheelProps> = ({ wheelColor = 'blue', arrowColor = 'black'
             accessibilityRole="button"
             accessibilityLabel="Spin the wheel"
           >
-            <Text style={{ color: isSpinning ? 'grey' : 'black' }}>Spin</Text>
+            <Text style={{ color: isSpinning ? 'grey' : 'black'}}>Spin</Text>
           </Pressable>
         </Animated.View>
       </View>
