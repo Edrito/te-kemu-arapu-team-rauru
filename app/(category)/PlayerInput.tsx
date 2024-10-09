@@ -2,6 +2,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
+import "../../global.css";
 
 const PlayerInput = () => {
   return (
@@ -31,7 +32,7 @@ const PlayerInput = () => {
 
         {/* Hints Section */}
         <View className="p-1 w-[60%] mt-16">
-          <Text className="text-[30px] border-2 border-dashed bg-green-700 w-full text-center rounded-xl text-white mb-5 font-pangolin">
+          <Text className="text-[30px] border-2 border-dashed game_buttons_green w-full text-center rounded-xl text-white mb-5 font-pangolin">
             Hints
           </Text>
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text, Pressable, Dimensions } from "react-native";
+import React from "react";
+import { Text, Pressable, useWindowDimensions } from "react-native";
 import '../global.css';
 
 interface CategoryBoxesProps {
@@ -9,49 +9,24 @@ interface CategoryBoxesProps {
   onPress?: () => void;
 }
 
-const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected , onPress}) => {
-  const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
-  // This is so that buttons change size in real time when screen size changes
-  useEffect(() => {
-    // Function to handle resizing of the window
-    const resizeScreen = () => {
-      // Update the state with the current window dimensions
-      setWindowDimensions(Dimensions.get('window'));
-    };
-
-    // Listen to changes in screen size
-    const subscription = Dimensions.addEventListener('change', resizeScreen);
-
-    // End listener
-    return () => subscription?.remove();
-  }, []);
-
-
+const CategoryBoxes: React.FC<CategoryBoxesProps> = ({ category, isCovered, isSelected, onPress }) => {
+  const windowDimensions = useWindowDimensions();
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={isCovered ? undefined : onPress}
+      className={`border-dashed border-2 flex-1 items-center justify-center ${
+        isCovered ? 'bg-gray-400' : isSelected ? 'bg-[#34b134]' : 'bg-game_buttons_green'
+      }`}
       style={{
-        backgroundColor: "green",
-        borderColor: "black",
-        borderStyle: "dashed",
-        borderWidth: 2,
         margin: 5,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
         height: 150,
-        minWidth: (windowDimensions.width < 1036) ? 200 : 500,
-        maxWidth: (windowDimensions.width < 1036) ? 200 : 500,
+        minWidth: windowDimensions.width < 1036 ? 200 : 500,
+        maxWidth: windowDimensions.width < 1036 ? 200 : 500,
       }}
-
     >
-
-      <Text className="text-white text-[30px]">
-        {
-          isSelected ? "✅" :
-
-          (  isCovered ? "🔴" : category)}
+      <Text className={`text-[30px] ${isCovered ? 'text-red-500' : 'text-white'}`}>
+        {category} {/* Show red dot if covered */}
       </Text>
     </Pressable>
   );

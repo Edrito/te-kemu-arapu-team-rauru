@@ -23,6 +23,11 @@ export default function MainPage() {
 
 
   const handleCreateLobby = async () => {
+  if (lobbyName.trim() === "") {
+    setErrorMessage("Please enter a lobby code.");
+    return;
+  }
+
   if (!user) {
     console.error("User is not authenticated");
     return;
@@ -42,6 +47,7 @@ export default function MainPage() {
     setErrorMessage("Failed to create lobby");
   }
 };
+
 
 const handleJoinLobby = async () => {
   if (lobbyName.trim() === "") {

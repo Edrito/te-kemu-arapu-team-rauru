@@ -86,7 +86,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
         </View>
 
         {/* Question section */}
-        <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[150px] m-3">
+        <View className="border-2 border-dashed bg-orange-600 p-5 items-center justify-center rounded-xl w-[80%] min-h-[150px] m-3">
           <Text className="text-[40px] text-white text-center font-pangolin">
             Did they guess correctly?
           </Text>
@@ -104,8 +104,6 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
             isSelected={voteType == "neutral"}
             onPress={() => vote("neutral")}
           />
-
-
 
           <VoteBox
             voteType={"✔️"}

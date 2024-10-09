@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Pressable, Dimensions } from "react-native";
+import { Text, Pressable, Dimensions, useWindowDimensions } from "react-native";
 import '../global.css';
 
 interface VoteBoxesProps {
@@ -8,7 +8,7 @@ interface VoteBoxesProps {
   onPress?: () => void;
 }
 
-const VoteBox: React.FC<VoteBoxesProps> = ({ voteType, isSelected , onPress}) => {
+const VoteBox = ({ voteType, isSelected, onPress }: { voteType: string, isSelected: boolean, onPress: () => void }) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
   // This is so that buttons change size in real time when screen size changes
   useEffect(() => {
@@ -27,30 +27,20 @@ const VoteBox: React.FC<VoteBoxesProps> = ({ voteType, isSelected , onPress}) =>
 
 
 
-  return (
+    return (
     <Pressable
       onPress={onPress}
+      className={`border-dashed border-2 m-2 flex-1 items-center justify-center ${
+        isSelected ? 'bg-[#34b134]' : 'bg-game_buttons_green'
+      }`}
       style={{
-        backgroundColor: "green",
-        borderColor: "black",
-        borderStyle: "dashed",
-        borderWidth: 2,
-        margin: 5,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
         height: 150,
-        minWidth: (windowDimensions.width < 1036) ? 200 : 500,
-        maxWidth: (windowDimensions.width < 1036) ? 200 : 500,
+        minWidth: windowDimensions.width < 1036 ? 200 : 500,
+        maxWidth: windowDimensions.width < 1036 ? 200 : 500,
       }}
-
     >
-
       <Text className="text-white text-[30px]">
-        {
-          isSelected ? "✅" :
-
-          ( voteType)}
+        {voteType}
       </Text>
     </Pressable>
   );
