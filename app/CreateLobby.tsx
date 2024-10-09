@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import GameModeDropdown from "te-kemu-arapu-compx374-team-rauru/components/GameModeDropdown";
+import { router } from "expo-router";
 
 const CreateLobby = () => {
   // Path to current player icon
@@ -33,7 +34,6 @@ const CreateLobby = () => {
   const [maxLobbyPlayerScore, setMaxLobbyPlayerScore] = useState("");
   const [lobbyTimeLimit, setLobbyTimeLimit] = useState("");
 
-  // Handles create button press
   // This is used to create the lobby once the user has selected all the configurations for a gamemode
   const createGameMode = () => {
     if (gameMode !== "Select Game Mode") {
@@ -291,7 +291,7 @@ const CreateLobby = () => {
             placeholder="-"
           />
           {/* TODO: add an onpress to direct to next page */}
-          <TouchableOpacity className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]">
+          <TouchableOpacity onPress={() => router.push("/PreGameLobby")} className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]">
             Submit
           </TouchableOpacity>
         </View>

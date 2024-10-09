@@ -6,7 +6,7 @@ import SelectIcon from "../components/SelectIcon";
 import { addDoc, collection } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
-import colorOptions from "../constants/Colors"; // Assuming this is where colorOptions is stored
+import colorOptions from "../constants/Colors";
 
 interface ProfileData {
   username: string;
@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
   const [difficulty, setDifficulty] = useState("Select");
   const [icon, setIcon] = useState<string | null>(null);
   const [username, setUsername] = useState<string>("");
-  const [selectedColor, setSelectedColor] = useState<string>(colorOptions.colorOptions[0]); // Initial color
+  const [selectedColor, setSelectedColor] = useState<string>(colorOptions.colorOptions[0]);
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
 
   // Adjust the layout based on window resizing
@@ -34,12 +34,22 @@ const Profile: React.FC = () => {
     return () => subscription?.remove();
   }, []);
 
+  useEffect(() => {
+    const resizeScreen = () => {
+      setWindowDimensions(Dimensions.get("window"));
+    };
+    const subscription = Dimensions.addEventListener("change", resizeScreen);
+    return () => subscription?.remove();
+  }, []);
+
+
   const handleCreateProfile = async () => {
     if (!user?.uid) {
       Alert.alert("User ID not found. Please sign in again.");
       return;
     }
 
+    
     if (!username.trim() || difficulty === "Select" || !icon || !selectedColor) {
       Alert.alert("Please fill in all fields.");
       return;
@@ -118,8 +128,8 @@ const Profile: React.FC = () => {
         </View>
 
         {/* Difficulty Section */}
-        <View className="flex-row items-center mb-[30px]">
-          <Text className="text-[50px] mr-10 font-pangolin">Difficulty</Text>
+          <View className="flex-row items-center mb-[30px]">
+            <Text className="text-[50px] mr-10 font-pangolin">Difficulty</Text>
 
           <Pressable onPress={() => setIsModalVisible(true)}>
             <Text className="text-[30px] border-2 border-black border-dashed bg-green-700 px-6 m-1 rounded font-pangolin">
