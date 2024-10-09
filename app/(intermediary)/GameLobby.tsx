@@ -1,23 +1,42 @@
-import {
+import React, { useEffect, useState } from "react";
+import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import LobbyComponent from "te-kemu-arapu-compx374-team-rauru/components/LobbyComponent";
+import { router } from "expo-router";import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   Dimensions,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
-import { SafeAreaView } from "react-native-safe-area-context";
-import LobbyComponent from "te-kemu-arapu-compx374-team-rauru/components/LobbyComponent";
-import { router } from "expo-router";
+  Alert
+} from "react-native";import { useAuth } from '../../context/AuthContext';
+import { isLobbyHost } from '../helpers';
+import { useGame } from '../../context/GameContext';
 
-const PreGameLobby = () => {
-  // Path to current player icon
-  // Testing purposes only
-  const playerIconTest = "../assets/images/react-logo.png";
-  const lobbyCode = "H02Dwd2";
+const GameLobby: React.FC = () => {
+  const { gameState, startGame } = useGame();
+  const { user } = useAuth();
 
-  // This is so that the page changes size in real time when screen size changes
+  const handleStartGame = async () => {
+    if (!gameState || !user) {
+      return;
+    }
+
+    const isUserLobbyHost = isLobbyHost(gameState, user.uid);
+
+    if (!isUserLobbyHost) {
+      Alert.alert('Error', 'Only the lobby creator can start the game.');
+      return;
+    }
+    try {
+      await startGame();
+      Alert.alert('Success', 'The game has started!');
+    } catch (error) {
+      console.error('Failed to start the game:', error);
+      Alert.alert('Error', 'Failed to start the game.');
+    }
+  };
+
   const [windowDimensions, setWindowDimensions] = useState(
     Dimensions.get("window")
   );
@@ -37,9 +56,7 @@ const PreGameLobby = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red items-center">
-      <View className="w-full">
-        <PlayerBar playerIcon={playerIconTest} />
-      </View>
+  
 
       <ScrollView
         style={{
@@ -66,23 +83,23 @@ const PreGameLobby = () => {
             Lobby Code:
           </Text>
           <Text className="text-[20px] font-bold border-2 border-dashed rounded-lg p-1 bg-white font-pangolin">
-            {lobbyCode}
+            {gameState?.lobbyCode??''}
           </Text>
         </View>
 
         <View className="w-full h-[50%] items-center justify-center">
           <ScrollView className="border rounded-md bg-orange-400 p-3 m-2">
             {/* Insert players here */}
-            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 1" />
+            {/* <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 1" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 2" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 3" />
-            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 4" />
+            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 4" /> */}
           </ScrollView>
         </View>
 
         <TouchableOpacity
           // Send to game
-          onPress={() => router.push("/gameState")}
+          onPress={handleStartGame }
           className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
         >
           <Text className="text-[30px] text-center font-pangolin">
@@ -94,4 +111,4 @@ const PreGameLobby = () => {
   );
 };
 
-export default PreGameLobby;
+export default GameLobby;

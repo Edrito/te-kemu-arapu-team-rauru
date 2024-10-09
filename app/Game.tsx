@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getCurrentGameType } from './helpers';
 import GameBar from '../components/GameBar';
-import GameLobby from './GameLobby';
+import GameLobby from './(intermediary)/GameLobby';
 import Loading from './loading';
 import Scoreboard from '../components/Scoreboard';
 import CategorySelect from './(category)/choosingCategory';
@@ -12,7 +12,7 @@ import SelectLetter from './(category)/selectLetter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLobbyNavigation } from '../hooks/useLobbynav';
 import { useGame } from '../context/GameContext';
-import ChoosingPlayer from './ChoosingPlayer';
+import ChoosingPlayer from './(intermediary)/ChoosingPlayer';
 import VotingPage from './(category)/voting';
 
 export default function Game() {

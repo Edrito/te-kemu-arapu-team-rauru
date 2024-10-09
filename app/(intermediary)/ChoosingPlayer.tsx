@@ -2,8 +2,8 @@ import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
-import { GameScreenParams } from "./types";
-import { getTimeRemaining } from "./helpers";
+import { GameScreenParams } from "../types";
+import { getTimeRemaining } from "../helpers";
 import { Timer } from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 
 const ChoosingPlayer: React.FC<GameScreenParams> = ({
