@@ -14,16 +14,49 @@ import { useLobbyNavigation } from '../../hooks/useLobbynav';
 import { useGame } from '../../context/GameContext';
 import ChoosingPlayer from '../(intermediary)/ChoosingPlayer';
 import VotingPage from '../(category)/voting';
+import { ProfileData } from '../types';
 
 export default function Game() {
   const { user } = useAuth();
-  const { gameState, subscribeToGame , unsubscribeFromGame} = useGame();
+  const { gameState, subscribeToGame , unsubscribeFromGame, fetchPlayerProfiles} = useGame();
   const { lobbyCode } = useLocalSearchParams() as { lobbyCode: string };
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const router = useRouter();
+  const [playerProfiles, setPlayerProfiles] = useState<ProfileData[]>([]);
+  const [previousParticipants, setParticipants] = useState<string[]>([]);
 
   useLobbyNavigation(lobbyCode);
 
+  useEffect(() => {
+    console.log("here1");
+    if (!gameState)
+    {
+      setParticipants([]);
+    }
+    console.log("here2");
+
+    if (gameState && previousParticipants!==gameState.participants)
+    {
+    console.log("here3");
+    var removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
+      var addedParticipants = gameState.participants.filter(x => !previousParticipants.includes(x));
+      
+      setParticipants(gameState.participants);
+
+      fetchPlayerProfiles(addedParticipants).then((profiles) => {
+        
+        setPlayerProfiles([
+          //Remove the removed participants from the list
+          ...playerProfiles.filter(x => !removedParticipants.includes(x.userId)),
+          //Add the new participants to the list
+          ...profiles
+        ]);
+      });
+    }
+    
+  }, [user, lobbyCode]);
+
+  console.log(playerProfiles);
   
   useEffect(() => {
     if (!user || !lobbyCode) {
@@ -40,14 +73,29 @@ export default function Game() {
     }
   }, [gameState, user]);
 
+  //If the lobby is closed after once having existed, redirect to the main page
+  useEffect(() => {
+    if (isInitialLoadComplete && !gameState) {
+    router.push('/MainPage');
+    }
+  }, [gameState, isInitialLoadComplete]);
+
 
   if (!gameState || !user) {
     return <Loading />;
   }
 
+
+
   const buildPageContent = () => {
     if (gameState.isLobbyOpen) {
-      return <GameLobby />;
+      return <GameLobby 
+      gameId={gameState.gameId}
+      lobbyCode={lobbyCode}
+    playerProfiles={playerProfiles}
+
+      mainState={gameState}
+      />;
     }
 
     if (!isInitialLoadComplete) return <Loading />;
@@ -63,6 +111,8 @@ export default function Game() {
             <CategorySelect
               gameId={gameState.gameId}
               lobbyCode={lobbyCode}
+            playerProfiles={playerProfiles}
+
               mainState={gameState}
             />
           );
@@ -71,6 +121,8 @@ export default function Game() {
           return <ChoosingPlayer 
           gameId={gameState.gameId}
           lobbyCode={lobbyCode}
+          playerProfiles={playerProfiles}
+
           mainState={gameState}
           />;
         case 'letterSelection':
@@ -78,6 +130,8 @@ export default function Game() {
             <SelectLetter
               gameId={gameState.gameId}
               lobbyCode={lobbyCode}
+            playerProfiles={playerProfiles}
+
               mainState={gameState}
             />
           );
@@ -88,6 +142,8 @@ export default function Game() {
                 gameId={gameState.gameId}
                 lobbyCode={lobbyCode}
                 mainState={gameState}
+            playerProfiles={playerProfiles}
+
               />
             );
             return 
@@ -112,7 +168,10 @@ export default function Game() {
         return <Loading />;
       case 'end':
       case 'lobbyEnd':
-        return <Scoreboard players={gameState.state.scores} />;
+        return <Scoreboard playerScores={gameState.state.scores}
+        playerProfiles={playerProfiles}
+        
+        />;
       case 'playing':
         return manageGame();
       default:
@@ -131,6 +190,7 @@ export default function Game() {
             gameId={gameState.gameId}
             lobbyCode={gameState.lobbyCode}
             mainState={gameState}
+            playerProfiles={playerProfiles}
           />
         )}
       </View>

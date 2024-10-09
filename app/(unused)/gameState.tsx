@@ -27,11 +27,7 @@ const GameState = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       {/* Game Bar at the top */}
-      <View className="w-full">
-        {mainState && (
-          <GameBar gameId={mainState.gameId} lobbyCode={mainState.lobbyCode} mainState={mainState} />
-        )}
-      </View>
+   
 
       {/* ScrollView to enable mouse-wheel scrolling */}
       <ScrollView

@@ -5,52 +5,22 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useRouter } from "expo-router";
 import '../global.css';
 import { useGame } from "../context/GameContext";
+import { ProfileData } from "te-kemu-arapu-compx374-team-rauru/app/types";
 
 
-interface PlayerData {
-  id: string;
-  score: number;
-  icon: string;
-  name: string;
-}
 
 interface ScoreboardProps {
-  players: { [playerId: string]: number; }
+  playerScores: { [playerId: string]: number; }
+  playerProfiles: ProfileData[];
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
-  const [playerData, setPlayerData] = useState<PlayerData[]>([]);
+const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles }) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
   const { resetGameState } = useGame();
   const router = useRouter();
 
-  useEffect(() => {
-    if(players == null) {
-      return;
-    }
-    const fetchPlayerData = async () => {
-      const playerDataPromises = Object.keys(players).map(async (playerId) => {
-        const player = { id: playerId, score: players[playerId] };
-        const profilesCollection = collection(firestore, "profile");
-        const profileQuery = query(profilesCollection, where("userId", "==", player.id));
-        const profileSnapshot = await getDocs(profileQuery);
+ 
 
-        const playerInfo = profileSnapshot.docs.length == 0 ? {} : profileSnapshot.docs[0].data();
-
-        return {
-          id: player.id,
-          score: player.score,
-          icon: playerInfo?.icon || "",
-          name: playerInfo?.username || "",
-        };
-      });
-
-      const resolvedPlayerData = await Promise.all(playerDataPromises);
-      setPlayerData(resolvedPlayerData.sort((a, b) => b.score - a.score));
-    };
-
-    fetchPlayerData();
-  }, [players]);
 
   useEffect(() => {
     const resizeScreen = () => {
@@ -78,7 +48,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
           paddingBottom: 20,
         }}
       >
-        {playerData.map((player, index) => (
+        {playerProfiles.map((player, index) => (
           <View
             key={index}
             style={{
@@ -93,8 +63,8 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ players }) => {
             }}
           >
             <Text style={{ fontSize: 24 }}>{player.icon}</Text>
-            <Text style={{ fontSize: 24, fontWeight: "bold" }}>{player.name}</Text>
-            <Text style={{ fontSize: 24 }}>{player.score}</Text>
+            <Text style={{ fontSize: 24, fontWeight: "bold" }}>{player.username}</Text>
+            <Text style={{ fontSize: 24 }}>{playerScores[player.userId]}</Text>
             
           </View>
         ))}

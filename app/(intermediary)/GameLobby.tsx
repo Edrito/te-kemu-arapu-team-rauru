@@ -2,23 +2,48 @@ import React, { useEffect, useState } from "react";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LobbyComponent from "te-kemu-arapu-compx374-team-rauru/components/LobbyComponent";
-import { router } from "expo-router";import {
+import { router } from "expo-router"; import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   Dimensions,
   Alert
-} from "react-native";import { useAuth } from '../../context/AuthContext';
+} from "react-native"; import { useAuth } from '../../context/AuthContext';
 import { isLobbyHost } from '../helpers';
 import { useGame } from '../../context/GameContext';
+import { GameScreenParams } from "../types";
 
-const GameLobby: React.FC = () => {
-  const { gameState, startGame } = useGame();
+const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, playerProfiles }) => {
+  const { gameState, startGame, leaveLobby, deleteLobby } = useGame();
   const { user } = useAuth();
 
-  const isLobbyHostValue = isLobbyHost(gameState, user?.uid ?? '');
+  console.log(playerProfiles);
 
+  const isLobbyHostValue = isLobbyHost(gameState, user?.uid ?? '');
+  const handleLeaveAction = async () => {
+    if (!gameState || !user) {
+      return;
+    }
+
+    try {
+      if (isLobbyHostValue) {
+        await deleteLobby();
+        router.push('/MainPage');
+        Alert.alert('Success', 'You have closed the game.');
+        return;
+      }
+      leaveLobby();
+      Alert.alert('Success', 'You have left the game.');
+      router.push('/MainPage');
+    } catch (error) {
+      console.error('Failed to leave the game:', error);
+      Alert.alert('Error', 'Failed to leave the game.');
+
+
+
+    }
+  }
   const handleStartGame = async () => {
     if (!gameState || !user) {
       return;
@@ -58,7 +83,7 @@ const GameLobby: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red items-center">
-  
+
 
       <ScrollView
         style={{
@@ -85,29 +110,37 @@ const GameLobby: React.FC = () => {
             Lobby Code:
           </Text>
           <Text className="text-[20px] font-bold border-2 border-dashed rounded-lg p-1 bg-white font-pangolin">
-            {gameState?.lobbyCode??''}
+            {gameState?.lobbyCode ?? ''}
           </Text>
         </View>
 
         <View className="w-full h-[50%] items-center justify-center">
           <ScrollView className="border rounded-md bg-orange-400 p-3 m-2">
-            {/* Insert players here */}
-            {/* <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 1" />
-            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 2" />
-            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 3" />
-            <LobbyComponent lobbyIcon={playerIconTest} lobbyName="PLAYER 4" /> */}
+         { playerProfiles.map((player) => (
+            <LobbyComponent lobbyIcon={player?.icon ?? "❔"} lobbyName={player?.username ?? ''} />))}
+
           </ScrollView>
         </View>
-
-        <TouchableOpacity
+        <View >
+          <TouchableOpacity
+            // Send to game
+            onPress={handleLeaveAction}
+            className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
+          >
+            <Text className="text-[30px] text-center font-pangolin">
+              {isLobbyHostValue ? 'End Game' : 'Leave Lobby'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {isLobbyHostValue ? <TouchableOpacity
           // Send to game
-          onPress={handleStartGame }
+          onPress={handleStartGame}
           className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
         >
           <Text className="text-[30px] text-center font-pangolin">
             Start Game
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </ScrollView>
     </SafeAreaView>
   );

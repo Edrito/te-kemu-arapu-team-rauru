@@ -1,6 +1,14 @@
 // app/types.ts
 
 
+export interface ProfileData {
+  username: string;
+  difficulty: string;
+  icon: string | null;
+  color: string;
+  userId: string;
+}
+
 // Define the parameters for the GameLobby screen
 export type GameLobbyParams = {
   lobbyName: string; // Name of the lobby
@@ -19,6 +27,7 @@ export type GameScreenParams = {
   gameId: string;
   lobbyCode: string;
   mainState: MainState;
+  playerProfiles: ProfileData[];
 };
 
 // Scores for each player

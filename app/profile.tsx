@@ -3,17 +3,12 @@ import { Alert, Dimensions, Modal, Pressable, SafeAreaView, ScrollView, TextInpu
 import { useRouter } from "expo-router";
 import DifficultyDropdown from "../components/DifficultyDropdown";
 import SelectIcon from "../components/SelectIcon";
-import { addDoc, collection } from "firebase/firestore";
+import {  collection, setDoc, doc } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 import colorOptions from "../constants/Colors";
+import { ProfileData } from "./types";
 
-interface ProfileData {
-  username: string;
-  difficulty: string;
-  icon: string | null;
-  color: string;
-}
 
 const Profile: React.FC = () => {
   const { user, setUserProfile } = useAuth();
@@ -59,17 +54,14 @@ const Profile: React.FC = () => {
       username: username.trim(),
       difficulty: difficulty,
       icon: icon,
+      userId: user.uid,
       color: selectedColor,
     };
 
     try {
       await addProfileData(profileData);
 
-      setUserProfile({
-        userId: user.uid,
-        ...profileData,
-        icon: profileData.icon ?? "default",
-      });
+      setUserProfile(profileData);
 
       router.push(`/MainPage`);
     } catch (error) {
@@ -83,11 +75,12 @@ const Profile: React.FC = () => {
 
   const addProfileData = async (profile: ProfileData) => {
     try {
-      const docRef = await addDoc(collection(firestore, "profile"), {
-        userId: user?.uid,
-        ...profile,
-      });
-      console.log("Document written with ID: ", docRef.id);
+      const test = doc(collection(firestore, "profile"),
+        user?.uid ?? profile.userId
+    );
+      const docRef = await setDoc(test, profile);
+  
+      console.log("Document written with ID: ", profile.userId);
     } catch (error) {
       console.error("Error adding document:", error);
       throw error;

@@ -2,6 +2,7 @@ import { firestore } from '../firebaseConfig';
 import { collection, query, where, onSnapshot, DocumentChange, DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { MainState, GameSettings, GameState, State } from '../app/types';
 
+
 export const subscribeToGameState = (
   lobbyCode: string,
   onGameStateChange: (gameState: MainState | null) => void,
@@ -112,16 +113,6 @@ const subscribe = onSnapshot(
       onError(error);
     }
   );
-
-//   function getDifferences(obj1: DocumentData, obj2: DocumentData): DocumentData {
-//   const changes: DocumentData = {};
-//   for (const key in obj2) {
-//     if (!_.isEqual(obj1[key], obj2[key])) {
-//       changes[key] = obj2[key];
-//     }
-//   }
-//   return changes;
-// }
 
   return subscribe;
 };

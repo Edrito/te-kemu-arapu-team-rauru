@@ -3,18 +3,12 @@ import { onAuthStateChanged, signInAnonymously, signOut, User } from 'firebase/a
 import { auth, firestore } from '../firebaseConfig';
 import { getDocs, query, collection, where } from 'firebase/firestore';
 import { router } from "expo-router";
-
-interface Profile {
-  userId: string;
-  username: string;
-  icon: string;
-  difficulty: string;
-}
+import { ProfileData } from 'te-kemu-arapu-compx374-team-rauru/app/types';
 
 const AuthContext = createContext<{
   user: User | null;
-  userProfile: Profile | null;
-  setUserProfile: (profile: Profile | null) => void;
+  userProfile: ProfileData | null;
+  setUserProfile: (profile: ProfileData | null) => void;
   signOutUser: () => void;
 }>({
   user: null,
@@ -27,9 +21,9 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [userProfile, setProfile] = useState<Profile | null>(null);
+  const [userProfile, setProfile] = useState<ProfileData | null>(null);
 
-  const setUserProfile = (profile: Profile | null) => {
+  const setUserProfile = (profile: ProfileData | null) => {
     setProfile(profile);
   };
 
@@ -39,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userSnapshot = await getDocs(queryWithUid);
       
       if (!userSnapshot.empty) {
-        setProfile(userSnapshot.docs[0].data() as Profile);
+        setProfile(userSnapshot.docs[0].data() as ProfileData);
       } else {
         console.error("User profile not found");
       }

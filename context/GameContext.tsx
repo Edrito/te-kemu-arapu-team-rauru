@@ -1,9 +1,10 @@
 import React, { createContext, useState, useContext } from 'react';
 import { sendPlayerAction } from '../utils/apiCall';
-import { MainState } from '../app/types';
+import { MainState, ProfileData } from '../app/types';
 import { subscribeToGameState } from '../context/gameStateListener';
 import { useAuth } from './AuthContext';
 import { GameSettings } from '../app/types';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 interface GameContextType {
   gameState: MainState | null;
@@ -18,6 +19,7 @@ interface GameContextType {
   passTurn: () => Promise<void>;
   playerVote: (voteType: string) => Promise<void>;
   lobbyUpsert: (lobbyConfig: GameSettings) => Promise<any>;
+  fetchPlayerProfiles: (participants: string[]) => Promise<ProfileData[]>;
 }
 
 
@@ -44,6 +46,31 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setUnsubscribe(() => unsubscribeFn);
   };
 
+  const fetchPlayerProfiles = async (participants: string[]) => {
+    const playerIds = participants;
+    const profiles: ProfileData[] = [];
+
+    for (const playerId of playerIds) {
+      const profile = await fetchPlayerProfile(playerId);
+      profiles.push(profile);
+    }
+
+    return profiles;
+  }
+
+  const fetchPlayerProfile = async (playerId: string) => {
+    const profileDoc = await getProfileDoc(playerId);
+    console.log('ID',playerId);
+    console.log('Profile doc:', profileDoc.data());
+    return profileDoc.data() as ProfileData;
+  }
+
+  const getProfileDoc = async (playerId: string) => {
+    const db = getFirestore();
+    const profileDocRef = doc(db, 'profile', playerId);
+    return await getDoc(profileDocRef);
+  }
+
   // Function to reset game state and unsubscribe
   const resetGameState = () => {
     if (unsubscribe) {
@@ -61,10 +88,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   // Create a game action
   const createGameAction = (actionType: string, details: any = {}) => {
     if (!playerId || !gameState?.gameId) return null;
-    return  ({
-      "action":{
+    return ({
+      "action": {
         "type": actionType,
-      details,
+        details,
 
       },
       gameId: gameState.gameId,
@@ -108,7 +135,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       action: {
         type: 'lobbyUpsert',
         details: {
-          "settings":lobbyConfig
+          "settings": lobbyConfig
         },
       },
     };
@@ -151,14 +178,14 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       passTurn,
       categoryVote,
       playerVote,
-      lobbyUpsert,
+      lobbyUpsert, fetchPlayerProfiles
     }),
     [gameState,
       selectLetter,
       passTurn,
       playerVote,
 
-      unsubscribeFromGame,lobbyUpsert, startGame, leaveLobby, deleteLobby, categoryVote]
+      unsubscribeFromGame, lobbyUpsert, fetchPlayerProfiles, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;

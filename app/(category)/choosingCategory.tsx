@@ -12,7 +12,7 @@ import  {Timer} from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 
 
 //Shows possible categories from the mainstate, and allows the user to vote on a category
-const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }) => {
+const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, playerProfiles }) => {
   const [votedCategory, setVoted] = useState("");
   const { user } = useAuth();
   const gameContext = useGame();
@@ -48,7 +48,7 @@ const CategorySelect: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainSta
       {/* This view holds the timer and the pass button */}
       <View className="flex-row items-center justify-between p-2">
         {Timer({
-          timeRemaining: getTimeRemaining(mainState, true),
+          newTime: getTimeRemaining(mainState, true),
           onTimeUp: () => {
           },
         })}
