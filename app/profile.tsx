@@ -77,10 +77,10 @@ const Profile: React.FC = () => {
       </View>
 
       <View className="flex-row items-center">
-        <Text className="text-[50px] mr-10 font-notosans">Difficulty</Text>
+        <Text className="text-[50px] mr-10 font-pangolin">Difficulty</Text>
 
         <Pressable onPress={() => setIsModalVisible(true)}>
-          <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 px-6 m-1 rounded">
+          <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 px-6 m-1 rounded font-pangolin">
             ?
           </Text>
         </Pressable>
@@ -92,18 +92,18 @@ const Profile: React.FC = () => {
           presentationStyle="pageSheet"
         >
           <View className="flex-1 justify-center items-center bg-primary_red">
-            <Text className="text-[30px] m-5 font-notosans">
+            <Text className="text-[30px] m-5 font-pangolin">
               Beginner: Longer time to guess and more access to hints.
             </Text>
-            <Text className="text-[30px] m-5 font-notosans">
+            <Text className="text-[30px] m-5 font-pangolin">
               Intermediate: Shorter time to guess with access to a single hint.
             </Text>
-            <Text className="text-[30px] m-5 font-notosans">
+            <Text className="text-[30px] m-5 font-pangolin">
               Pro: Minimal time to guess with no hints available.
             </Text>
 
             <Pressable onPress={() => setIsModalVisible(false)}>
-              <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+              <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
                 Close
               </Text>
             </Pressable>
@@ -122,7 +122,7 @@ const Profile: React.FC = () => {
       </View>
 
       <Pressable onPress={handleCreateProfile}>
-        <Text className="font-notosans text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded">
+        <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded">
           Create
         </Text>
       </Pressable>

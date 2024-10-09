@@ -27,25 +27,25 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
         onPress={toggleDropdown}
         className="bg-orange-500 py-1.5 px-2.5 rounded border border-black"
       >
-        <Text className="text-black text-[24px]">{selectedValue}</Text>
+        <Text className="text-black text-[24px] font-pangolin">{selectedValue}</Text>
       </Pressable>
 
       {isOpen && (
         <View className="bg-orange-500 rounded border border-black mt-0.5 w-full overflow-hidden">
           <Pressable onPress={() => handleOptionSelect("Beginner")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
+            <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin"
             >
               Beginner
             </Text>
           </Pressable>
           <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
+            <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin"
             >
               Intermediate
             </Text>
           </Pressable>
           <Pressable onPress={() => handleOptionSelect("Pro")}>
-            <Text className="p-1.5 pl-2.5 text-[24px]"
+            <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin"
             >
               Pro
             </Text>

@@ -4,8 +4,9 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LobbyComponent from "te-kemu-arapu-compx374-team-rauru/components/LobbyComponent";
@@ -18,6 +19,24 @@ const LobbyHome = () => {
 
   const [lobbyName, setLobbyName] = useState("");
 
+    // This is so that the page changes size in real time when screen size changes
+    const [windowDimensions, setWindowDimensions] = useState(
+      Dimensions.get("window")
+    );
+    useEffect(() => {
+      // Function to handle resizing of the window
+      const resizeScreen = () => {
+        // Update the state with the current window dimensions
+        setWindowDimensions(Dimensions.get("window"));
+      };
+  
+      // Listen to changes in screen size
+      const subscription = Dimensions.addEventListener("change", resizeScreen);
+  
+      // End listener
+      return () => subscription?.remove();
+    }, []);
+
   return (
     <SafeAreaView className="flex-1 bg-primary_red items-center">
       <View className="w-full">
@@ -25,18 +44,20 @@ const LobbyHome = () => {
       </View>
 
       <ScrollView
-        className="flex-1 max-w-[50%] p-2"
+        style={{
+          minWidth: windowDimensions.width < 1036 ? "90%" : "50%",
+          maxWidth: windowDimensions.width < 1036 ? "90%" : "50%",
+        }}
         contentContainerStyle={{
           alignItems: "center",
-          paddingBottom: 20,
         }}
       >
-        <View className="items-center m-5 p-2">
+        <View className="items-center p-2">
           <Text className="font-pangolin text-[70px]">Te kēmu Arapū</Text>
           <Text className="font-pangolin text-[60px]">The Alphabet Game</Text>
         </View>
 
-        <View className="items-center flex-row flex-1 m-3">
+        <View className="items-center justify-center flex-row flex-wrap">
           <TextInput
             className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 h-[60px]"
             onChangeText={setLobbyName}
@@ -50,12 +71,13 @@ const LobbyHome = () => {
           </TouchableOpacity>
         </View>
 
-        <View className="w-full items-center justify-center">
-          <ScrollView className="flex-grow border rounded-md bg-orange-400 w-[80%] m-2 items-center justify-center">
+        <View className="w-[70%] h-[50%] items-center justify-center">
+          <ScrollView className="border rounded-md bg-orange-400 p-3  m-2">
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="LOBBY NAME" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="LOBBY 2" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="LOBBY 3" />
             <LobbyComponent lobbyIcon={playerIconTest} lobbyName="LOBBY 4" />
+ 
           </ScrollView>
         </View>
 

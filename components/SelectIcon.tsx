@@ -69,11 +69,11 @@ const SelectIcon: React.FC<{ onSelect: (icon: string) => void }> = ({
       >
         <Text className="text-[50px]">{iconData[currentIndex].icon}</Text>
 
-        <Text className="text-[20px] font-bold my-2.5">
+        <Text className="text-[25px] font-bold my-2.5 font-pangolin">
           {iconData[currentIndex].name}
         </Text>
 
-        <Text className="text-center text-[15px]">
+        <Text className="text-center text-[20px] font-pangolin">
           {iconData[currentIndex].description}
         </Text>
       </View>
