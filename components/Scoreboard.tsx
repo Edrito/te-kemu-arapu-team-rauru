@@ -12,9 +12,10 @@ import { ProfileData } from "te-kemu-arapu-compx374-team-rauru/app/types";
 interface ScoreboardProps {
   playerScores: { [playerId: string]: number; }
   playerProfiles: ProfileData[];
+  isEndGame: boolean;
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles }) => {
+const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles,isEndGame }) => {
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
   const { resetGameState } = useGame();
   const router = useRouter();
@@ -68,12 +69,12 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles })
             
           </View>
         ))}
-        <Pressable
+       {isEndGame? <Pressable
           onPress={handlePress}
           className="bg-yellow-500 p-4 rounded-lg border-2 border-black mt-5 mx-auto w-3/4"
         >
           <Text className="text-xl font-bold text-center">Go to MainPage</Text>
-        </Pressable>
+        </Pressable>: null}
       </ScrollView>
     </View>
   );

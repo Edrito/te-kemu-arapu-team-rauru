@@ -18,7 +18,6 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
   const { gameState, startGame, leaveLobby, deleteLobby } = useGame();
   const { user } = useAuth();
 
-  console.log(playerProfiles);
 
   const isLobbyHostValue = isLobbyHost(gameState, user?.uid ?? '');
   const handleLeaveAction = async () => {
@@ -114,10 +113,16 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
           </Text>
         </View>
 
-        <View className="w-full h-[50%] items-center justify-center">
+        <View className="w-full h-[50%]  justify-center">
           <ScrollView className="border rounded-md bg-orange-400 p-3 m-2">
          { playerProfiles.map((player) => (
-            <LobbyComponent lobbyIcon={player?.icon ?? "❔"} lobbyName={player?.username ?? ''} />))}
+            <LobbyComponent  username={player.username}
+              icon={player.icon}
+              color={player.color}
+              userId={player.userId}
+              difficulty={player.difficulty}
+
+            />))}
 
           </ScrollView>
         </View>

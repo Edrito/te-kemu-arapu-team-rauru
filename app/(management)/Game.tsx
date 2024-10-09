@@ -28,35 +28,34 @@ export default function Game() {
   useLobbyNavigation(lobbyCode);
 
   useEffect(() => {
-    console.log("here1");
     if (!gameState)
     {
       setParticipants([]);
     }
-    console.log("here2");
 
     if (gameState && previousParticipants!==gameState.participants)
     {
-    console.log("here3");
+      
     var removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
       var addedParticipants = gameState.participants.filter(x => !previousParticipants.includes(x));
       
-      setParticipants(gameState.participants);
 
       fetchPlayerProfiles(addedParticipants).then((profiles) => {
-        
+        console.log(profiles);
+        console.log("Profiles Fetched");
         setPlayerProfiles([
           //Remove the removed participants from the list
-          ...playerProfiles.filter(x => !removedParticipants.includes(x.userId)),
+          ...playerProfiles.filter(x => !removedParticipants.includes(x.userId)
+        && !profiles.map(x => x.userId).includes(x.userId)
+        ),
           //Add the new participants to the list
           ...profiles
         ]);
       });
     }
     
-  }, [user, lobbyCode]);
+  }, [gameState]);
 
-  console.log(playerProfiles);
   
   useEffect(() => {
     if (!user || !lobbyCode) {
@@ -170,6 +169,7 @@ export default function Game() {
       case 'lobbyEnd':
         return <Scoreboard playerScores={gameState.state.scores}
         playerProfiles={playerProfiles}
+        isEndGame={true}
         
         />;
       case 'playing':

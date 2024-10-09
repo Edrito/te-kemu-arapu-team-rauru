@@ -30,7 +30,9 @@ const GameBar: React.FC  <GameScreenParams>  = ({mainState, gameId, lobbyCode, p
         <View className="flex-1 items-center justify-center p-[20px] bg-primary_red">
 
           <View className="border-2 border-dashed m-10">
-            <Scoreboard playerScores={mainState.state.scores} playerProfiles={playerProfiles} />
+            <Scoreboard playerScores={mainState.state.scores} playerProfiles={playerProfiles} 
+            isEndGame={false}
+            />
           </View>
 
           <Pressable onPress={() => setIsModalVisible(false)}>
