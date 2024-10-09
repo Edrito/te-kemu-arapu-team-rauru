@@ -63,10 +63,12 @@ const Profile: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
-      <Text className="font-pangolin text-[70px] p-5">Create Profile</Text>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View className="w-full max-w-screen-sm px-4">
+        <Text className="font-pangolin text-[70px] p-5 text-center">Create Profile</Text>
 
-      {/* Improved Username Input */}
-      <View className="w-[80%] mb-[70px]">
+        {/* Improved Username Input */}
+        <View className="w-full mb-[70px]">
         <TextInput
           className="h-12 border-2 border-orange-500 rounded-lg px-4 bg-white text-[18px] text-[#333] shadow-md"
           placeholder="Enter your username"
@@ -74,14 +76,14 @@ const Profile: React.FC = () => {
           value={username}
           onChangeText={setUsername} // Update username state on change
         />
-      </View>
+        </View>
 
-      <View className="flex-row items-center">
+        <View className="flex-row items-center justify-center mb-5">
         <Text className="text-[50px] mr-10 font-pangolin">Difficulty</Text>
 
         <Pressable onPress={() => setIsModalVisible(true)}>
           <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 px-6 m-1 rounded font-pangolin">
-            ?
+          ?
           </Text>
         </Pressable>
 
@@ -92,40 +94,42 @@ const Profile: React.FC = () => {
           presentationStyle="pageSheet"
         >
           <View className="flex-1 justify-center items-center bg-primary_red">
-            <Text className="text-[30px] m-5 font-pangolin">
-              Beginner: Longer time to guess and more access to hints.
-            </Text>
-            <Text className="text-[30px] m-5 font-pangolin">
-              Intermediate: Shorter time to guess with access to a single hint.
-            </Text>
-            <Text className="text-[30px] m-5 font-pangolin">
-              Pro: Minimal time to guess with no hints available.
-            </Text>
+          <Text className="text-[30px] m-5 font-pangolin">
+            Beginner: Longer time to guess and more access to hints.
+          </Text>
+          <Text className="text-[30px] m-5 font-pangolin">
+            Intermediate: Shorter time to guess with access to a single hint.
+          </Text>
+          <Text className="text-[30px] m-5 font-pangolin">
+            Pro: Minimal time to guess with no hints available.
+          </Text>
 
-            <Pressable onPress={() => setIsModalVisible(false)}>
-              <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
-                Close
-              </Text>
-            </Pressable>
+          <Pressable onPress={() => setIsModalVisible(false)}>
+            <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+            Close
+            </Text>
+          </Pressable>
           </View>
         </Modal>
-      </View>
+        </View>
 
-      {/* Dropdown for selecting difficulty */}
-      <View className="justify-center items-center bg-primary_red m-7 pb-16">
+        {/* Dropdown for selecting difficulty */}
+        <View className="justify-center items-center bg-primary_red m-7 pb-16">
         <DifficultyDropdown onSelect={setDifficulty} />
-      </View>
+        </View>
 
-      {/* Icon selection */}
-      <View className="w-[30%] min-w-[350px]">
+        {/* Icon selection */}
+        <View className="w-full min-w-[350px]">
         <SelectIcon onSelect={setIcon} />
-      </View>
+        </View>
 
-      <Pressable onPress={handleCreateProfile}>
-        <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded">
+        <Pressable onPress={handleCreateProfile}>
+        <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-orange-500 p-1.5 px-5 m-7 rounded text-center">
           Create
         </Text>
-      </Pressable>
+        </Pressable>
+      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
