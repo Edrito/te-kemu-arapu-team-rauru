@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   View,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
@@ -19,67 +20,71 @@ const Start = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-  const checkUserProfile = async () => {
-    if (user) {
-      try {
-        const queryWithUid = query(
-          collection(firestore, "profile"),
-          where("userId", "==", user.uid)
-        );
-        const userSnapshot = await getDocs(queryWithUid);
+    const checkUserProfile = async () => {
+      if (user) {
+        try {
+          const queryWithUid = query(
+            collection(firestore, "profile"),
+            where("userId", "==", user.uid)
+          );
+          const userSnapshot = await getDocs(queryWithUid);
 
-        if (!userSnapshot.empty) {
-          router.push("/MainPage");
+          if (!userSnapshot.empty) {
+            router.push("/MainPage");
+          }
+        } catch (error) {
+          console.error("Error getting user profile:", error);
         }
-      } catch (error) {
-        console.error("Error getting user profile:", error);
       }
-    }
-  };
+    };
 
-  if (user) {
-    checkUserProfile();
-  }
-}, [user]);
+    if (user) {
+      checkUserProfile();
+    }
+  }, [user]);
 
   // Path to current player icon
   const playerIconTest = "../assets/images/react-logo.png";
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={true}
-        style={{ marginTop: 100 }}
+      <ImageBackground
+        source={require("../assets/images/tekemuarapu-bg-80.png")}
+        className=" w-full h-full"
+        resizeMode="stretch"
       >
-        <View className="flex-1 justify-center items-center">
-          <Text className="font-pangolin text-[130px] p-[100px]">
-            Te kēmu Arapū
-          </Text>
-
-          <Pressable
-            onPress={() => router.push("/Profile")}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
-                padding: 20,
-                borderRadius: 8,
-                borderWidth: 2,
-                borderColor: "black",
-                borderStyle: "dashed",
-                margin: 10,
-              },
-            ]}
-          >
-            <Text className="text-[30px] font-bold text-white font-crayonara">
-              BEGIN!
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={true}
+          style={{ marginTop: 100 }}
+        >
+          <View className="flex-1 justify-center items-center">
+            <Text className="font-pangolin text-[130px] p-[100px]">
+              Te kēmu Arapū
             </Text>
-          </Pressable>
-          {/* TODO: DELETE THIS */}
-          <View>
-            {/* <Text>This is an index to goto and test pages</Text> */}
-            {/* <Button
+
+            <Pressable
+              onPress={() => router.push("/profile")}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
+                  padding: 20,
+                  borderRadius: 8,
+                  borderWidth: 2,
+                  borderColor: "black",
+                  borderStyle: "dashed",
+                  margin: 10,
+                },
+              ]}
+            >
+              <Text className="text-[30px] font-bold text-white font-crayonara">
+                BEGIN!
+              </Text>
+            </Pressable>
+            {/* TODO: DELETE THIS */}
+            <View>
+              {/* <Text>This is an index to goto and test pages</Text> */}
+              {/* <Button
               title="(TESTING) go to scoreboard screen"
               onPress={() => router.push("/Score")}
             />
@@ -87,15 +92,15 @@ const Start = () => {
               title="(TESTING) go to loading screen"
               onPress={() => router.push("/Loading")}
             /> */}
-            {/* <Button
+              {/* <Button
               title="(TESTING) game state with wheel"
               onPress={() => router.push("/gameState")}
             /> */}
-            {/* <Button
+              {/* <Button
               title="(TESTING) go to category screen"
               onPress={() => router.push("/selectCategory")}
             /> */}
-            {/* <Button
+              {/* <Button
               title="(TESTING) go to letter select screen (Player POV)"
               onPress={() => router.push("/selectLetterPlayer")}
             />
@@ -103,17 +108,18 @@ const Start = () => {
               title="(TESTING) go to letter select screen (Spectator POV)"
               onPress={() => router.push("/selectLetterSpectator")}
             /> */}
-            {/* <Button
+              {/* <Button
               title="(TESTING) go to vote screen"
               onPress={() => router.push("/voting")}
             /> */}
-          </View>
+            </View>
 
-          <Text className="text-[30px] absolute bottom-5 self-center font-bold">
-            DEMO
-          </Text>
-        </View>
-      </ScrollView>
+            <Text className="text-[30px] absolute bottom-5 self-center font-bold">
+              DEMO
+            </Text>
+          </View>
+        </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
