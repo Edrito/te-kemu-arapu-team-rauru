@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Pressable,
   ScrollView,
+  Modal,
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { router } from "expo-router";
@@ -32,9 +33,9 @@ export default function MainPage() {
 
   const [isJoinModalVisible, setIsJoinModalVisible] = useState(false);
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
-  
-  
-  const handleCreateLobby =  () => {
+  const [gameGuideModal, setGameGuideModal] = useState(false);
+
+  const handleCreateLobby = () => {
     if (!user) {
       console.error("User is not authenticated");
       setErrorMessage("You must be signed in to create a lobby.");
@@ -98,7 +99,8 @@ export default function MainPage() {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+        className="p-5"
+        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
         showsVerticalScrollIndicator={true}
         keyboardShouldPersistTaps="handled"
       >
@@ -144,12 +146,67 @@ export default function MainPage() {
         </View>
 
         <Pressable onPress={signOutUser}>
-          <Text
-            style={{ color: "#fff", fontSize: 16, textAlign: "center" }}
-          >
+          <Text style={{ color: "#fff", fontSize: 16, textAlign: "center" }}>
             Sign Out
           </Text>
         </Pressable>
+
+        <TouchableOpacity
+          className="items-center justify-center border-2 border-dashed w-[100px] p-3 bg-orange-400 absolute bottom-5 right-5"
+          onPress={() => setGameGuideModal(true)}
+        >
+          <Text className="text-center font-pangolin text-[20px]">
+            How to Play
+          </Text>
+        </TouchableOpacity>
+
+        <Modal
+          visible={gameGuideModal}
+          onRequestClose={() => setGameGuideModal(false)}
+          animationType="slide"
+          presentationStyle="pageSheet"
+        >
+          <ScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              paddingBottom: 20,
+              paddingTop: 20,
+            }}
+            className="flex-1 flex-start bg-primary_red"
+          >
+            <Text className="text-[60px] m-5 font-pangolin text-center">
+              Te Kēmu Arapū
+            </Text>
+            <Text className="text-[30px] m-5 font-pangolin text-center">
+              A fun spoken game for family and friends to practice the Māori
+              alphabet! No board or cards needed—just your voice and some good
+              company. Players have a time limit to guess, and others can vote
+              on pronunciation. Perfect for gatherings and boosting te reo Māori
+              skills!
+            </Text>
+            <Text className="text-[50px] m-5 font-pangolin text-center">
+              Gamemodes
+            </Text>
+            <Text className="text-[30px] m-5 font-pangolin text-center">
+              <Text className="font-bold">Category: </Text>
+              Pick a category and a letter. Say a word in that category starting
+              with the chosen letter.
+            </Text>
+            <Text className="text-[30px] m-5 font-pangolin text-center">
+              <Text className="font-bold">Random: </Text>A letter is picked at
+              random, and you need to say a word that starts with it.
+            </Text>
+
+            <TouchableOpacity
+              className="border-2 border-dashed bg-green-700 my-5"
+              onPress={() => setGameGuideModal(false)}
+            >
+              <Text className="font-pangolin text-[30px] text-center p-0.5 px-5 m-1 rounded">
+                Close
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </Modal>
 
         {/* Footer */}
         <Text className="mt-24 text-[20px] text-black text-center">DEMO</Text>
