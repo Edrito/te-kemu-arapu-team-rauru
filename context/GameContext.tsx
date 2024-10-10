@@ -60,8 +60,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchPlayerProfile = async (playerId: string) => {
     const profileDoc = await getProfileDoc(playerId);
-    console.log('ID',playerId);
-    console.log('Profile doc:', profileDoc.data());
     return profileDoc.data() as ProfileData;
   }
 
