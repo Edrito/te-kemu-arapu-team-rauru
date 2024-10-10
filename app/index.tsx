@@ -47,9 +47,9 @@ const Start = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
       <ImageBackground
-        source={require("../assets/images/tekemuarapu-bg-80.png")}
-        className=" w-full h-full"
-        resizeMode="stretch"
+        source={require("../assets/images/tekemuarapu-bg-80.jpg")}
+        className="flex-1"
+        resizeMode="contain"
       >
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -57,7 +57,7 @@ const Start = () => {
           style={{ marginTop: 100 }}
         >
           <View className="flex-1 justify-center items-center">
-            <Text className="font-pangolin text-[130px] p-[100px]">
+            <Text style={{textShadowColor: 'white', textShadowRadius: 5}} className="font-pangolin text-[130px] p-[100px] text-center">
               Te kēmu Arapū
             </Text>
 
@@ -112,7 +112,7 @@ const Start = () => {
             /> */}
             </View>
 
-            <Text className="text-[30px] absolute bottom-5 self-center font-bold">
+            <Text className="text-[30px] self-center font-bold">
               DEMO
             </Text>
           </View>

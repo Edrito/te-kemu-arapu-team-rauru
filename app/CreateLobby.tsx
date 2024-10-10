@@ -145,18 +145,13 @@ const CreateLobby = () => {
     return () => subscription?.remove();
   }, []);
 
-  // Function to only allow numbers into game options
-  const numbersOnly = (input: any, setOption: any) => {
-    const numericText = input.replace(/[^0-9]/g, "");
-    setOption(numericText);
-  };
-
   // Function to only allow numbers into game option with a max number
-  const numbersOnlyWithMax = (input: any, setOption: any) => {
+  const numbersOnlyWithMax = (input: any, maxNumber: any, setOption: any) => {
     const numericText = input.replace(/[^0-9]/g, "");
+    // Base 10 number parsing
     const numericValue = parseInt(numericText, 10);
 
-    if (!isNaN(numericValue) && numericValue <= 10) {
+    if (!isNaN(numericValue) && numericValue <= maxNumber) {
       setOption(numericText);
     } else if (numericText === "") {
       setOption("");
@@ -266,7 +261,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={(input) => numbersOnly(input, setMaxScore)}
+                      onChangeText={(input) => numbersOnlyWithMax(input, 99, setMaxScore)}
                       value={maxScore}
                       placeholder="-"
                       keyboardType="numeric"
@@ -280,7 +275,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={(input) => numbersOnly(input, setTimeLimit)}
+                      onChangeText={(input) => numbersOnlyWithMax(input, 30, setTimeLimit)}
                       value={timeLimit}
                       placeholder="-"
                       keyboardType="numeric"
@@ -294,7 +289,7 @@ const CreateLobby = () => {
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-                      onChangeText={(input) => numbersOnlyWithMax(input, setMaxCategories)}
+                      onChangeText={(input) => numbersOnlyWithMax(input, 10, setMaxCategories)}
                       value={maxCategories}
                       placeholder="-"
                       keyboardType="numeric"
@@ -333,7 +328,7 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={(input) => numbersOnly(input, setMaxLobbyScore)}
+              onChangeText={(input) => numbersOnlyWithMax(input, 99, setMaxLobbyScore)}
               value={maxLobbyScore}
               placeholder="-"
               keyboardType="numeric"
@@ -347,7 +342,7 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={(input) => numbersOnly(input, setMaxLobbyPlayerScore)}
+              onChangeText={(input) => numbersOnlyWithMax(input, 99, setMaxLobbyPlayerScore)}
               value={maxLobbyPlayerScore}
               placeholder="-"
               keyboardType="numeric"
@@ -361,7 +356,7 @@ const CreateLobby = () => {
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
-              onChangeText={(input) => numbersOnly(input, setLobbyTimeLimit)}
+              onChangeText={(input) => numbersOnlyWithMax(input, 5, setLobbyTimeLimit)}
               value={lobbyTimeLimit}
               placeholder="-"
               keyboardType="numeric"
