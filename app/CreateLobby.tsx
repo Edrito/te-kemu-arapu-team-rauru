@@ -33,13 +33,13 @@ const CreateLobby = () => {
   const [lobbyName, setLobbyName] = useState("");
 
   // State for end conditions
-  const [maxScore, setMaxScore] = useState("");
-  const [timeLimit, setTimeLimit] = useState("");
-  const [maxCategories, setMaxCategories] = useState("");
+  const [maxScore, setMaxScore] = useState("5");
+  const [timeLimit, setTimeLimit] = useState("15");
+  const [maxCategories, setMaxCategories] = useState("3");
 
-  const [maxLobbyScore, setMaxLobbyScore] = useState("");
-  const [maxLobbyPlayerScore, setMaxLobbyPlayerScore] = useState("");
-  const [lobbyTimeLimit, setLobbyTimeLimit] = useState("");
+  const [maxLobbyScore, setMaxLobbyScore] = useState("50");
+  const [maxLobbyPlayerScore, setMaxLobbyPlayerScore] = useState("15");
+  const [lobbyTimeLimit, setLobbyTimeLimit] = useState("25");
 
 
   const submit = async () => {
@@ -118,9 +118,10 @@ const CreateLobby = () => {
 
       // Reset the values
       setGameMode("Select Game Mode");
-      setMaxScore("");
-      setTimeLimit("");
-      setMaxCategories("");
+      setMaxScore("5");
+      setTimeLimit("15");
+      setMaxCategories("3");
+
 
     }
     setIsModalVisible(false);
