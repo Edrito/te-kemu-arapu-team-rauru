@@ -362,13 +362,13 @@ const CreateLobby = () => {
             />
           </View>
         </ScrollView>
-        <View className=" flex-col items-center m-10">
+        <View className="flex-col items-center m-10">
           <View className="flex-row justify-between items-center">
             <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Lobby Name
+              Lobby Name:
             </Text>
             <TextInput
-              className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 min-w-[80%]"
+              className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 w-[60%]"
               onChangeText={setLobbyName}
               value={lobbyName}
               placeholder="-"

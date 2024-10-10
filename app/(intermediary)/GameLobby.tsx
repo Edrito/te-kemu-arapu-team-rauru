@@ -81,7 +81,7 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 bg-primary_red items-center">
+    <SafeAreaView className="flex-1 bg-primary_red items-center m-2">
 
 
       <ScrollView
