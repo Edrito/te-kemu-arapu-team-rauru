@@ -4,6 +4,7 @@ dist/
 npm-debug.*
 *.jks
 *.p8
+.firebase/
 *.p12
 *.key
 *.mobileprovision
