@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 import "../global.css";
 
 interface HeaderBarIcon {
@@ -8,10 +9,10 @@ interface HeaderBarIcon {
 }
 
 const HeaderBar: React.FC<HeaderBarIcon> = ({ playerIcon }) => {
-  const [language, setLanguage] = useState("English");
+  const { toggleLanguage, displayLanguage } = useLanguage();
 
   const changeLanguage = () => {
-    setLanguage((language) => (language === "English" ? "Maori" : "English"));
+    toggleLanguage();
   };
 
   return (
@@ -29,7 +30,7 @@ const HeaderBar: React.FC<HeaderBarIcon> = ({ playerIcon }) => {
           resizeMode="contain"
         />
         <Text className="text-[30px] font-bold font-pangolin ml-2">
-          {language}
+          {displayLanguage}
         </Text>
       </Pressable>
     </View>

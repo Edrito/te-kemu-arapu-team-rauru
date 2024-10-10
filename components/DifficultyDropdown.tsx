@@ -2,18 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable, TouchableWithoutFeedback } from "react-native";
 import Animated, { useSharedValue, withTiming, useAnimatedStyle } from "react-native-reanimated";
 import '../global.css';
+import { useLanguage } from "../context/languageToggleButton";
 
 interface DropdownProps {
   onSelect: (value: string) => void;
 }
 
 const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+  const { getText } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("Select");
-
+  const [selectedValue, setSelectedValue] = useState(getText('select'));
   const dropdownHeight = useSharedValue(0);
   const dropdownOpacity = useSharedValue(0);
-
   const dropdownRef = useRef<View>(null);
 
   const toggleDropdown = () => {
@@ -71,13 +71,13 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
             className="bg-green-700 rounded border border-black mt-0.5 w-full absolute z-20 overflow-hidden"
           >
             <Pressable onPress={() => handleOptionSelect("Beginner")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">Beginner</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('beginner')}</Text>
             </Pressable>
             <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">Intermediate</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('intermediate')}</Text>
             </Pressable>
             <Pressable onPress={() => handleOptionSelect("Pro")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">Pro</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('pro')}</Text>
             </Pressable>
           </Animated.View>
         )}

@@ -14,10 +14,12 @@ import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
+import { useLanguage } from "../context/languageToggleButton";
 
 const Start = () => {
   const router = useRouter();
   const { user } = useAuth();
+  const { getText } = useLanguage();
 
   useEffect(() => {
     const checkUserProfile = async () => {
@@ -62,7 +64,7 @@ const Start = () => {
             </Text>
 
             <Pressable
-              onPress={() => router.push("/Profile")}
+              onPress={() => router.push("/profile")}
               style={({ pressed }) => [
                 {
                   backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
@@ -76,7 +78,7 @@ const Start = () => {
               ]}
             >
               <Text className="text-[30px] font-bold text-white font-crayonara">
-                BEGIN!
+                {getText('start')}
               </Text>
             </Pressable>
             {/* TODO: DELETE THIS */}

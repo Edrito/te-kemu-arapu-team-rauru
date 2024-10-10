@@ -4,6 +4,8 @@ import { AuthProvider } from "../context/AuthContext";
 import { GameProvider } from "../context/GameContext";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import { LanguageProvider } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,11 +36,13 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <GameProvider>
+        <LanguageProvider>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(category)" />
           <Stack.Screen name="Game" />
         </Stack>
+        </LanguageProvider>
       </GameProvider>
     </AuthProvider>
   );

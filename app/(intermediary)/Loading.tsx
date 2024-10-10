@@ -32,7 +32,7 @@ const Loading = () => {
       <View>
         <Text
           style={{ fontSize: windowDimensions.width < 1036 ? 50 : 70 }}
-          className="font-pangolin text-center p-5 border-2 border-dashed rounded-xl bg-green-500 mb-[30px]"
+          className="font-pangolin text-center p-5 border-2 border-dashed rounded-xl bg-green-700 mb-[30px]"
         >
           Did you know:
         </Text>
@@ -41,7 +41,7 @@ const Loading = () => {
       <View className="w-[70%] p-1">
         <Text
           style={{ fontSize: windowDimensions.width < 1036 ? 40 : 60 }}
-          className="text-center font-pangolin text-[60px] border-2 border-dashed rounded-xl bg-green-500"
+          className="text-center font-pangolin text-[60px] border-2 border-dashed rounded-xl bg-green-700"
         >
           {randomFact}
         </Text>

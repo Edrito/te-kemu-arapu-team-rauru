@@ -18,10 +18,12 @@ import { createLobbyAction } from "../utils/apiFunctions";
 import { sendPlayerAction } from "../utils/apiCall";
 import JoinLobbyModal from "../components/JoinLobbyModal";
 import CreateLobbyModal from "../components/CreateLobbyModal"; // Import the CreateLobbyModal component
+import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 export default function MainPage() {
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { getText } = useLanguage();
   const { user, signOutUser, userProfile } = useAuth();
 
   useProfileNavigation();
@@ -98,6 +100,7 @@ export default function MainPage() {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
+      <PlayerBar playerIcon={""} />
       <ScrollView
         className="p-5"
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
@@ -117,7 +120,7 @@ export default function MainPage() {
             textAlign: "center",
           }}
         >
-          Welcome, {userProfile?.username ?? "Player"}!
+          {getText('welcome')}, {userProfile?.username ?? "Player"}!
         </Text>
 
         {errorMessage ? (
@@ -133,7 +136,7 @@ export default function MainPage() {
             className="bg-green-700 py-3.5 px-7.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
             onPress={() => setIsJoinModalVisible(true)}
           >
-            <Text className="text-[18px] font-bold text-white">JOIN</Text>
+            <Text className="text-[18px] font-bold text-white">{getText('join')}</Text>
           </TouchableOpacity>
 
           {/* CREATE Button */}
@@ -141,13 +144,13 @@ export default function MainPage() {
             className="bg-green-700 py-3.5 px-7.5 rounded-lg my-2.5 items-center border-2 border-dashed border-black"
             onPress={handleCreateLobby}
           >
-            <Text className="text-[18px] font-bold text-white">CREATE</Text>
+            <Text className="text-[18px] font-bold text-white">{getText('create')}</Text>
           </TouchableOpacity>
         </View>
 
         <Pressable onPress={signOutUser}>
           <Text style={{ color: "#fff", fontSize: 16, textAlign: "center" }}>
-            Sign Out
+            {getText('signOut')}
           </Text>
         </Pressable>
 

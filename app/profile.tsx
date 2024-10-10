@@ -8,6 +8,8 @@ import { firestore } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 import colorOptions from "../constants/Colors";
 import { ProfileData } from "./types";
+import { useLanguage } from "../context/languageToggleButton";
+import PlayerBar from "../components/PlayerBar";
 
 
 const Profile: React.FC = () => {
@@ -19,6 +21,8 @@ const Profile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>(colorOptions.colorOptions[0]);
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
+  const { getText } = useLanguage();
+
 
   // Adjust the layout based on window resizing
   useEffect(() => {
@@ -94,6 +98,7 @@ const Profile: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+      <PlayerBar playerIcon={icon ?? ""} />
       <ScrollView
         style={{
           flex: 1,
@@ -107,14 +112,14 @@ const Profile: React.FC = () => {
         className = "w-full max-w-screen-sm px-4"
       >
         <Text className="font-pangolin text-[70px] text-center p-5">
-          Create Profile
+          {getText('createProfile')}
         </Text>
 
         {/* Username Input */}
         <View className="w-[80%] mb-[30px]">
           <TextInput
             className="h-12 border-2 border-green-700 rounded-lg px-4 bg-white text-[18px] text-[#333] shadow-md"
-            placeholder="Enter your username"
+            placeholder={getText('enterUsername')}
             placeholderTextColor="#888"
             value={username}
             onChangeText={setUsername}
@@ -123,7 +128,7 @@ const Profile: React.FC = () => {
 
         {/* Difficulty Section */}
           <View className="flex-row items-center mb-[30px]">
-            <Text className="text-[50px] mr-10 font-pangolin">Difficulty</Text>
+            <Text className="text-[50px] mr-10 font-pangolin">{getText('difficulty')}:</Text>
 
           <Pressable onPress={() => setIsModalVisible(true)}>
             <Text className="text-[30px] border-2 border-black border-dashed bg-green-700 px-6 m-1 rounded font-pangolin">
@@ -139,18 +144,18 @@ const Profile: React.FC = () => {
           >
             <View className="flex-1 justify-center items-center bg-primary_red">
               <Text className="text-[30px] m-5 font-pangolin">
-                Beginner: Longer time to guess and more access to hints.
+                {getText('beginner')}: {getText('beginnerDescription')}
               </Text>
               <Text className="text-[30px] m-5 font-pangolin">
-                Intermediate: Shorter time to guess with access to a single hint.
+                {getText('intermediate')}: {getText('intermediateDescription')}
               </Text>
               <Text className="text-[30px] m-5 font-pangolin">
-                Pro: Minimal time to guess with no hints available.
+                {getText('pro')}: {getText('proDescription')}
               </Text>
 
               <Pressable onPress={() => setIsModalVisible(false)}>
                 <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-green-700 p-0.5 px-5 m-1 rounded">
-                  Close
+                  {getText('close')}
                 </Text>
               </Pressable>
             </View>
@@ -170,7 +175,7 @@ const Profile: React.FC = () => {
         {/* Create Button */}
         <Pressable onPress={handleCreateProfile}>
           <Text className="font-pangolin text-[30px] border-2 border-black border-dashed bg-green-700 p-1.5 px-5 rounded">
-            Create
+            {getText('create')}
           </Text>
         </Pressable>
       </ScrollView>
