@@ -43,8 +43,6 @@ const Start = () => {
     }
   }, [user]);
 
-  // Path to current player icon
-  const playerIconTest = "../assets/images/react-logo.png";
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
@@ -64,7 +62,7 @@ const Start = () => {
             </Text>
 
             <Pressable
-              onPress={() => router.push("/profile")}
+              onPress={() => router.push("/Profile")}
               style={({ pressed }) => [
                 {
                   backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
