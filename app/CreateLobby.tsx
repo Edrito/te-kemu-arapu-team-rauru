@@ -45,7 +45,7 @@ const CreateLobby = () => {
         setErrorMessage("Please enter a lobby name");
         return;
       }
-      
+
       const name = lobbyName;
       const maxScore = parseInt(maxLobbyScore);
       const maxPlayerScore = parseInt(maxLobbyPlayerScore);
@@ -177,7 +177,7 @@ const CreateLobby = () => {
           Games
         </Text>
 
-        <View className="w-full max-h-[300px]">
+        <View className="w-full max-h-[300px] min-h-[100px]">
           <ScrollView className="border-2 border-dashed rounded-lg bg-orange-500 p-3 w-full flex-1">
             {selectedGameModes.map((gameMode, index) => (
               <View key={index}>{renderGameModeView(gameMode, index)}</View>
@@ -189,7 +189,9 @@ const CreateLobby = () => {
           onPress={() => setIsModalVisible(true)}
           className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[80%]"
         >
-          <Text className="text-white text-[30px]">Add Game Mode</Text>
+          <Text className="text-white text-[30px] font-pangolin text-center">
+            Add Game Mode
+          </Text>
         </TouchableOpacity>
 
         {/* Corrected Modal implementation */}
@@ -200,10 +202,19 @@ const CreateLobby = () => {
           presentationStyle="pageSheet"
         >
           <View className="flex-1 justify-center items-center bg-primary_red p-10">
+            <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
+              Choose Game Mode:
+            </Text>
             <GameModeDropdown onSelect={setGameMode} />
 
             <ScrollView
-              className="flex-1 max-w-[50%] p-2"
+              style={{
+                flex: 1,
+                padding: 5,
+                minWidth: windowDimensions.width < 1036 ? "100%" : "50%",
+                maxWidth: windowDimensions.width < 1036 ? "100%" : "50%",
+              }}
+              // className="flex-1 max-w-[50%] p-2"
               contentContainerStyle={{
                 alignItems: "center",
                 paddingBottom: 20,
@@ -211,12 +222,15 @@ const CreateLobby = () => {
             >
               {gameMode !== "Select Game Mode" && (
                 <>
+                  <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
+                    Set End Conditions:
+                  </Text>
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
                       Max Score:
                     </Text>
                     <TextInput
-                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
                       onChangeText={(input) =>
                         numbersOnlyWithMax(input, 99, setMaxScore)
                       }
@@ -228,10 +242,10 @@ const CreateLobby = () => {
 
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                      Time Limit:
+                      Time Limit (m):
                     </Text>
                     <TextInput
-                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
                       onChangeText={(input) =>
                         numbersOnlyWithMax(input, 30, setTimeLimit)
                       }
@@ -246,7 +260,7 @@ const CreateLobby = () => {
                       Max Categories:
                     </Text>
                     <TextInput
-                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+                      className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
                       onChangeText={(input) =>
                         numbersOnlyWithMax(input, 10, setMaxCategories)
                       }
@@ -261,12 +275,12 @@ const CreateLobby = () => {
 
             <View className="flex-row p-1 justify-between items-center">
               <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded font-pangolin">
                   Cancel
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => createGameMode()}>
-                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded">
+                <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded font-pangolin">
                   Add
                 </Text>
               </TouchableOpacity>
@@ -284,7 +298,7 @@ const CreateLobby = () => {
               Max Total Score:
             </Text>
             <TextInput
-              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
               onChangeText={(input) =>
                 numbersOnlyWithMax(input, 99, setMaxLobbyScore)
               }
@@ -299,7 +313,7 @@ const CreateLobby = () => {
               Max Player Score:
             </Text>
             <TextInput
-              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
               onChangeText={(input) =>
                 numbersOnlyWithMax(input, 99, setMaxLobbyPlayerScore)
               }
@@ -314,7 +328,7 @@ const CreateLobby = () => {
               Time Limit (m):
             </Text>
             <TextInput
-              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%]"
+              className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
               onChangeText={(input) =>
                 numbersOnlyWithMax(input, 5, setLobbyTimeLimit)
               }
@@ -325,7 +339,7 @@ const CreateLobby = () => {
           </View>
         </ScrollView>
 
-        <View className="flex-col items-center m-10">
+        <View className="flex-col items-center m-5">
           <View className="flex-row justify-between items-center">
             <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
               Lobby Name:
@@ -338,19 +352,27 @@ const CreateLobby = () => {
             />
           </View>
 
-        {/* Submit button */}
-          <TouchableOpacity
-            onPress={submit}
-            className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]"
-          >
-            <Text>Submit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("/MainPage")}
-            className="border-2 border-dashed rounded-lg p-2 bg-red-500 font-pangolin text-white text-[30px] m-2 text-center w-[40%]"
+          <View className="flex-row">
+            {/* Submit button */}
+            <TouchableOpacity
+              onPress={submit}
+              className="border-2 border-dashed rounded-lg p-3 bg-green-700 font-pangolin text-white  m-2 text-center "
             >
-            <Text>Cancel</Text>
-          </TouchableOpacity>
+              <Text className="text-[30px] text-white font-pangolin">
+                Submit
+              </Text>
+            </TouchableOpacity>
+
+            {/* Cancel button */}
+            <TouchableOpacity
+              onPress={() => router.push("/MainPage")}
+              className="border-2 border-dashed rounded-lg p-3 bg-red-500 font-pangolin text-white text-[30px] m-2 text-center "
+            >
+              <Text className="text-[30px] text-white font-pangolin">
+                Cancel
+              </Text>
+            </TouchableOpacity>
+          </View>
 
           {errorMessage ? (
             <Text className="text-red-400 font-bold text-[15px] mb-5 text-center">
