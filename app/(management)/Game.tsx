@@ -39,7 +39,7 @@ export default function Game() {
       
     let removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
       let addedParticipants = gameState.participants.filter(x => !previousParticipants.includes(x));
-      
+      setParticipants(gameState.participants);
 
       fetchPlayerProfiles(addedParticipants).then((profiles) => {
         console.log(profiles);
