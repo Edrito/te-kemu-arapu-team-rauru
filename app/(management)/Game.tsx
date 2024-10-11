@@ -88,21 +88,22 @@ export default function Game() {
 
   const buildPageContent = () => {
     if (gameState.isLobbyOpen) {
-      return <GameLobby 
-      gameId={gameState.gameId}
-      lobbyCode={lobbyCode}
-    playerProfiles={playerProfiles}
-
-      mainState={gameState}
-      />;
+      return (
+        <GameLobby 
+          gameId={gameState.gameId}
+          lobbyCode={lobbyCode}
+          playerProfiles={playerProfiles}
+          mainState={gameState}
+        />
+      );
     }
-
+  
     if (!isInitialLoadComplete) return <Loading />;
-
+  
     const phase = gameState.state.phase;
     const gamePhase = gameState.state.gameState?.phase || '';
     const gameType = getCurrentGameType(gameState);
-
+  
     const manageCategory = () => {
       switch (gamePhase) {
         case 'choosingCategory':
@@ -110,49 +111,45 @@ export default function Game() {
             <CategorySelect
               gameId={gameState.gameId}
               lobbyCode={lobbyCode}
-            playerProfiles={playerProfiles}
-
+              playerProfiles={playerProfiles}
               mainState={gameState}
             />
           );
         case 'choosingPlayer':
           setTimeout(() => { }, 3000);
-          return <ChoosingPlayer 
-          gameId={gameState.gameId}
-          lobbyCode={lobbyCode}
-          playerProfiles={playerProfiles}
-
-          mainState={gameState}
-          />;
+          return (
+            <ChoosingPlayer 
+              gameId={gameState.gameId}
+              lobbyCode={lobbyCode}
+              playerProfiles={playerProfiles}
+              mainState={gameState}
+            />
+          );
         case 'letterSelection':
           return (
             <SelectLetter
               gameId={gameState.gameId}
               lobbyCode={lobbyCode}
-            playerProfiles={playerProfiles}
-
+              playerProfiles={playerProfiles}
               mainState={gameState}
             />
           );
-
-          case 'voting':
-            return (
-              <VotingPage
-                gameId={gameState.gameId}
-                lobbyCode={lobbyCode}
-                mainState={gameState}
-            playerProfiles={playerProfiles}
-
-              />
-            );
-            return 
+        case 'voting':
+          return (
+            <VotingPage
+              gameId={gameState.gameId}
+              lobbyCode={lobbyCode}
+              mainState={gameState}
+              playerProfiles={playerProfiles}
+            />
+          );
         default:
           return <Text>Unknown game phase</Text>;
       }
     };
-
+  
     const manageGame = () => {
-      switch (gameType) {
+      switch (gameType.toLowerCase()) { // Convert gameType to lowercase
         case 'category':
           return manageCategory();
         case 'random':
@@ -161,17 +158,19 @@ export default function Game() {
           return <Text>Unknown game type</Text>;
       }
     };
-
+  
     switch (phase) {
       case 'loading':
         return <Loading />;
       case 'end':
       case 'lobbyEnd':
-        return <Scoreboard playerScores={gameState.state.scores}
-        playerProfiles={playerProfiles}
-        isEndGame={true}
-        
-        />;
+        return (
+          <Scoreboard 
+            playerScores={gameState.state.scores}
+            playerProfiles={playerProfiles}
+            isEndGame={true}
+          />
+        );
       case 'playing':
         return manageGame();
       default:
