@@ -11,6 +11,13 @@ export const getCurrentGame = (game: MainState) => {
   return game.settings.games[currentGameId];
 };
 
+export const concatenateStrings = (strings: string[] | null): string => {
+  if (!strings || strings.length === 0) {
+    return '';
+  }
+  return strings.join('');
+};
+
 
 
 export const getCurrentGameType = (game: MainState) => {

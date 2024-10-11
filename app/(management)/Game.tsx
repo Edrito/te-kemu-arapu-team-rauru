@@ -15,6 +15,7 @@ import { useGame } from '../../context/GameContext';
 import ChoosingPlayer from '../(intermediary)/ChoosingPlayer';
 import VotingPage from '../(category)/voting';
 import { ProfileData } from '../types';
+import { concatenateStrings } from '../helpers';
 
 export default function Game() {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ export default function Game() {
       setParticipants([]);
     }
 
-    if (gameState && previousParticipants!==gameState.participants)
+    if (gameState && concatenateStrings(previousParticipants)!==concatenateStrings(gameState.participants))
     {
       
     let removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
