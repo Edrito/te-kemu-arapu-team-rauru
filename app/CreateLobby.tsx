@@ -94,7 +94,7 @@ const CreateLobby = () => {
       };
 
       const tempGame: Game = {
-        type: gameMode,
+        type: gameMode.toLowerCase(),
         endConditions: tempEndConditions,
       };
 
