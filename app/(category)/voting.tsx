@@ -17,40 +17,20 @@ import  {Timer} from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 import { getTimeRemaining } from "../helpers";
 
 
-const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }) => {
+const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, playerProfiles }) => {
 
   const [voteType, setVoted] = useState<string>("");
   const { user } = useAuth();
   const gameContext = useGame();
 
-  const [playerName, setPlayerName] = useState<string>(""); // State to hold the player name
+  const playerTurnProfile = playerProfiles.find(
+    (profile) => profile.userId === mainState.state.gameState.playerTurn
+  ); 
 
-
-  const categories = mainState.categories ?? [];
-  const categoriesCovered = mainState.state.gameState.categoriesCovered ?? [];
 
   const currentLetter = mainState.state.gameState.selectedLetter;
   const currentCategory = mainState.state.gameState.currentCategory;
 
-  const playerTurn = mainState.state.gameState.playerTurn;
-
-  // Fetch player name from Firestore
-  useEffect(() => {
-    const fetchPlayerName = async () => {
-      const db = getFirestore(); // Get Firestore instance
-      const playerDocRef = doc(db, "profiles", playerTurn); // Reference to the "playerTurn" document
-      const playerDoc = await getDoc(playerDocRef);
-
-      if (playerDoc.exists()) {
-        const data = playerDoc.data();
-        setPlayerName(data.name); // Assume the player's name is stored in a "name" field
-      } else {
-        console.log("No such document!");
-      }
-    };
-
-    fetchPlayerName();
-  }, [playerTurn]);
 
   const vote = (voteType: string) => {
     if (!user) {
@@ -71,7 +51,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState }
       >
         <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[300px]">
           <Text className="text-[40px] text-white text-center font-pangolin">
-            {playerName || "..."} is currently guessing a "{currentCategory}" starting with the letter
+            {playerTurnProfile?.username || "..."} is currently guessing a "{currentCategory}" starting with the letter
             "{currentLetter}"
           </Text>
         </View>
