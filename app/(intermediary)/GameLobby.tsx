@@ -113,29 +113,30 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
           </Text>
         </View>
 
-        <View className="w-full h-[50%]  justify-center">
+        <View className="w-full h-[50%] justify-center">
           <ScrollView className="border rounded-md bg-orange-400 p-3 m-2">
-         { playerProfiles.map((player) => (
-            <LobbyComponent  username={player.username}
-              icon={player.icon}
-              color={player.color}
-              userId={player.userId}
-              difficulty={player.difficulty}
-
-            />))}
-
+            {playerProfiles.map((player) => (
+              <LobbyComponent
+                key={player.userId}
+                username={player.username}
+                icon={player.icon}
+                color={player.color}
+                userId={player.userId}
+                difficulty={player.difficulty}
+              />
+            ))}
           </ScrollView>
         </View>
+
         <View >
           <TouchableOpacity
-            // Send to game
-            onPress={handleLeaveAction}
-            className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
-          >
-            <Text className="text-[30px] text-center font-pangolin">
-              {isLobbyHostValue ? 'End Game' : 'Leave Lobby'}
-            </Text>
-          </TouchableOpacity>
+              onPress={handleLeaveAction}
+              className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
+            >
+              <Text className="text-[30px] text-center font-pangolin">
+                {isLobbyHostValue ? 'End Game' : 'Leave Lobby'}
+              </Text>
+            </TouchableOpacity>
         </View>
         {isLobbyHostValue ? <TouchableOpacity
           // Send to game

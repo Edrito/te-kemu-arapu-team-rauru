@@ -22,7 +22,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return languageTexts[key][currentLanguage];
   };
 
-  const displayLanguage = currentLanguage === 'e' ? 'Māori' : 'English';
+  const displayLanguage = currentLanguage === 'e' ? 'English' : 'Māori';
 
   const contextValue = React.useMemo(() => ({
     currentLanguage,

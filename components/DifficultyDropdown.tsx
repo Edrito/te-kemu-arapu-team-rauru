@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Pressable, TouchableWithoutFeedback } from "react-native";
-import Animated, { useSharedValue, withTiming, useAnimatedStyle } from "react-native-reanimated";
-import '../global.css';
+import React, { useRef, useState, useEffect } from "react";
+import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useLanguage } from "../context/languageToggleButton";
+import '../global.css';
 
 interface DropdownProps {
   onSelect: (value: string) => void;
 }
 
 const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
-  const { getText } = useLanguage();
+  const { getText, currentLanguage } = useLanguage(); // Use currentLanguage to track the current language
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(getText('select'));
+  const [selectedEnglishValue, setSelectedEnglishValue] = useState<string>("Select"); // Store the English value
   const dropdownHeight = useSharedValue(0);
   const dropdownOpacity = useSharedValue(0);
   const dropdownRef = useRef<View>(null);
+
+  // Translate the selected value for display purposes
+  const translatedSelectedValue = getText(selectedEnglishValue.toLowerCase() as "beginner" | "intermediate" | "pro");
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -27,9 +30,9 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
     }
   };
 
-  const handleOptionSelect = (value: string) => {
-    setSelectedValue(value);
-    onSelect(value);
+  const handleOptionSelect = (englishValue: string) => {
+    setSelectedEnglishValue(englishValue);  // Store the English value
+    onSelect(englishValue);  // Pass the English value to the parent
     setIsOpen(false);
     dropdownHeight.value = withTiming(0, { duration: 200 });
     dropdownOpacity.value = withTiming(0, { duration: 200 });
@@ -61,7 +64,10 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
           onPress={toggleDropdown}
           className="bg-green-700 py-1.5 px-2.5 rounded border border-black"
         >
-          <Text className="text-black text-[24px] font-pangolin">{selectedValue}</Text>
+          {/* Display the translated value */}
+          <Text className="text-black text-[24px] font-pangolin text-white">
+            {translatedSelectedValue}
+          </Text>
         </Pressable>
 
         {isOpen && (
@@ -71,13 +77,13 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
             className="bg-green-700 rounded border border-black mt-0.5 w-full absolute z-20 overflow-hidden"
           >
             <Pressable onPress={() => handleOptionSelect("Beginner")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('beginner')}</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('beginner')}</Text>
             </Pressable>
             <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('intermediate')}</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('intermediate')}</Text>
             </Pressable>
             <Pressable onPress={() => handleOptionSelect("Pro")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin">{getText('pro')}</Text>
+              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('pro')}</Text>
             </Pressable>
           </Animated.View>
         )}

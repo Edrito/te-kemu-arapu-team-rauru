@@ -36,8 +36,8 @@ export default function Game() {
     if (gameState && previousParticipants!==gameState.participants)
     {
       
-    var removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
-      var addedParticipants = gameState.participants.filter(x => !previousParticipants.includes(x));
+    let removedParticipants = previousParticipants.filter(x => !gameState.participants.includes(x));
+      let addedParticipants = gameState.participants.filter(x => !previousParticipants.includes(x));
       
 
       fetchPlayerProfiles(addedParticipants).then((profiles) => {

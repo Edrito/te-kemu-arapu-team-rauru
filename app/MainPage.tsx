@@ -177,29 +177,28 @@ export default function MainPage() {
             }}
             className="flex-1 flex-start bg-primary_red"
           >
-            <Text className="text-[60px] m-5 font-pangolin text-center">
+            <Text className="text-[60px] m-5 font-pangolin text-center font-bold text-white">
               Te Kēmu Arapū
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
               A fun spoken game for family and friends to practice the Māori
-              alphabet! No board or cards needed—just your voice and some good
+              language! No board or cards needed—just your voice and some good
               company. Players have a time limit to guess, and others can vote
               on pronunciation. Perfect for gatherings and boosting te reo Māori
               skills!
             </Text>
-            <Text className="text-[50px] m-5 font-pangolin text-center">
+            <Text className="text-[50px] m-5 font-pangolin text-center underline font-bold">
               Gamemodes
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
-              <Text className="font-bold">Category: </Text>
-              Pick a category and a letter. Say a word in that category starting
-              with the chosen letter.
+              <Text className="font-bold text-orange-500
+              underline">Category: </Text>
+              Pick a category and a letter. Say a word in that category starting with the chosen letter.
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
-              <Text className="font-bold">Random: </Text>A letter is picked at
-              random, and you need to say a word that starts with it.
+              <Text className="font-bold text-orange-500 underline">Random: </Text>
+              A letter is picked at random, and you need to say a word that starts with it.
             </Text>
-
             <TouchableOpacity
               className="border-2 border-dashed bg-green-700 my-5"
               onPress={() => setGameGuideModal(false)}

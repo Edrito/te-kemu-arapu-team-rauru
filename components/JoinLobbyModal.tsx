@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, Modal, Pressable, TextInput } from 'react-native';
-import { Keyboard } from 'react-native';
+import { View, Text, Modal, Pressable, TextInput, Keyboard } from 'react-native';
 
 interface JoinLobbyModalProps {
   visible: boolean;
@@ -10,8 +9,6 @@ interface JoinLobbyModalProps {
 
 const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoin }) => {
   const [code, setCode] = useState(['', '', '', '']);
-
-  // Refs to handle focus on inputs
   const inputRefs = useRef<Array<TextInput | null>>([]);
 
   const handleChangeText = (index: number, value: string) => {
@@ -51,7 +48,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
       onRequestClose={onClose}
     >
       <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-        <View className="bg-primary_red w-[80%] p-6 shadow-lg">
+        <View className="bg-primary_red w-[90%] max-w-lg p-6 shadow-lg rounded-lg">
           <Text className="text-[24px] text-center font-bold mb-4">Enter 4-Digit Code</Text>
 
           {/* 4 text inputs for each digit */}
@@ -60,7 +57,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
               <TextInput
                 key={index}
                 ref={(ref) => (inputRefs.current[index] = ref)}
-                className="border-2 bg-slate-50 border-gray-300 w-[50px] h-[50px] text-center text-[24px] mx-2 rounded"
+                className="border-2 bg-slate-50 border-gray-300 w-[50px] h-[50px] text-center text-[24px] mx-1 rounded"
                 maxLength={1}
                 keyboardType="numeric"
                 value={digit}
