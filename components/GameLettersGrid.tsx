@@ -7,6 +7,7 @@ interface LettersGridProps {
   allLetters: string[]; // All available letters
   selectedLetter: string; // Currently selected letter
   selectLetter: (letter: string) => void; // Function to handle letter selection
+  allowSelection: boolean; // Allow selection of letters
 }
 
 const LettersGrid: React.FC<LettersGridProps> = ({
@@ -14,6 +15,7 @@ const LettersGrid: React.FC<LettersGridProps> = ({
   allLetters,
   selectedLetter,
   selectLetter,
+  allowSelection,
 }) => {
   return (
     <View className="w-full h-full justify-center items-center flex-1 flex-row flex-wrap">
@@ -24,6 +26,7 @@ const LettersGrid: React.FC<LettersGridProps> = ({
           isSelected={selectedLetter === letter}
           isCovered={selectedLetters.includes(letter)}
           onPress={() => selectLetter(letter)}
+          allowSelection= {allowSelection}
         />
       ))}
     </View>

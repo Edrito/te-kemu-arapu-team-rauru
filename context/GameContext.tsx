@@ -19,6 +19,7 @@ interface GameContextType {
   passTurn: () => Promise<void>;
   playerVote: (voteType: string) => Promise<void>;
   lobbyUpsert: (lobbyConfig: GameSettings) => Promise<any>;
+  getHint: (category:string, letter:string) => Promise<any>;
   fetchPlayerProfiles: (participants: string[]) => Promise<ProfileData[]>;
 }
 
@@ -102,7 +103,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const sendAction = async (actionPayload: any) => {
     if (!actionPayload) return;
     try {
-      await sendPlayerAction(actionPayload);
+      return await sendPlayerAction(actionPayload);
     } catch (error) {
       console.error('Error sending action:', error);
     }
@@ -147,6 +148,14 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   };
 
+  const getHint = async (category:string, letter:string) => {
+    const actionPayload = createGameAction('hint', {
+      category,
+      letter
+    });
+    return await sendAction(actionPayload);
+  }
+
   const selectLetter = async (letter: string) => {
     const actionPayload = createGameAction('letterSelect', { letter });
     await sendAction(actionPayload);
@@ -175,7 +184,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       selectLetter,
       passTurn,
       categoryVote,
-      playerVote,
+      playerVote,getHint,
       lobbyUpsert, fetchPlayerProfiles
     }),
     [gameState,
@@ -183,7 +192,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       passTurn,
       playerVote,
 
-      unsubscribeFromGame, lobbyUpsert, fetchPlayerProfiles, startGame, leaveLobby, deleteLobby, categoryVote]
+      unsubscribeFromGame,getHint, lobbyUpsert, fetchPlayerProfiles, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;

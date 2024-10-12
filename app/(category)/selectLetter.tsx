@@ -7,11 +7,13 @@ import { getTimeRemaining } from "../helpers";
 import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
 import { Timer } from "te-kemu-arapu-compx374-team-rauru/components/Timer";
 import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
+import { useAuth } from "te-kemu-arapu-compx374-team-rauru/context/AuthContext";
 
 const SelectLetter: React.FC<GameScreenParams> = ({
   gameId,
   lobbyCode,
   mainState,
+  playerProfiles
 }) => {
   const selectedCategory = mainState.state.gameState.currentCategory;
   const gameContext = useGame();
@@ -19,6 +21,12 @@ const SelectLetter: React.FC<GameScreenParams> = ({
   const [selectedLetter, setSelectedLetter] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
   const { getText } = useLanguage();
+  const auth = useAuth();
+
+  const isPlayerTurn = mainState.state.gameState.playerTurn === auth.user?.uid;
+  const playerTurnProfile = playerProfiles.find(
+    (profile) => profile.userId === mainState.state.gameState.playerTurn
+  );
 
   const handleSelectLetter = (letter: string) => {
     gameContext.selectLetter(letter);
@@ -73,11 +81,12 @@ const SelectLetter: React.FC<GameScreenParams> = ({
             allLetters={mainState.alphabet ?? []}
             selectedLetter={selectedLetter}
             selectLetter={handleSelectLetter}
+            allowSelection={isPlayerTurn}
           />
         </View>
 
         {/* Random selection button */}
-        <View className="w-full items-center justify-center m-5">
+        {isPlayerTurn? <View className="w-full items-center justify-center m-5">
           <Pressable
             className={`border-2 border-dashed items-center justify-center p-3 w-[40%] ${
               selectedOption === "random"
@@ -88,13 +97,15 @@ const SelectLetter: React.FC<GameScreenParams> = ({
           >
             <Text className="text-[40px] text-white">{getText('random')}</Text>
           </Pressable>
-        </View>
+        </View>:null}
       </ScrollView>
 
       {/* Prompt to select a letter */}
       <View className="w-full items-center justify-center">
         <Text className="text-[40px] text-center text-white font-pangolin">
-          {getText('itsYourTurn')}
+          {isPlayerTurn? getText('itsYourTurn') :
+          playerTurnProfile?.username  +" " +   getText('isCurrentlySelecting') 
+          }
         </Text>
       </View>
 
@@ -105,7 +116,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
           onTimeUp={() => {}}
         />
 
-        <Pressable
+       { isPlayerTurn? <Pressable
           className={`m-2 p-6 border-2 border-dashed items-center ${
             selectedOption === "pass"
               ? "bg-button_pressed_orange"
@@ -114,7 +125,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
           onPress={handlePass}
         >
           <Text className="text-[40px] text-white">{getText('pass')}</Text>
-        </Pressable>
+        </Pressable>:null}
       </View>
     </SafeAreaView>
   );

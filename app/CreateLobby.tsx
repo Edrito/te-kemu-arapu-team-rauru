@@ -135,15 +135,15 @@ const CreateLobby = () => {
 
   const renderGameModeView = (mode: Game, index: number) => {
     switch (mode.type) {
-      case "Category":
-      case "Random":
+      case "category":
+      case "random":
         return (
           <View className="w-full flex-row justify-start items-center border-2 bg-green-950">
-            <Text className="font-pangolin text-[30px] text-white border-2 border-dashed p-1 text-center">
+            {/* <Text className="font-pangolin text-[30px] text-white border-2 border-dashed p-1 text-center">
               {index + 1}
-            </Text>
+            </Text> */}
             <Text className="font-pangolin text-[30px] text-white text-center ml-2">
-              {mode.type}
+                {mode.type.charAt(0).toUpperCase() + mode.type.slice(1).toLowerCase()}
             </Text>
           </View>
         );
@@ -179,7 +179,7 @@ const CreateLobby = () => {
         </Text>
 
         <View className="w-full max-h-[300px] min-h-[100px]">
-          <ScrollView className="border-2 border-dashed rounded-lg bg-orange-500 p-3 w-full flex-1">
+          <ScrollView className="border-2 border-dashed rounded-lg bg-green-700 p-3 w-full flex-1">
             {selectedGameModes.map((gameMode, index) => (
               <View key={index}>{renderGameModeView(gameMode, index)}</View>
             ))}
@@ -191,7 +191,7 @@ const CreateLobby = () => {
           className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[80%]"
         >
           <Text className="text-white text-[30px] font-pangolin text-center">
-            {getText("addGameType")}:
+            {getText("addGameType")}
           </Text>
         </TouchableOpacity>
 

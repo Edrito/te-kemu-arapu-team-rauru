@@ -174,6 +174,10 @@ export const languageTexts = {
         e: "It's your turn to select a letter!",
         m: "Ko tō tāu e kōwhiri i te pū!"
     },
+    isCurrentlySelecting: {
+        e: "is currently selecting a letter!",
+        m: "e kōwhiri ana i te pū!"
+    },
     isCurrentlyGuessing: {
         e: "is currently guessing a",
         m: "e mahi ana i te"

@@ -41,11 +41,11 @@ const GameModeDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
               {getText("category")}
             </Text>
           </Pressable>
-          <Pressable onPress={() => handleOptionSelect("Random")}>
+          {/* <Pressable onPress={() => handleOptionSelect("Random")}>
             <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin">
               {getText("random")}
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
       )}
     </View>

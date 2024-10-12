@@ -98,58 +98,9 @@ const Start = () => {
                 {getText("start")}
               </Text>
             </TouchableOpacity>
-            {/* 
-            <Pressable
-              onPress={() => router.push("/profile")}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? "#4CAF50" : "#2F6D30",
-                  padding: 20,
-                  borderRadius: 8,
-                  borderWidth: 2,
-                  borderColor: "black",
-                  borderStyle: "dashed",
-                  margin: 10,
-                },
-              ]}
-            >
-              <Text className="text-[30px] font-bold text-white font-crayonara">
-                {getText("start")}
-              </Text>
-            </Pressable> */}
-            {/* TODO: DELETE THIS */}
-            <View>
-              {/* <Text>This is an index to goto and test pages</Text> */}
-              {/* <Button
-              title="(TESTING) go to scoreboard screen"
-              onPress={() => router.push("/Score")}
-            />
-            <Button
-              title="(TESTING) go to loading screen"
-              onPress={() => router.push("/Loading")}
-            /> */}
-              {/* <Button
-              title="(TESTING) game state with wheel"
-              onPress={() => router.push("/gameState")}
-            /> */}
-              {/* <Button
-              title="(TESTING) go to category screen"
-              onPress={() => router.push("/selectCategory")}
-            /> */}
-              {/* <Button
-              title="(TESTING) go to letter select screen (Player POV)"
-              onPress={() => router.push("/selectLetterPlayer")}
-            />
-            <Button
-              title="(TESTING) go to letter select screen (Spectator POV)"
-              onPress={() => router.push("/selectLetterSpectator")}
-            /> */}
-              {/* <Button
-              title="(TESTING) go to vote screen"
-              onPress={() => router.push("/voting")}
-            /> */}
-            </View>
-
+        
+        
+        
             <Text className="text-[30px] self-center font-bold">DEMO</Text>
           </View>
         </ScrollView>

@@ -5,10 +5,11 @@ import "te-kemu-arapu-compx374-team-rauru/global.css";
 import { FACTS } from "te-kemu-arapu-compx374-team-rauru/constants/MaoriFacts";
 import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
+const randomFact = FACTS[Math.floor(Math.random() * FACTS.length)];
+
 const Loading = () => {
   const { getText } = useLanguage();    
-  const randomFact = FACTS[Math.floor(Math.random() * FACTS.length)];
-  
+
   // This is so that the page changes size in real time when screen size changes
   const [windowDimensions, setWindowDimensions] = useState(
     Dimensions.get("window")
