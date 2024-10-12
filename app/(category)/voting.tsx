@@ -29,7 +29,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      <ScrollView contentContainerStyle={{ alignItems: "center" }} className="p-5">
+      <ScrollView contentContainerStyle={{ alignItems: "center" }} className="">
         <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[300px]">
           <Text className="text-[40px] text-white text-center font-pangolin">
             {playerTurnProfile?.username ?? "..."} is currently guessing a "{currentCategory}" starting with the letter "{currentLetter}"

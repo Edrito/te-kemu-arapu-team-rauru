@@ -35,8 +35,8 @@ const VoteBox = ({ voteType, isSelected, onPress }: { voteType: string, isSelect
       }`}
       style={{
         height: 150,
-        minWidth: windowDimensions.width < 1036 ? 200 : 500,
-        maxWidth: windowDimensions.width < 1036 ? 200 : 500,
+        minWidth: windowDimensions.width < 600 ? 100 : 150,
+        maxWidth: windowDimensions.width < 600 ? 100 : 150,
       }}
     >
       <Text className="text-white text-[30px]">
