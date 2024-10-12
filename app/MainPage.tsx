@@ -102,7 +102,7 @@ export default function MainPage() {
     <SafeAreaView className="flex-1 bg-primary_red">
       <PlayerBar playerIcon={""} />
       <ScrollView
-        className="p-5"
+        className="m-10"
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
         showsVerticalScrollIndicator={true}
         keyboardShouldPersistTaps="handled"
@@ -155,7 +155,7 @@ export default function MainPage() {
         </Pressable>
 
         <TouchableOpacity
-          className="items-center justify-center border-2 border-dashed w-[100px] p-3 bg-orange-400 absolute bottom-5 right-5"
+          className="items-center justify-center border-2 border-dashed w-[100px] p-3 bg-orange-400 m-10"
           onPress={() => setGameGuideModal(true)}
         >
           <Text className="text-center font-pangolin text-[20px]">
@@ -211,7 +211,7 @@ export default function MainPage() {
         </Modal>
 
         {/* Footer */}
-        <Text className="mt-24 text-[20px] text-black text-center">DEMO</Text>
+        {/* <Text className="mt-24 text-[20px] text-black text-center">DEMO</Text> */}
       </ScrollView>
 
       {/* Join Lobby Modal */}

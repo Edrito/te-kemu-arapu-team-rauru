@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../global.css";
 import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import {
@@ -9,6 +9,8 @@ import {
   View,
   ScrollView,
   ImageBackground,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../context/AuthContext";
@@ -45,24 +47,52 @@ const Start = () => {
     }
   }, [user]);
 
+  const [windowDimensions, setWindowDimensions] = useState(
+    Dimensions.get("window")
+  );
+  useEffect(() => {
+    const resizeScreen = () => {
+      setWindowDimensions(Dimensions.get("window"));
+    };
+
+    const subscription = Dimensions.addEventListener("change", resizeScreen);
+
+    return () => subscription?.remove();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      <ImageBackground
-        source={require("../assets/images/tekemuarapu-bg-80.jpg")}
-        className="flex-1"
-        resizeMode="contain"
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={true}
+        style={{ marginTop: 100 }}
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={true}
-          style={{ marginTop: 100 }}
+        <ImageBackground
+          source={require("../assets/images/tekemuarapu-bg-80.jpg")}
+          className="flex-1 justify-center w-full h-full"
+          resizeMode="cover"
         >
           <View className="flex-1 justify-center items-center">
-            <Text style={{textShadowColor: 'white', textShadowRadius: 5}} className="font-pangolin text-[130px] p-[100px] text-center">
+            <Text
+              style={{
+                textShadowColor: "white",
+                textShadowRadius: 5,
+                fontSize: windowDimensions.width < 1036 ? 60 : 130,
+              }}
+              className="font-pangolin p-[100px] text-center"
+            >
               Te kēmu Arapū
             </Text>
 
+            <TouchableOpacity
+              onPress={() => router.push("/profile")}
+              className="p-[20px] border-2 border-dashed rounded-lg bg-green-800 m-[20px]"
+            >
+              <Text className="text-[30px] font-bold text-white font-pangolin">
+                {getText("start")}
+              </Text>
+            </TouchableOpacity>
+            {/* 
             <Pressable
               onPress={() => router.push("/profile")}
               style={({ pressed }) => [
@@ -78,9 +108,9 @@ const Start = () => {
               ]}
             >
               <Text className="text-[30px] font-bold text-white font-crayonara">
-                {getText('start')}
+                {getText("start")}
               </Text>
-            </Pressable>
+            </Pressable> */}
             {/* TODO: DELETE THIS */}
             <View>
               {/* <Text>This is an index to goto and test pages</Text> */}
@@ -114,12 +144,10 @@ const Start = () => {
             /> */}
             </View>
 
-            <Text className="text-[30px] self-center font-bold">
-              DEMO
-            </Text>
+            <Text className="text-[30px] self-center font-bold">DEMO</Text>
           </View>
-        </ScrollView>
-      </ImageBackground>
+        </ImageBackground>
+      </ScrollView>
     </SafeAreaView>
   );
 };

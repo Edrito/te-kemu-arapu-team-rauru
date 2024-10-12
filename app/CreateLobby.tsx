@@ -210,7 +210,7 @@ const CreateLobby = () => {
             <ScrollView
               style={{
                 flex: 1,
-                padding: 5,
+                padding: 3,
                 minWidth: windowDimensions.width < 1036 ? "100%" : "50%",
                 maxWidth: windowDimensions.width < 1036 ? "100%" : "50%",
               }}
@@ -289,7 +289,7 @@ const CreateLobby = () => {
         </Modal>
 
         <Text className="text-[30px] text-white font-pangolin m-2 border-2 border-dashed rounded-lg p-2 bg-green-700 w-full text-center">
-          Lobby End Conditions
+          Set Lobby End Conditions
         </Text>
 
         <ScrollView className="border-2 border-dashed rounded-lg bg-green-700 p-3 w-full flex-grow">
@@ -353,6 +353,15 @@ const CreateLobby = () => {
           </View>
 
           <View className="flex-row">
+            <TouchableOpacity
+              onPress={() => router.push("/MainPage")}
+              className="border-2 border-dashed rounded-lg p-3 bg-red-500 font-pangolin text-white text-[30px] m-2 text-center "
+            >
+              <Text className="text-[30px] text-white font-pangolin">
+                Cancel
+              </Text>
+            </TouchableOpacity>
+
             {/* Submit button */}
             <TouchableOpacity
               onPress={submit}
@@ -364,14 +373,6 @@ const CreateLobby = () => {
             </TouchableOpacity>
 
             {/* Cancel button */}
-            <TouchableOpacity
-              onPress={() => router.push("/MainPage")}
-              className="border-2 border-dashed rounded-lg p-3 bg-red-500 font-pangolin text-white text-[30px] m-2 text-center "
-            >
-              <Text className="text-[30px] text-white font-pangolin">
-                Cancel
-              </Text>
-            </TouchableOpacity>
           </View>
 
           {errorMessage ? (

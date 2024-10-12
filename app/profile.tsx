@@ -72,10 +72,10 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+    <SafeAreaView className="flex-1 justify-center items-center bg-primary_red pb-2">
       <PlayerBar playerIcon={icon ?? ""} />
       <ScrollView
-        className={`flex-1 ${isSmallScreen ? "w-full" : "w-4/6"} p-4`}
+        className={`flex-1 ${isSmallScreen ? "w-full" : "w-4/6"} px-4 pb-10`}
         contentContainerStyle={{ alignItems: "center" }}
       >
         <Text className={`font-pangolin ${isSmallScreen ? "text-4xl" : "text-6xl"} text-center p-5`}>
