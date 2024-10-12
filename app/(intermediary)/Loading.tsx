@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "te-kemu-arapu-compx374-team-rauru/global.css";
 import { FACTS } from "te-kemu-arapu-compx374-team-rauru/constants/MaoriFacts";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 const Loading = () => {
+  const { getText } = useLanguage();    
   const randomFact = FACTS[Math.floor(Math.random() * FACTS.length)];
   
   // This is so that the page changes size in real time when screen size changes
@@ -37,7 +39,7 @@ const Loading = () => {
 
       <View className="m-[50px] w-[80%]">
         <Text className="font-pangolin text-[70px] text-center p-5">
-          Loading
+          {getText("loading")}
         </Text>
 
         <ActivityIndicator size={"large"} color={"black"} />
@@ -48,7 +50,7 @@ const Loading = () => {
           style={{ fontSize: windowDimensions.width < 1036 ? 50 : 70 }}
           className="font-pangolin text-center p-5 border-2 border-dashed rounded-xl bg-green-700 mb-[30px]"
         >
-          Did you know:
+        {getText("didYouKnow")}
         </Text>
       </View>
 

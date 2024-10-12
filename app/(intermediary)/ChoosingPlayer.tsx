@@ -5,6 +5,7 @@ import "te-kemu-arapu-compx374-team-rauru/global.css";
 import { GameScreenParams } from "../types";
 import { getTimeRemaining } from "../helpers";
 import { Timer } from "te-kemu-arapu-compx374-team-rauru/components/Timer";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 const ChoosingPlayer: React.FC<GameScreenParams> = ({
   gameId,
@@ -12,6 +13,7 @@ const ChoosingPlayer: React.FC<GameScreenParams> = ({
   mainState,
 }) => {
   const remainingTime = getTimeRemaining(mainState, true);
+  const { getText } = useLanguage();
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
@@ -31,7 +33,7 @@ const ChoosingPlayer: React.FC<GameScreenParams> = ({
         style={{ margin: 50 }}
       >
         <Text className="font-pangolin text-white text-[70px] p-5">
-          Selecting a player!
+          {getText("selectingPlayer")}
         </Text>
       </View>
       <View>

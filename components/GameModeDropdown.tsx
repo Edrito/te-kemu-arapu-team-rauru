@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import "../global.css";
+import { useLanguage } from "../context/languageToggleButton";
 
 // This component is a dropdown view used for selecting the difficulty level
 // in the create profile screen
@@ -12,6 +13,7 @@ interface DropdownProps {
 const GameModeDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Select Game Mode");
+  const { getText } = useLanguage();
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -36,12 +38,12 @@ const GameModeDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
         <View className="bg-orange-500 rounded border border-black mt-0.5 w-full overflow-hidden">
           <Pressable onPress={() => handleOptionSelect("Category")}>
             <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin">
-              Category
+              {getText("category")}
             </Text>
           </Pressable>
           <Pressable onPress={() => handleOptionSelect("Random")}>
             <Text className="p-1.5 pl-2.5 text-[24px] font-pangolin">
-              Random
+              {getText("random")}
             </Text>
           </Pressable>
         </View>

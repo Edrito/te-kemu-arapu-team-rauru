@@ -6,6 +6,7 @@ import { GameScreenParams } from "../types"; // Assuming you have these types de
 import { getTimeRemaining } from "../helpers";
 import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
 import { Timer } from "te-kemu-arapu-compx374-team-rauru/components/Timer";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 const SelectLetter: React.FC<GameScreenParams> = ({
   gameId,
@@ -17,6 +18,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
   const [hasPassed, setHasPassed] = useState<boolean>(false);
   const [selectedLetter, setSelectedLetter] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const { getText } = useLanguage();
 
   const handleSelectLetter = (letter: string) => {
     gameContext.selectLetter(letter);
@@ -46,7 +48,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
       {/* Header bar */}
       <View className="w-full items-center justify-center mt-3">
         <Text className="text-[40px] text-white font-pangolin">
-          Category: {selectedCategory}
+          {getText('category')}: {selectedCategory}
         </Text>
       </View>
 
@@ -84,7 +86,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
             }`}
             onPress={handleRandomSelection}
           >
-            <Text className="text-[40px] text-white">RANDOM</Text>
+            <Text className="text-[40px] text-white">{getText('random')}</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -92,7 +94,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
       {/* Prompt to select a letter */}
       <View className="w-full items-center justify-center">
         <Text className="text-[40px] text-center text-white font-pangolin">
-          It's your turn to select a letter!
+          {getText('itsYourTurn')}
         </Text>
       </View>
 
@@ -111,7 +113,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
           }`}
           onPress={handlePass}
         >
-          <Text className="text-[40px] text-white">PASS</Text>
+          <Text className="text-[40px] text-white">{getText('pass')}</Text>
         </Pressable>
       </View>
     </SafeAreaView>

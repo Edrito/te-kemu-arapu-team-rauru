@@ -6,8 +6,10 @@ import { getTimeRemaining } from "../helpers";
 import { GameScreenParams } from "../types";
 import { useAuth } from "te-kemu-arapu-compx374-team-rauru/context/AuthContext";
 import { useGame } from "te-kemu-arapu-compx374-team-rauru/context/GameContext";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, playerProfiles }) => {
+  const { getText } = useLanguage();
   const [voteType, setVoted] = useState<string>("");
   const { user } = useAuth();
   const gameContext = useGame();
@@ -32,7 +34,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
       <ScrollView contentContainerStyle={{ alignItems: "center" }} className="">
         <View className="border-2 border-dashed bg-game_buttons_green p-5 items-center justify-center rounded-xl w-[80%] min-h-[300px]">
           <Text className="text-[40px] text-white text-center font-pangolin">
-            {playerTurnProfile?.username ?? "..."} is currently guessing a "{currentCategory}" starting with the letter "{currentLetter}"
+            {playerTurnProfile?.username ?? "..."} {getText("isCurrentlyGuessing")} {currentCategory} {getText("startingWithTheLetter")} {currentLetter}
           </Text>
         </View>
 
@@ -47,7 +49,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
         {/* Question section */}
         <View className="border-2 border-dashed bg-orange-600 p-5 items-center justify-center rounded-xl w-[80%] min-h-[150px] m-3">
           <Text className="text-[40px] text-white text-center font-pangolin">
-            Did they guess correctly?
+            {getText("didTheyGuessCorrectly")}
           </Text>
         </View>
 

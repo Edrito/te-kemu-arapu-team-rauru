@@ -14,10 +14,12 @@ import { router } from "expo-router"; import {
 import { isLobbyHost } from '../helpers';
 import { useGame } from '../../context/GameContext';
 import { GameScreenParams } from "../types";
+import { useLanguage } from '../../context/languageToggleButton';
 
 const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, playerProfiles }) => {
   const { gameState, startGame, leaveLobby, deleteLobby } = useGame();
   const { user } = useAuth();
+  const { getText } = useLanguage();
 
 
   const isLobbyHostValue = isLobbyHost(gameState, user?.uid ?? '');
@@ -111,14 +113,11 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
           <Text className="font-pangolin text-[70px] text-center">
             Te kēmu Arapū
           </Text>
-          <Text className="font-pangolin text-[60px] text-center">
-            The Alphabet Game
-          </Text>
         </View>
 
         <View className="items-center flex-row justify-between flex-1 m-3 border-4 border-dashed rounded-lg p-10 bg-green-950 min-h-[60px] max-h-[60px]">
           <Text className="text-white text-[30px] font-bold mr-5 font-pangolin">
-            Lobby Code:
+            {getText('lobbyCode')}
           </Text>
           <Text className="text-[40px] font-bold border-2 border-dashed rounded-lg p-2 bg-white font-pangolin">
             {gameState?.lobbyCode ?? ''}
@@ -147,7 +146,7 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
           className="justify-center h-[60px] border-2 border-dashed bg-green-700 p-0.5 px-5 m-2 rounded"
         >
           <Text className="text-[30px] text-center font-pangolin">
-            Start Game
+            {getText('startGame')}
           </Text>
         </TouchableOpacity> : null}
 
@@ -156,7 +155,7 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
             className="justify-center h-[60px] border-2 border-dashed bg-red-500 p-0.5 px-5 m-2 rounded"
             >
               <Text className="text-[30px] text-center font-pangolin">
-                {isLobbyHostValue ? 'End Game' : 'Leave Lobby'}
+                {isLobbyHostValue ? getText('endGame') : getText('leaveGame')}
               </Text>
             </TouchableOpacity>
         </View>

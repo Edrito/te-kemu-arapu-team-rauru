@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Modal, Pressable, TextInput, Keyboard } from 'react-native';
+import { useLanguage } from 'te-kemu-arapu-compx374-team-rauru/context/languageToggleButton';
 
 interface JoinLobbyModalProps {
   visible: boolean;
@@ -10,6 +11,7 @@ interface JoinLobbyModalProps {
 const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoin }) => {
   const [code, setCode] = useState(['', '', '', '']);
   const inputRefs = useRef<Array<TextInput | null>>([]);
+  const { getText } = useLanguage();
 
   const handleChangeText = (index: number, value: string) => {
     if (/^[a-zA-Z0-9]$/.test(value) || value === '') {
@@ -59,7 +61,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
                 ref={(ref) => (inputRefs.current[index] = ref)}
                 className="border-2 bg-slate-50 border-gray-300 w-14 h-14 text-center text-[18px] md:w-16 md:h-16 md:text-[24px] rounded"
                 maxLength={1}
-                keyboardType="numeric"
+                inputMode='numeric'
                 value={digit}
                 onChangeText={(value) => handleChangeText(index, value)}
                 autoFocus={index === 0}
@@ -72,12 +74,12 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
             className="bg-game_buttons_green py-3.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
             onPress={joinGame}
           >
-            <Text className="text-[18px] font-bold text-white">OK</Text>
+            <Text className="text-[18px] font-bold text-white">{getText('join')}</Text>
           </Pressable>
 
           {/* Cancel button */}
           <Pressable onPress={onClose} className="mt-4">
-            <Text className="text-center text-[18px] text-black">Cancel</Text>
+            <Text className="text-center text-[18px] text-black">{getText('cancel')}</Text>
           </Pressable>
         </View>
       </View>

@@ -7,7 +7,7 @@ import { useLanguage } from "../context/languageToggleButton";
 
 const GameBar: React.FC  <GameScreenParams>  = ({mainState, gameId, lobbyCode, playerProfiles}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { toggleLanguage, displayLanguage } = useLanguage();
+  const { toggleLanguage, displayLanguage, getText } = useLanguage();
 
   const changeLanguage = () => {
     toggleLanguage();
@@ -18,7 +18,7 @@ const GameBar: React.FC  <GameScreenParams>  = ({mainState, gameId, lobbyCode, p
       {/* Score Button */}
       <Pressable onPress={() => setIsModalVisible(true)}>
         <Text className="text-[30px] font-bold font-pangolin m-2 p-2 border-2 border-dashed bg-orange-500">
-          Score
+          {getText("scores")}
         </Text>
       </Pressable>
 

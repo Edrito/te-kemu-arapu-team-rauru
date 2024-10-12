@@ -175,7 +175,7 @@ export default function MainPage() {
           onPress={() => setGameGuideModal(true)}
         >
           <Text className="text-center font-pangolin text-[20px]">
-            How to Play
+            {getText('gameGuide')}
           </Text>
         </TouchableOpacity>
 

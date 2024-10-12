@@ -20,12 +20,13 @@ import {
   LobbyEndConditions,
 } from "./types";
 import { useGame } from "../context/GameContext";
+import { useLanguage } from "../context/languageToggleButton";
 
 const CreateLobby = () => {
   const playerIconTest = "../assets/images/react-logo.png";
   const { gameState, lobbyUpsert } = useGame();
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { getText } = useLanguage();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameMode, setGameMode] = useState("Select Game Mode");
   const [selectedGameModes, setSelectedGameModes] = useState<Game[]>([]);
@@ -170,11 +171,11 @@ const CreateLobby = () => {
         }}
       >
         <Text className="text-[50px] text-white font-pangolin m-2">
-          Create Lobby
+          {getText("createLobby")}
         </Text>
 
         <Text className="text-[30px] text-white font-pangolin m-2 border-2 border-dashed rounded-lg p-2 bg-green-700 w-full text-center">
-          Games
+          {getText("games")}
         </Text>
 
         <View className="w-full max-h-[300px] min-h-[100px]">
@@ -190,7 +191,7 @@ const CreateLobby = () => {
           className="border-2 border-dashed rounded-lg p-2 bg-orange-500 font-pangolin text-white text-[30px] m-2 text-center w-[80%]"
         >
           <Text className="text-white text-[30px] font-pangolin text-center">
-            Add Game Mode
+            {getText("addGameType")}:
           </Text>
         </TouchableOpacity>
 
@@ -203,7 +204,7 @@ const CreateLobby = () => {
         >
           <View className="flex-1 justify-center items-center bg-primary_red p-10">
             <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Choose Game Mode:
+              {getText("chooseGameMode")}:
             </Text>
             <GameModeDropdown onSelect={setGameMode} />
 
@@ -223,11 +224,11 @@ const CreateLobby = () => {
               {gameMode !== "Select Game Mode" && (
                 <>
                   <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                    Set End Conditions:
+                    {getText("setLobbyEnd")}:
                   </Text>
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                      Max Score:
+                      {getText("maxTotalScore")}:
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -236,13 +237,13 @@ const CreateLobby = () => {
                       }
                       value={maxScore}
                       placeholder="-"
-                      keyboardType="numeric"
+                      inputMode="numeric"
                     />
                   </View>
 
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                      Time Limit (m):
+                      {getText("timeLimit")} (m):
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -251,13 +252,13 @@ const CreateLobby = () => {
                       }
                       value={timeLimit}
                       placeholder="-"
-                      keyboardType="numeric"
+                      inputMode="numeric"
                     />
                   </View>
 
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                      Max Categories:
+                      {getText("maxCategories")}:
                     </Text>
                     <TextInput
                       className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -266,7 +267,7 @@ const CreateLobby = () => {
                       }
                       value={maxCategories}
                       placeholder="-"
-                      keyboardType="numeric"
+                      inputMode="numeric"
                     />
                   </View>
                 </>
@@ -276,12 +277,12 @@ const CreateLobby = () => {
             <View className="flex-row p-1 justify-between items-center">
               <TouchableOpacity onPress={() => setIsModalVisible(false)}>
                 <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded font-pangolin">
-                  Cancel
+                  {getText("cancel")}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => createGameMode()}>
                 <Text className="text-[30px] border-2 border-black border-dashed bg-orange-500 p-0.5 px-5 m-1 rounded font-pangolin">
-                  Add
+                  {getText("add")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -289,13 +290,13 @@ const CreateLobby = () => {
         </Modal>
 
         <Text className="text-[30px] text-white font-pangolin m-2 border-2 border-dashed rounded-lg p-2 bg-green-700 w-full text-center">
-          Set Lobby End Conditions
+          {getText("setLobbyEnd")}
         </Text>
 
         <ScrollView className="border-2 border-dashed rounded-lg bg-green-700 p-3 w-full flex-grow">
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Max Total Score:
+              {getText("maxTotalScore")}:
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -304,13 +305,13 @@ const CreateLobby = () => {
               }
               value={maxLobbyScore}
               placeholder="-"
-              keyboardType="numeric"
+              inputMode="numeric"
             />
           </View>
 
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Max Player Score:
+              {getText("maxPlayerScore")}:
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -319,13 +320,13 @@ const CreateLobby = () => {
               }
               value={maxLobbyPlayerScore}
               placeholder="-"
-              keyboardType="numeric"
+              inputMode="numeric"
             />
           </View>
 
           <View className="flex-row p-1 justify-between items-center">
             <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Time Limit (m):
+              {getText('timeLimit')} (m):
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-400 text-[30px] p-2 m-2 w-[40%] font-pangolin"
@@ -334,7 +335,7 @@ const CreateLobby = () => {
               }
               value={lobbyTimeLimit}
               placeholder="-"
-              keyboardType="numeric"
+              inputMode="numeric"
             />
           </View>
         </ScrollView>
@@ -342,7 +343,7 @@ const CreateLobby = () => {
         <View className="flex-col items-center m-5">
           <View className="flex-row justify-between items-center">
             <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
-              Lobby Name:
+              {getText("lobbyName")}:
             </Text>
             <TextInput
               className="border-2 border-dashed text-center bg-orange-500 text-[30px] p-2 m-2 w-[60%]"
@@ -358,7 +359,7 @@ const CreateLobby = () => {
               className="border-2 border-dashed rounded-lg p-3 bg-red-500 font-pangolin text-white text-[30px] m-2 text-center "
             >
               <Text className="text-[30px] text-white font-pangolin">
-                Cancel
+                {getText("cancel")}
               </Text>
             </TouchableOpacity>
 
@@ -368,7 +369,7 @@ const CreateLobby = () => {
               className="border-2 border-dashed rounded-lg p-3 bg-green-700 font-pangolin text-white  m-2 text-center "
             >
               <Text className="text-[30px] text-white font-pangolin">
-                Submit
+                {getText("create")}
               </Text>
             </TouchableOpacity>
 

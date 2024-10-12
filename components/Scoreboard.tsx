@@ -6,6 +6,7 @@ import { useRouter } from "expo-router";
 import '../global.css';
 import { useGame } from "../context/GameContext";
 import { ProfileData } from "te-kemu-arapu-compx374-team-rauru/app/types";
+import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
 
 
 
@@ -19,6 +20,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles,is
   const [windowDimensions, setWindowDimensions] = useState(Dimensions.get("window"));
   const { resetGameState } = useGame();
   const router = useRouter();
+  const { getText } = useLanguage();
 
  
 
@@ -73,7 +75,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles,is
           onPress={handlePress}
           className="bg-yellow-500 p-4 rounded-lg border-2 border-black mt-5 mx-auto w-3/4"
         >
-          <Text className="text-xl font-bold text-center">Go to MainPage</Text>
+          <Text className="text-xl font-bold text-center">{getText('close')}</Text>
         </Pressable>: null}
       </ScrollView>
     </View>
