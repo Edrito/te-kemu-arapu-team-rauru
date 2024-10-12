@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Pressable, SafeAreaView, ScrollView, TextInput, View, Text, useWindowDimensions } from "react-native";
+import { Modal, Pressable, SafeAreaView, ScrollView, TextInput, View, Text, useWindowDimensions, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import DifficultyDropdown from "../components/DifficultyDropdown";
 import SelectIcon from "../components/SelectIcon";
@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
       userId: user.uid,
       color: selectedColor,
     };
-
+    
     try {
       await addProfileData(profileData);
       setUserProfile(profileData);
@@ -74,6 +74,18 @@ const Profile: React.FC = () => {
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
       <PlayerBar playerIcon={icon ?? ""} />
+       <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <ImageBackground
+          source={require("../assets/images/tekemuarapu-bg-80.jpg")}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
+          resizeMode="cover"
+        />
+      </View>
       <ScrollView
         className={`flex-1 ${isSmallScreen ? "w-full" : "w-4/6"} p-4`}
         contentContainerStyle={{ alignItems: "center" }}
@@ -95,9 +107,9 @@ const Profile: React.FC = () => {
 
         {/* Difficulty Dropdown */}
         <View className="w-full justify-center items-center mb-8" style={{ zIndex: 10 }}>
+
           <DifficultyDropdown onSelect={setDifficulty} />
         </View>
-
         {/* Icon selection */}
         <View className="w-full mb-8" style={{ minWidth: 300, zIndex: 5 }}>
           <SelectIcon onSelect={handleIconSelect} />
@@ -112,7 +124,7 @@ const Profile: React.FC = () => {
 
         {/* Error Message */}
         {errorMessage && (
-          <Text className="text-red-500 text-center mt-4">{errorMessage}</Text> // Error message in red text
+          <Text className="text-red-500 text-center mt-4">{errorMessage}</Text>
         )}
       </ScrollView>
     </SafeAreaView>

@@ -1,7 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import "../../global.css";
 
 const PlayerInput = () => {

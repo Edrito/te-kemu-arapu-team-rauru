@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "te-kemu-arapu-compx374-team-rauru/global.css";
 import { GameScreenParams } from "../types";
@@ -14,6 +14,18 @@ const ChoosingPlayer: React.FC<GameScreenParams> = ({
   const remainingTime = getTimeRemaining(mainState, true);
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red">
+       <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <ImageBackground
+          source={require("te-kemu-arapu-compx374-team-rauru/assets/images/tekemuarapu-bg-80.jpg")}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
+          resizeMode="cover"
+        />
+      </View>
       <View
         className="border-2 border-dashed bg-game_buttons_green m-[50px] rounded-lg"
         style={{ margin: 50 }}

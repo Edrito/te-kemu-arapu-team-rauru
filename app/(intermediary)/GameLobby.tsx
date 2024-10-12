@@ -8,7 +8,8 @@ import { router } from "expo-router"; import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Alert
+  Alert,
+  ImageBackground,
 } from "react-native"; import { useAuth } from '../../context/AuthContext';
 import { isLobbyHost } from '../helpers';
 import { useGame } from '../../context/GameContext';
@@ -82,7 +83,18 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red items-center m-2">
-
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <ImageBackground
+          source={require("te-kemu-arapu-compx374-team-rauru/assets/images/tekemuarapu-bg-80.jpg")}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
+          resizeMode="cover"
+        />
+      </View>
 
       <ScrollView
         style={{
@@ -104,17 +116,17 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
           </Text>
         </View>
 
-        <View className="items-center flex-row justify-between flex-1 m-3 border-4 border-dashed rounded-lg p-3 bg-green-950 min-h-[60px] max-h-[60px]">
-          <Text className="text-white text-[20px] font-bold mr-5 font-pangolin">
+        <View className="items-center flex-row justify-between flex-1 m-3 border-4 border-dashed rounded-lg p-10 bg-green-950 min-h-[60px] max-h-[60px]">
+          <Text className="text-white text-[30px] font-bold mr-5 font-pangolin">
             Lobby Code:
           </Text>
-          <Text className="text-[20px] font-bold border-2 border-dashed rounded-lg p-1 bg-white font-pangolin">
+          <Text className="text-[40px] font-bold border-2 border-dashed rounded-lg p-2 bg-white font-pangolin">
             {gameState?.lobbyCode ?? ''}
           </Text>
         </View>
 
         <View className="w-full h-[50%] justify-center">
-          <ScrollView className="border rounded-md bg-orange-400 p-3 m-2">
+          <ScrollView className="border rounded-md bg-orange-500 p-3 m-2">
             {playerProfiles.map((player) => (
               <LobbyComponent
                 key={player.userId}
@@ -129,24 +141,25 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
         </View>
 
         <View >
-          <TouchableOpacity
-              onPress={handleLeaveAction}
-              className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
+        {isLobbyHostValue ? <TouchableOpacity
+          // Send to game
+          onPress={handleStartGame}
+          className="justify-center h-[60px] border-2 border-dashed bg-green-700 p-0.5 px-5 m-2 rounded"
+        >
+          <Text className="text-[30px] text-center font-pangolin">
+            Start Game
+          </Text>
+        </TouchableOpacity> : null}
+
+        <TouchableOpacity
+            onPress={handleLeaveAction}
+            className="justify-center h-[60px] border-2 border-dashed bg-red-500 p-0.5 px-5 m-2 rounded"
             >
               <Text className="text-[30px] text-center font-pangolin">
                 {isLobbyHostValue ? 'End Game' : 'Leave Lobby'}
               </Text>
             </TouchableOpacity>
         </View>
-        {isLobbyHostValue ? <TouchableOpacity
-          // Send to game
-          onPress={handleStartGame}
-          className="justify-center h-[60px] border-2 border-dashed bg-orange-500 p-0.5 px-5 m-2 rounded"
-        >
-          <Text className="text-[30px] text-center font-pangolin">
-            Start Game
-          </Text>
-        </TouchableOpacity> : null}
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,50 +1,37 @@
-// VoteBox.tsx
-import React, { useEffect, useState } from "react";
-import { Text, Pressable, Dimensions } from "react-native";
-import '../global.css';
+import React from "react";
+import { Text, Pressable, useWindowDimensions } from "react-native";
 
-interface VoteBoxesProps {
+interface VoteBoxProps {
   voteType: string;
-  isSelected?: boolean;
-  onPress?: () => void;
+  isSelected: boolean;
+  onPress: () => void;
 }
 
-const VoteBox = ({ voteType, isSelected, onPress }: { voteType: string, isSelected: boolean, onPress: () => void }) => {
-  const [windowDimensions, setWindowDimensions] = useState(Dimensions.get('window'));
+const VoteBox: React.FC<VoteBoxProps> = ({ voteType, isSelected, onPress }) => {
+  const { width } = useWindowDimensions();
 
-  // This is so that buttons change size in real time when screen size changes
-  useEffect(() => {
-    // Function to handle resizing of the window
-    const resizeScreen = () => {
-      // Update the state with the current window dimensions
-      setWindowDimensions(Dimensions.get('window'));
-    };
-
-    // Listen to changes in screen size
-    const subscription = Dimensions.addEventListener('change', resizeScreen);
-
-    // End listener
-    return () => subscription?.remove();
-  }, []);
-
+  const buttonSize = width < 600 ? width / 3 - 20 : 120;
+  
   return (
     <Pressable
       onPress={onPress}
-      className={`border-dashed border-2 m-2 flex-1 items-center justify-center ${
-        isSelected ? 'bg-emerald_green' : 'bg-maori_red'
-      } border-black`}
+      className={`border-dashed border-2 items-center justify-center ${
+        isSelected ? "bg-[#34b134]" : "bg-game_buttons_green"
+      }`}
       style={{
-        height: 150,
-        minWidth: windowDimensions.width < 1036 ? 200 : 500,
-        maxWidth: windowDimensions.width < 1036 ? 200 : 500,
+        height: buttonSize,
+        width: buttonSize, 
+        margin: width < 600 ? 4 : 8,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
       }}
-      accessibilityLabel={`Vote ${voteType}`}
     >
-      <Text className="text-white text-[30px]">
+      <Text style={{ fontSize: buttonSize / 2, color: "white" }}>
         {voteType}
       </Text>
     </Pressable>
   );
 };
 
-export default VoteBox; 
+export default VoteBox;

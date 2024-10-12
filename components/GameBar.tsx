@@ -3,13 +3,14 @@ import { View, Text, Pressable, Image, Modal } from "react-native";
 import Scoreboard from "te-kemu-arapu-compx374-team-rauru/components/Scoreboard";
 import "../global.css";
 import { GameScreenParams } from "../app/types";
+import { useLanguage } from "../context/languageToggleButton";
 
 const GameBar: React.FC  <GameScreenParams>  = ({mainState, gameId, lobbyCode, playerProfiles}) => {
-  const [language, setLanguage] = useState("English");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { toggleLanguage, displayLanguage } = useLanguage();
 
   const changeLanguage = () => {
-    setLanguage((language) => (language === "English" ? "Maori" : "English"));
+    toggleLanguage();
   };
 
   return (
@@ -51,7 +52,7 @@ const GameBar: React.FC  <GameScreenParams>  = ({mainState, gameId, lobbyCode, p
           resizeMode="contain"
         />
         <Text className="text-[30px] font-bold font-pangolin ml-2">
-          {language}
+          {displayLanguage}
         </Text>
       </Pressable>
     </View>
