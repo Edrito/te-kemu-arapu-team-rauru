@@ -48,16 +48,16 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
       onRequestClose={onClose}
     >
       <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-        <View className="bg-primary_red w-[90%] max-w-lg p-6 shadow-lg rounded-lg">
+        <View className="bg-primary_red p-6 shadow-lg rounded-lg w-11/12 max-w-sm md:max-w-lg">
           <Text className="text-[24px] text-center font-bold mb-4">Enter 4-Digit Code</Text>
 
           {/* 4 text inputs for each digit */}
-          <View className="flex-row justify-center mb-4">
+          <View className="flex-row justify-center mb-4 space-x-2 md:space-x-4">
             {code.map((digit, index) => (
               <TextInput
                 key={index}
                 ref={(ref) => (inputRefs.current[index] = ref)}
-                className="border-2 bg-slate-50 border-gray-300 w-[50px] h-[50px] text-center text-[24px] mx-1 rounded"
+                className="border-2 bg-slate-50 border-gray-300 w-14 h-14 text-center text-[18px] md:w-16 md:h-16 md:text-[24px] rounded"
                 maxLength={1}
                 keyboardType="numeric"
                 value={digit}

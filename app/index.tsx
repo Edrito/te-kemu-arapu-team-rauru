@@ -4,7 +4,6 @@ import GameBar from "te-kemu-arapu-compx374-team-rauru/components/GameBar";
 import {
   Text,
   Pressable,
-  Button,
   SafeAreaView,
   View,
   ScrollView,
@@ -62,15 +61,22 @@ const Start = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={true}
-        style={{ marginTop: 100 }}
-      >
+      <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
         <ImageBackground
           source={require("../assets/images/tekemuarapu-bg-80.jpg")}
-          className="flex-1 justify-center w-full h-full"
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
           resizeMode="cover"
+        />
+      </View>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={true}
+          style={{ marginTop: 100 }}
         >
           <View className="flex-1 justify-center items-center">
             <Text
@@ -146,8 +152,7 @@ const Start = () => {
 
             <Text className="text-[30px] self-center font-bold">DEMO</Text>
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
     </SafeAreaView>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useLanguage } from "../context/languageToggleButton";
@@ -9,7 +9,7 @@ interface DropdownProps {
 }
 
 const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
-  const { getText, currentLanguage } = useLanguage(); // Use currentLanguage to track the current language
+  const { getText } = useLanguage(); // Use currentLanguage to track the current language
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEnglishValue, setSelectedEnglishValue] = useState<string>("Select"); // Store the English value
   const dropdownHeight = useSharedValue(0);
@@ -65,7 +65,7 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
           className="bg-green-700 py-1.5 px-2.5 rounded border border-black"
         >
           {/* Display the translated value */}
-          <Text className="text-black text-[24px] font-pangolin text-white">
+          <Text className="text-[24px] font-pangolin text-white">
             {translatedSelectedValue}
           </Text>
         </Pressable>
@@ -76,14 +76,22 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
             style={animatedStyle}
             className="bg-green-700 rounded border border-black mt-0.5 w-full absolute z-20 overflow-hidden"
           >
-            <Pressable onPress={() => handleOptionSelect("Beginner")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('beginner')}</Text>
+            {/* Option for Beginner */}
+            <Pressable onPress={() => handleOptionSelect("Beginner")} className="flex-row justify-between px-2">
+              <Text className="py-2.5 text-[24px] font-pangolin text-white">{getText('beginner')}</Text>
+              <Text className="py-2.5 text-[16px] text-gray-300">{getText('beginnerDescription')}</Text>
             </Pressable>
-            <Pressable onPress={() => handleOptionSelect("Intermediate")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('intermediate')}</Text>
+
+            {/* Option for Intermediate */}
+            <Pressable onPress={() => handleOptionSelect("Intermediate")} className="flex-row justify-between px-2">
+              <Text className="py-2.5 text-[24px] font-pangolin text-white">{getText('intermediate')}</Text>
+              <Text className="py-2.5 text-[16px] text-gray-300">{getText('intermediateDescription')}</Text>
             </Pressable>
-            <Pressable onPress={() => handleOptionSelect("Pro")}>
-              <Text className="py-2.5 pl-2.5 text-[24px] font-pangolin text-white">{getText('pro')}</Text>
+
+            {/* Option for Pro */}
+            <Pressable onPress={() => handleOptionSelect("Pro")} className="flex-row justify-between px-2">
+              <Text className="py-2.5 text-[24px] font-pangolin text-white">{getText('pro')}</Text>
+              <Text className="py-2.5 text-[16px] text-gray-300">{getText('proDescription')}</Text>
             </Pressable>
           </Animated.View>
         )}

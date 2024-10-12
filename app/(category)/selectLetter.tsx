@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, Pressable, ImageBackground } from "react-native";
 import GameLettersGrid from "te-kemu-arapu-compx374-team-rauru/components/GameLettersGrid";
 import "../../global.css";
 import { GameScreenParams } from "../types"; // Assuming you have these types defined
@@ -50,6 +50,19 @@ const SelectLetter: React.FC<GameScreenParams> = ({
         </Text>
       </View>
 
+       <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <ImageBackground
+          source={require("te-kemu-arapu-compx374-team-rauru/assets/images/tekemuarapu-bg-80.jpg")}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
+          resizeMode="cover"
+        />
+      </View>
+
       <ScrollView className="w-full mt-5 items-center">
         {/* Letters grid */}
         <View className="flex-wrap flex-row justify-center">
@@ -85,10 +98,10 @@ const SelectLetter: React.FC<GameScreenParams> = ({
 
       {/* Timer and Pass button */}
       <View className="flex-row items-center justify-between p-2">
-        {Timer({
-          timeRemaining: getTimeRemaining(mainState, true),
-          onTimeUp: () => {},
-        })}
+        <Timer
+          newTime={getTimeRemaining(mainState, true)}
+          onTimeUp={() => {}}
+        />
 
         <Pressable
           className={`m-2 p-6 border-2 border-dashed items-center ${

@@ -11,6 +11,7 @@ import {
   Pressable,
   ScrollView,
   Modal,
+  ImageBackground,
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { router } from "expo-router";
@@ -100,6 +101,20 @@ export default function MainPage() {
 
   return (
     <SafeAreaView className="flex-1 bg-primary_red">
+      <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <ImageBackground
+          source={require("../assets/images/tekemuarapu-bg-80.jpg")}
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
+          resizeMode="cover"
+        />
+      </View>
+      
+      {/* Main Content Goes Here */}
       <PlayerBar playerIcon={""} />
       <ScrollView
         className="m-10"
@@ -112,6 +127,7 @@ export default function MainPage() {
           Te Kēmu Arapū
         </Text>
 
+        {/* User Information */}
         <Text
           style={{
             color: "#fff",
@@ -163,6 +179,7 @@ export default function MainPage() {
           </Text>
         </TouchableOpacity>
 
+        {/* Game Guide Modal */}
         <Modal
           visible={gameGuideModal}
           onRequestClose={() => setGameGuideModal(false)}
@@ -223,16 +240,7 @@ export default function MainPage() {
           handleJoinLobby(code);
         }}
       />
-
-      {/* Create Lobby Modal */}
-      {/* <CreateLobbyModal
-        visible={isCreateModalVisible}
-        onClose={() => setIsCreateModalVisible(false)}
-        onCreate={(lobbyName) => {
-          setIsCreateModalVisible(false);
-          handleCreateLobby(lobbyName);
-        }}
-      /> */}
     </SafeAreaView>
+
   );
 }

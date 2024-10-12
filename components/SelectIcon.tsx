@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import colorOptions from "../constants/Colors";
 import '../global.css';
@@ -65,8 +65,19 @@ const iconData: IconData[] = [
 
 
 const SelectIcon: React.FC<{ onSelect: (icon: string, color: string) => void }> = ({ onSelect }) => {
+
   const [currentIconIndex, setCurrentIconIndex] = useState<number>(0);
   const [currentColor, setCurrentColor] = useState<string>(colorOptions.colorOptions[0]);
+
+  const getRandomIndex = (length: number) => Math.floor(Math.random() * length);
+
+  useEffect(() => {
+    const randomIconIndex = getRandomIndex(iconData.length);
+    const randomColorIndex = getRandomIndex(colorOptions.colorOptions.length);
+    setCurrentIconIndex(randomIconIndex);
+    setCurrentColor(colorOptions.colorOptions[randomColorIndex]);
+    onSelect(iconData[randomIconIndex].icon, colorOptions.colorOptions[randomColorIndex]);
+  }, []);
 
   const handleIconNext = () => {
     setCurrentIconIndex((prevIndex) => (prevIndex + 1) % iconData.length);
@@ -84,7 +95,7 @@ const SelectIcon: React.FC<{ onSelect: (icon: string, color: string) => void }> 
   };
 
   return (
-    <View className="w-full">
+    <View className="w-full bg-red-700 p-4 border-black border-2 rounded-lg">
       {/* Icon Navigation */}
       <View className="flex-row items-center mb-5">
         <TouchableOpacity onPress={handleIconPrevious}>
@@ -103,7 +114,7 @@ const SelectIcon: React.FC<{ onSelect: (icon: string, color: string) => void }> 
               alignItems: "center",
             }}
           >
-            <Text className="text-[50px]">{iconData[currentIconIndex].icon}</Text>
+          <Text className="text-[50px]">{iconData[currentIconIndex].icon}</Text>
           </View>
           <Text className="text-[25px] font-bold my-2.5 font-pangolin">
             {iconData[currentIconIndex].name}
