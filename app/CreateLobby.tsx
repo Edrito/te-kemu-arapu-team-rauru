@@ -202,7 +202,7 @@ const CreateLobby = () => {
           animationType="slide"
           presentationStyle="pageSheet"
         >
-          <View className="flex-1 justify-center items-center bg-primary_red p-10">
+          <View className="flex-1 justify-center items-center bg-primary_red p-8">
             <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
               {getText("chooseGameMode")}:
             </Text>
@@ -212,6 +212,11 @@ const CreateLobby = () => {
               style={{
                 flex: 1,
                 padding: 3,
+                marginTop: 10,
+                borderWidth: 2,
+                borderStyle: "dashed",
+                borderRadius: 10,
+                backgroundColor: "#aa2424",
                 minWidth: windowDimensions.width < 1036 ? "100%" : "50%",
                 maxWidth: windowDimensions.width < 1036 ? "100%" : "50%",
               }}
