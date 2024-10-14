@@ -4,14 +4,9 @@ import {
   ScrollView,
   Text,
   TouchableWithoutFeedback,
-  useWindowDimensions,
   View,
 } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming} from "react-native-reanimated";
 import { useLanguage } from "../context/languageToggleButton";
 import "../global.css";
 
@@ -36,7 +31,7 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
     if (!isOpen) {
-      dropdownHeight.value = withTiming(150, { duration: 200 });
+      dropdownHeight.value = withTiming(250, { duration: 200 });
       dropdownOpacity.value = withTiming(1, { duration: 200 });
     } else {
       dropdownHeight.value = withTiming(0, { duration: 200 });
@@ -45,8 +40,8 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
   };
 
   const handleOptionSelect = (englishValue: string) => {
-    setSelectedEnglishValue(englishValue); // Store the English value
-    onSelect(englishValue); // Pass the English value to the parent
+    setSelectedEnglishValue(englishValue);
+    onSelect(englishValue); 
     setIsOpen(false);
     dropdownHeight.value = withTiming(0, { duration: 200 });
     dropdownOpacity.value = withTiming(0, { duration: 200 });
@@ -81,10 +76,10 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
       <View className="w-full max-w-[600px] min-w-[300px] relative">
         <Pressable
           onPress={toggleDropdown}
-          className="bg-green-700 py-1.5 px-2.5 rounded border border-black"
+          className="bg-green-700 py-2 px-3 rounded border border-black"
         >
           {/* Display the translated value */}
-          <Text className="text-[24px] font-pangolin text-white">
+          <Text className="text-2xl font-pangolin text-white">
             {translatedSelectedValue}
           </Text>
         </Pressable>
@@ -97,17 +92,17 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
           >
             <ScrollView
               contentContainerStyle={{ paddingBottom: 10 }}
-              style={{ maxHeight: 150 }}
+              style={{ maxHeight: 250 }}
             >
               {/* Option for Beginner */}
               <Pressable
                 onPress={() => handleOptionSelect("Beginner")}
-                className="flex-row justify-between px-2"
+                className="flex-col px-4 py-2"
               >
-                <Text className="py-2.5 text-[24px] font-pangolin text-white">
+                <Text className="text-xl font-pangolin text-white">
                   {getText("beginner")}
                 </Text>
-                <Text className="py-2.5 text-[16px] text-gray-300">
+                <Text className="text-sm text-gray-300">
                   {getText("beginnerDescription")}
                 </Text>
               </Pressable>
@@ -115,12 +110,12 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
               {/* Option for Intermediate */}
               <Pressable
                 onPress={() => handleOptionSelect("Intermediate")}
-                className="flex-row justify-between px-2"
+                className="flex-col px-4 py-2"
               >
-                <Text className="py-2.5 text-[24px] font-pangolin text-white">
+                <Text className="text-xl font-pangolin text-white">
                   {getText("intermediate")}
                 </Text>
-                <Text className="py-2.5 text-[16px] text-gray-300">
+                <Text className="text-sm text-gray-300">
                   {getText("intermediateDescription")}
                 </Text>
               </Pressable>
@@ -128,12 +123,12 @@ const DifficultyDropdown: React.FC<DropdownProps> = ({ onSelect }) => {
               {/* Option for Pro */}
               <Pressable
                 onPress={() => handleOptionSelect("Pro")}
-                className="flex-row justify-between px-2"
+                className="flex-col px-4 py-2"
               >
-                <Text className="py-2.5 text-[24px] font-pangolin text-white">
+                <Text className="text-xl font-pangolin text-white">
                   {getText("pro")}
                 </Text>
-                <Text className="py-2.5 text-[16px] text-gray-300">
+                <Text className="text-sm text-gray-300">
                   {getText("proDescription")}
                 </Text>
               </Pressable>

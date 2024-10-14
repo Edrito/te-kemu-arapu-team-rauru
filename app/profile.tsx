@@ -14,8 +14,6 @@ import PlayerBar from "../components/PlayerBar";
 const Profile: React.FC = () => {
   const { user, setUserProfile } = useAuth();
   const router = useRouter();
-  const { width } = useWindowDimensions();
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [difficulty, setDifficulty] = useState("Select");
   const [icon, setIcon] = useState<string | null>(null);
   const [username, setUsername] = useState<string>("");
@@ -23,7 +21,6 @@ const Profile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { getText } = useLanguage();
 
-  const isSmallScreen = width < 600;
 
   const handleCreateProfile = async () => {
     setErrorMessage(null);
@@ -73,26 +70,18 @@ const Profile: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red pb-2">
-      <PlayerBar playerIcon={icon ?? ""} />
        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
         <ImageBackground
           source={require("../assets/images/tekemuarapu-bg-80.jpg")}
-          style={{
-            flex: 1,
-            width: '100%',
-            height: '100%',
-            opacity: 0.5,
-          }}
+          className="w-full h-full opacity-50"
           resizeMode="cover"
         />
       </View>
-      <ScrollView
-        className={`flex-1 ${isSmallScreen ? "w-full" : "w-4/6"} px-4 pb-10`}
-        contentContainerStyle={{ alignItems: "center" }}
-      >
-        <Text className={`font-pangolin ${isSmallScreen ? "text-4xl" : "text-6xl"} text-center p-5`}>
-          {getText('createProfile')}
-        </Text>
+
+      <PlayerBar playerIcon={icon ?? ""} />
+
+      <ScrollView className="flex-1 w-full md:w-4/6 px-4 pb-10" contentContainerStyle={{ alignItems: "center" }}>
+        <Text className="font-pangolin text-4xl md:text-6xl text-center p-5">{getText("createProfile")}</Text>
 
         {/* Username Input */}
         <View className="w-full flex items-center mb-8">
@@ -106,25 +95,24 @@ const Profile: React.FC = () => {
         </View>
 
         {/* Difficulty Dropdown */}
-        <View className="w-full justify-center items-center mb-8" style={{ zIndex: 10 }}>
-
+        <View className="w-full justify-center items-center mb-8 z-10">
           <DifficultyDropdown onSelect={setDifficulty} />
         </View>
         {/* Icon selection */}
-        <View className="w-full mb-8" style={{ minWidth: 300, zIndex: 5 }}>
+        <View className="w-full mb-8 min-w-[300px] z-5">
           <SelectIcon onSelect={handleIconSelect} />
         </View>
 
         {/* Create Button */}
-        <Pressable onPress={handleCreateProfile} style={{ zIndex: 1 }}>
-          <Text className="font-pangolin text-2xl border-2 border-black border-dashed bg-green-700 p-2 rounded text-white">
+         <Pressable onPress={handleCreateProfile} className="bg-green-700 py-3 rounded text-center border-2 border-black border-dashed">
+          <Text className="font-pangolin text-2xl p-2 rounded text-white">
             {getText('create')}
           </Text>
         </Pressable>
 
         {/* Error Message */}
         {errorMessage && (
-          <Text className="text-red-500 text-center mt-4">{errorMessage}</Text>
+          <Text className="text-white font-bold text-xl text-center mt-4">{errorMessage}</Text>
         )}
       </ScrollView>
     </SafeAreaView>

@@ -10,7 +10,7 @@ import { LanguageProvider } from "te-kemu-arapu-compx374-team-rauru/context/lang
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function Root() {
   const [fontsLoaded, error] = useFonts({
     "Crayonara-Regular": require("../assets/fonts/Crayonara-Regular.ttf"),
     "NotoSans-Regular": require("../assets/fonts/NotoSans-Regular.ttf"),
@@ -39,8 +39,11 @@ export default function RootLayout() {
         <LanguageProvider>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
-          <Stack.Screen name="(category)" />
-          <Stack.Screen name="Game" />
+          <Stack.Screen name="MainPage" />
+          <Stack.Screen name="profile" />
+          <Stack.Screen name="(management)/Game" />
+          <Stack.Screen name="(category)/choosingCategory" />
+          <Stack.Screen name="(category)/voting" />
         </Stack>
         </LanguageProvider>
       </GameProvider>
