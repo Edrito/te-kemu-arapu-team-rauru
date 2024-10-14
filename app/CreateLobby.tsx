@@ -229,7 +229,7 @@ const CreateLobby = () => {
               {gameMode !== "Select Game Mode" && (
                 <>
                   <Text className="text-center text-[30px] text-white p-2 m-2 font-pangolin rounded-lg w-[50%]">
-                    {getText("setLobbyEnd")}:
+                    {getText("setGameEnd")}:
                   </Text>
                   <View className="flex-row p-1 justify-between items-center">
                     <Text className="text-center text-[30px] text-white border-2 border-dashed bg-green-900 p-2 m-2 font-pangolin rounded-lg w-[50%]">

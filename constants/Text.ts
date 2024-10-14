@@ -230,6 +230,10 @@ export const languageTexts = {
         e: "Max Player Score",
         m: "Whainga Toa"
     },
+    setGameEnd: {
+        e: "Set Game Mode End Conditions",
+        m: "Whakaritea ngā Hōtaka Whakamutunga kēmu."
+    },
     setLobbyEnd: {
         e: "Set Lobby End Conditions",
         m: "Whakarite i te Whakamutu Waehere"
