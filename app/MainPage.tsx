@@ -35,7 +35,6 @@ export default function MainPage() {
   });
 
   const [isJoinModalVisible, setIsJoinModalVisible] = useState(false);
-  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [gameGuideModal, setGameGuideModal] = useState(false);
 
   const handleCreateLobby = () => {
@@ -198,23 +197,19 @@ export default function MainPage() {
               Te Kēmu Arapū
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
-              A fun spoken game for family and friends to practice the Māori
-              language! No board or cards needed—just your voice and some good
-              company. Players have a time limit to guess, and others can vote
-              on pronunciation. Perfect for gatherings and boosting te reo Māori
-              skills!
+              {getText('howToText1')}
             </Text>
             <Text className="text-[50px] m-5 font-pangolin text-center underline font-bold">
-              Gamemodes
+              {getText('gameMode')}
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
               <Text className="font-bold text-orange-500
-              underline">Category: </Text>
-              Pick a category and a letter. Say a word in that category starting with the chosen letter.
+              underline">{getText('category')}: </Text>
+              {getText('howToText2')} 
             </Text>
             <Text className="text-[30px] m-5 font-pangolin text-center">
-              <Text className="font-bold text-orange-500 underline">Random: </Text>
-              A letter is picked at random, and you need to say a word that starts with it.
+              <Text className="font-bold text-orange-500 underline">{getText('random')}: </Text>
+              {getText('howToText3')}
             </Text>
             <TouchableOpacity
               className="border-2 border-dashed bg-green-700 my-5"

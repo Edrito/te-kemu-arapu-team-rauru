@@ -19,7 +19,7 @@ import { concatenateStrings } from '../helpers';
 
 export default function Game() {
   const { user } = useAuth();
-  const { gameState, subscribeToGame , unsubscribeFromGame, fetchPlayerProfiles} = useGame();
+  const { gameState, subscribeToGame, fetchPlayerProfiles} = useGame();
   const { lobbyCode } = useLocalSearchParams() as { lobbyCode: string };
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const router = useRouter();

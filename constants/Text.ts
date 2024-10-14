@@ -32,15 +32,15 @@ export const languageTexts = {
     },
     beginnerDescription: {
         e: "Longer time to guess and more access to hints.",
-        m: "Hui Nga Tautoko"
+        m: "He nui ngā tīwhiri, he nui hoki te wā."
     },
     intermediateDescription: {
         e: "Shorter time to guess with access to a single hint.",
-        m: "Paku Tautoko"
+        m: "He wā poto ki te whakapae me ngā tīwhiri iti"
     },
     proDescription: {
         e: "Minimal time to guess with no hints available.",
-        m: "Kare kau Tautoko"
+        m: "Kāore he tīwhiri, kāore he wā"
     },
     add: {
         e: "Add",
@@ -68,7 +68,7 @@ export const languageTexts = {
     },
     loading: {
         e: "Loading",
-        m: "a Taihoa"
+        m: "A Taihoa"
     },
     random: {
         e: "Random",
@@ -172,7 +172,7 @@ export const languageTexts = {
     },
     itsYourTurn: {
         e: "It's your turn to select a letter!",
-        m: "Ko tō tāu e kōwhiri i te pū!"
+        m: "Ko tō wa kia Kōwhirihia he reta!"
     },
     isCurrentlySelecting: {
         e: "is currently selecting a letter!",
@@ -180,11 +180,11 @@ export const languageTexts = {
     },
     isCurrentlyGuessing: {
         e: "is currently guessing a",
-        m: "e mahi ana i te"
+        m: "kei te whakapae i te"
     },
     startingWithTheLetter: {
         e: "starting with the letter",
-        m: "timata mai i te pū"
+        m: "e tīmata ana ki te pū"
     },
     didTheyGuessCorrectly: {
         e: "Did they guess correctly?",
@@ -200,7 +200,7 @@ export const languageTexts = {
     },
     maxTotalScore: {
         e: "Max Total Score:",
-        m: "Whaina toa"
+        m: "Ngā Piro whakamutunga Katoa:"
     },
     createLobby: {
         e: "Create Lobby",
@@ -216,7 +216,7 @@ export const languageTexts = {
     },
     timeLimit: {
         e: "Time Limit",
-        m: "Taima Tutuki"
+        m: "Tepenga Wā"
     },
     lobbyName: {
         e: "Lobby Name",
@@ -228,7 +228,7 @@ export const languageTexts = {
     },
     maxPlayerScore: {
         e: "Max Player Score",
-        m: "Whainga Toa"
+        m: "Ngā Piro Whakamutunga ā te Kaiwhakamahi"
     },
     setGameEnd: {
         e: "Set Game Mode End Conditions",
@@ -244,7 +244,7 @@ export const languageTexts = {
     },
     chooseGameMode: {
         e: "Choose Game Mode",
-        m: "Tīpakohia Te Arataki Kēmu"
+        m: "Tohua Te Tau Tānui Kēmu"
     },
     didYouKnow: {
         e: "Did you know:",
@@ -260,13 +260,50 @@ export const languageTexts = {
     },
     goToMainPage: {
         e: "Go to Main Page",
-        m: "Haere ki te Whārangi Matua"
+        m: "Hoki ki te Whārangi Matua"
     },
-        
-    
-
-
-
-
-
-};
+    howToText1: {
+        e: `  
+            A fun spoken game for family and friends to practice the Māori
+            language! No board or cards needed—just your voice and some good
+            company. Players have a time limit to guess, and others can vote
+            on pronunciation. Perfect for gatherings and boosting te reo Māori
+            skills!
+            `
+              ,
+        m:  `
+                He kēmu mō ngā hoa me te whānau mā te whakatairanga i te ako o te Reo Māori. 
+                Ko tōu reo, me te wairua ngahau anake e hiahiatia ana. 
+                Kei ngā kaitākaro he wā iti hei ako, te kōwhiri i te whakautu, ā, ka taea e te toenga te pōti i runga i tāu i whakahua. 
+                Ko te whāinga o tēnei kēmu ko te whakapakari i tōu reo Māori.
+            `
+    },
+    howToText2: {
+        e: `
+                Pick a category and a letter. Say a word in that category starting with the chosen letter.
+            `,
+        m:  `
+                Kōwhirihia he wahanga me tētehi arapū. Whakaputa he kupu i taua wahanga e timata ana ki te arapū i kōwhirihia e koe.
+            `
+    },
+    howToText3: {
+        e: `   
+                A letter is picked at random, and you need to say a word that starts with it.
+            `,
+        m:  `
+                Ka kowhirihia he arapū noa, ā me ahei koe te whakahua i te kupu ka timata ki taua arapū.
+            `
+    },
+    gameMode: {
+        e: "Game Mode",
+        m: "Aratau  Kēmu"
+    },
+    enterDigit: {
+        e: "Enter a 4 digit code",
+        m: "Whakauru To Tohu Muna Matiwha"
+    },
+    howDoYouThinkTheyDid: {
+        e: "How do you think they did?",
+        m: "He aha o whakaaro mo to rātou mahi?"
+    },
+}

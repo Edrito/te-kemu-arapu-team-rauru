@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Modal, Pressable, TextInput, Keyboard } from 'react-native';
 import { useLanguage } from 'te-kemu-arapu-compx374-team-rauru/context/languageToggleButton';
+import { useWindowDimensions } from 'react-native';
 
 interface JoinLobbyModalProps {
   visible: boolean;
@@ -12,6 +13,9 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
   const [code, setCode] = useState(['', '', '', '']);
   const inputRefs = useRef<Array<TextInput | null>>([]);
   const { getText } = useLanguage();
+  const { width } = useWindowDimensions();
+
+  const isSmallScreen = width < 600;
 
   const handleChangeText = (index: number, value: string) => {
     if (/^[a-zA-Z0-9]$/.test(value) || value === '') {
@@ -51,7 +55,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
     >
       <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
         <View className="bg-primary_red p-6 shadow-lg rounded-lg w-11/12 max-w-sm md:max-w-lg">
-          <Text className="text-[24px] text-center font-bold mb-4">Enter 4-Digit Code</Text>
+          <Text className="text-2xl text-center font-bold mb-4">{getText('enterDigit')}</Text>
 
           {/* 4 text inputs for each digit */}
           <View className="flex-row justify-center mb-4 space-x-2 md:space-x-4">
@@ -59,9 +63,11 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
               <TextInput
                 key={index}
                 ref={(ref) => (inputRefs.current[index] = ref)}
-                className="border-2 bg-slate-50 border-gray-300 w-14 h-14 text-center text-[18px] md:w-16 md:h-16 md:text-[24px] rounded"
+                className={`border-2 bg-slate-50 border-gray-300 text-center 
+                            ${isSmallScreen ? 'w-12 h-12 text-xl' : 'w-16 h-16 text-2xl'} 
+                            rounded-md`}
                 maxLength={1}
-                inputMode='numeric'
+                keyboardType='numeric'
                 value={digit}
                 onChangeText={(value) => handleChangeText(index, value)}
                 autoFocus={index === 0}
@@ -74,12 +80,12 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
             className="bg-game_buttons_green py-3.5 rounded-lg my-2.5 items-center border-dashed border-2 border-black"
             onPress={joinGame}
           >
-            <Text className="text-[18px] font-bold text-white">{getText('join')}</Text>
+            <Text className="text-lg font-bold text-white">{getText('join')}</Text>
           </Pressable>
 
           {/* Cancel button */}
           <Pressable onPress={onClose} className="mt-4">
-            <Text className="text-center text-[18px] text-black">{getText('cancel')}</Text>
+            <Text className="text-center text-lg text-black">{getText('cancel')}</Text>
           </Pressable>
         </View>
       </View>
