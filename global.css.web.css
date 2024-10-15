@@ -807,12 +807,12 @@ video {
   min-height: 300px;
 }
 
-.min-h-\[60px\] {
-  min-height: 60px;
+.min-h-\[58px\] {
+  min-height: 58px;
 }
 
-.min-h-\[75px\] {
-  min-height: 75px;
+.min-h-\[60px\] {
+  min-height: 60px;
 }
 
 .w-11\/12 {
@@ -1275,6 +1275,10 @@ video {
 
 .text-\[24px\] {
   font-size: 24px;
+}
+
+.text-\[28px\] {
+  font-size: 28px;
 }
 
 .text-\[30px\] {

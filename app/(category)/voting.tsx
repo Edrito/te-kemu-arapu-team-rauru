@@ -11,6 +11,7 @@ import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageT
 const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, playerProfiles }) => {
   const { getText } = useLanguage();
   const [voteType, setVoted] = useState<string>("");
+  const [hintDef, setHintDef] = useState<string | null>(null);
   const [hintsUsed, setHintsUsed] = useState<string[]>(["", "", ""]);
   const { user } = useAuth();
   const gameContext = useGame();
@@ -134,6 +135,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
           newHints[2] = result['word'] ?? '';
           return newHints;
         });
+        setHintDef(result['definition'] ?? '');
         await playAudio(result['word'] ?? '');
 
       }
@@ -155,6 +157,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
             newHints[1] = result['word'] ?? '';
             return newHints;
           });
+          setHintDef(result['definition'] ?? '');
         }
       } else if (hintIndex === 0) {
         const result = await gameContext.getHint(currentCategory, currentLetter);
@@ -164,6 +167,7 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
           newHints[hintIndex] = result['word'] ?? '';
           return newHints;
         });
+        setHintDef(result['definition'] ?? '');
       }
   }
 
@@ -194,9 +198,11 @@ const VotingPage: React.FC<GameScreenParams> = ({ gameId, lobbyCode, mainState, 
         </View>
 
 
-        {isPlayerTurn && !fullHideHint ? <View className="border-2 border-dashed bg-green-600 p-5 items-center justify-center rounded-xl w-[80%] min-h-[75px] m-3">
-          <Text className="text-[36px] text-white text-center font-pangolin">
-            {getText("hints")}
+        {isPlayerTurn && !fullHideHint ? <View className="border-2 border-dashed bg-green-600 p-5 items-center justify-center rounded-xl w-[80%] min-h-[58px] m-3">
+          <Text className="text-[28px] text-white text-center font-pangolin">
+            {
+              (hintsUsed[1] !== '' || hintsUsed[2] !== '') && hintDef != null ? hintDef :
+                getText("hints")}
           </Text>
         </View> : null}
 

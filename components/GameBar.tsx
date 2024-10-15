@@ -25,6 +25,21 @@ const GameBar: React.FC<GameScreenParams> = ({ mainState, gameId, lobbyCode, pla
 
   return (
     <View className="flex w-full  flex-row bg-red-500 flex-wrap justify-between items-center p-2 px-4">
+   
+   {
+        inGame ? <Pressable onPress={() => {
+          resetGameState();
+          router.push("/MainPage");
+        }}>
+          <Text className="text-[30px] font-bold font-pangolin m-2 p-2 border-2 border-dashed bg-red-700">
+            {getText("leaveGame")}
+          </Text>
+
+        </Pressable>
+          : null
+      }
+   
+   
       {/* Score Button */}
       <Pressable onPress={() => setIsModalVisible(true)}>
         <Text className="text-[30px] font-bold font-pangolin m-2 p-2 border-2 border-dashed bg-orange-500">
@@ -55,18 +70,7 @@ const GameBar: React.FC<GameScreenParams> = ({ mainState, gameId, lobbyCode, pla
       </Modal>
      
 
-      {
-        inGame ? <Pressable onPress={() => {
-          resetGameState();
-          router.push("/MainPage");
-        }}>
-          <Text className="text-[30px] font-bold font-pangolin m-2 p-2 border-2 border-dashed bg-red-700">
-            {getText("leaveGame")}
-          </Text>
-
-        </Pressable>
-          : null
-      }
+  
 
 {
         inGame ?
