@@ -127,7 +127,6 @@ export default function MainPage() {
           Te Kēmu Arapū
         </Text>
 
-        <TextToSpeech text="Te Kēmu Arapū" />
 
         {/* User Information */}
         <Text

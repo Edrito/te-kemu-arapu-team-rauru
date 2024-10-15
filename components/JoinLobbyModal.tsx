@@ -67,7 +67,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
                             ${isSmallScreen ? 'w-12 h-12 text-xl' : 'w-16 h-16 text-2xl'} 
                             rounded-md`}
                 maxLength={1}
-                keyboardType='numeric'
+                // keyboardType='numeric'
                 value={digit}
                 onChangeText={(value) => handleChangeText(index, value)}
                 autoFocus={index === 0}
