@@ -73,7 +73,7 @@ const SelectLetter: React.FC<GameScreenParams> = ({
         />
       </View>
 
-      <ScrollView className="w-full mt-5 items-center">
+      <ScrollView className="w-full mt-5 items-center" contentContainerStyle={{alignItems: "center"}}>
         {/* Letters grid */}
         <View className="flex-wrap flex-row justify-center">
           <GameLettersGrid

@@ -71,9 +71,14 @@ const Profile: React.FC = () => {
   return (
     <SafeAreaView className="flex-1 justify-center items-center bg-primary_red pb-2">
        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-        <ImageBackground
+       <ImageBackground
           source={require("../assets/images/tekemuarapu-bg-80.jpg")}
-          className="w-full h-full opacity-50"
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            opacity: 0.5,
+          }}
           resizeMode="cover"
         />
       </View>
