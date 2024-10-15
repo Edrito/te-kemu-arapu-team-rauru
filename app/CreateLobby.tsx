@@ -155,7 +155,7 @@ const CreateLobby = () => {
   return (
     <SafeAreaView className="flex-1 bg-primary_red items-center">
       <View className="w-full">
-        <PlayerBar playerIcon={playerIconTest} />
+      <PlayerBar playerIcon={""} />
       </View>
 
       <ScrollView
