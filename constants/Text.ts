@@ -199,8 +199,8 @@ export const languageTexts = {
         m: "Waehere uru:"
     },
     maxTotalScore: {
-        e: "Max Total Score:",
-        m: "Ngā Piro whakamutunga Katoa:"
+        e: "Max Total Score",
+        m: "Ngā Piro whakamutunga Katoa"
     },
     createLobby: {
         e: "Create Lobby",
