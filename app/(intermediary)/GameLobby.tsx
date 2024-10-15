@@ -114,7 +114,13 @@ const GameLobby: React.FC<GameScreenParams> =  ({ gameId, lobbyCode, mainState, 
             Te kēmu Arapū
           </Text>
         </View>
-
+        {gameState?.settings.lobbyName != null ? <View className="items-center ">
+          <Text className="font-pangolin text-[46px] text-center">
+           {
+            gameState?.settings.lobbyName
+           }
+          </Text>
+        </View>:null}
         <View className="items-center flex-row justify-between flex-1 m-3 border-4 border-dashed rounded-lg p-10 bg-green-950 min-h-[60px] max-h-[60px]">
           <Text className="text-white text-[30px] font-bold mr-5 font-pangolin">
             {getText('lobbyCode')}

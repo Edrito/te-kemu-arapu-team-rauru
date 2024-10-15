@@ -67,7 +67,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles,is
           >
             <Text style={{ fontSize: 24 }}>{player.icon}</Text>
             <Text style={{ fontSize: 24, fontWeight: "bold" }}>{player.username}</Text>
-            <Text style={{ fontSize: 24 }}>{playerScores[player.userId]}</Text>
+            <Text style={{ fontSize: 24 }}>{playerScores[player.userId] ?? 0}</Text>
             
           </View>
         ))}

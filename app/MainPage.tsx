@@ -21,6 +21,7 @@ import JoinLobbyModal from "../components/JoinLobbyModal";
 import CreateLobbyModal from "../components/CreateLobbyModal"; // Import the CreateLobbyModal component
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import { useLanguage } from "te-kemu-arapu-compx374-team-rauru/context/languageToggleButton";
+import TextToSpeech from "te-kemu-arapu-compx374-team-rauru/components/TextToSpeech";
 
 export default function MainPage() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -125,6 +126,8 @@ export default function MainPage() {
         <Text className="text-[60px] font-bold text-white mb-12 font-pangolin text-center">
           Te Kēmu Arapū
         </Text>
+
+        <TextToSpeech text="Te Kēmu Arapū" />
 
         {/* User Information */}
         <Text

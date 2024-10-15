@@ -3,14 +3,14 @@
     "settings": {
 		"games" : {
     		"0":{
-			"type":"string",
+			"type":"category",
 			"endConditions":{
 				"duration": "int",
 				"score": "int"
-			}
+				}
+			},
+			"1":{}
 		},
-		"1":{}
-	}   ,
         "endConditions" : {
 		"time" : "ISO8601",
 		"score" : "int"

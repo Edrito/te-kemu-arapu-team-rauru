@@ -4,14 +4,18 @@ interface TextToSpeechProps {
   text: string; // Only need the text prop
 }
 
+
+
+
 const TextToSpeech: React.FC<TextToSpeechProps> = ({ text }) => {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const apiUrl = 'https://api.papareo.io/reo/synthesize';
   const token = '4bd79c39-9422-4129-bb29-ffdc444fa6c5'; // Fixed token
   const speed = 1;       // Fixed speed
   const voiceId = 'pita'; // Fixed voice ID
 
   const synthesizeSpeech = async () => {
-    const apiUrl = 'https://api.papareo.io/reo/synthesize';
+
     
     const body = JSON.stringify({
       text: text,
@@ -39,9 +43,13 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({ text }) => {
         const data = await response.json();
         console.log('API response data:', data);
         
-        if (data.url) {
-          console.log('Audio URL:', data.url);
-          setAudioUrl(data.url); // Set the audio URL for playback
+        if (data.audio_url) {
+          console.log('Audio URL:', data.audio_url);
+          setAudioUrl(data.audio_url); // Set the audio URL for playback
+          const audio = new Audio(data.audio_url);
+          audio.play().catch(error => {
+            console.error('Error playing audio:', error);
+          });
         } else {
           console.error('No audio URL returned in the response.');
           setAudioUrl(null);
