@@ -44,7 +44,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ playerScores, playerProfiles,is
     <View style={{ flex: 1, backgroundColor: "#c97d1a", padding: 20 }}>
       <ScrollView
         style={{
-          height: 600,
+          height: 500,
           minWidth: windowDimensions.width < 700 ? 300 : 500,
         }}
         contentContainerStyle={{

@@ -19,7 +19,7 @@ interface GameContextType {
   passTurn: () => Promise<void>;
   playerVote: (voteType: string) => Promise<void>;
   lobbyUpsert: (lobbyConfig: GameSettings) => Promise<any>;
-  getHint: (category:string, letter:string) => Promise<any>;
+  getHint: (category: string, letter: string) => Promise<any>;
   fetchPlayerProfiles: (participants: string[]) => Promise<ProfileData[]>;
 }
 
@@ -148,7 +148,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     await sendAction(actionPayload);
   };
 
-  const getHint = async (category:string, letter:string) => {
+  const getHint = async (category: string, letter: string) => {
     const actionPayload = createGameAction('hint', {
       category,
       letter
@@ -184,7 +184,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       selectLetter,
       passTurn,
       categoryVote,
-      playerVote,getHint,
+      playerVote, getHint,
       lobbyUpsert, fetchPlayerProfiles
     }),
     [gameState,
@@ -192,7 +192,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       passTurn,
       playerVote,
 
-      unsubscribeFromGame,getHint, lobbyUpsert, fetchPlayerProfiles, startGame, leaveLobby, deleteLobby, categoryVote]
+      unsubscribeFromGame, getHint, lobbyUpsert, fetchPlayerProfiles, startGame, leaveLobby, deleteLobby, categoryVote]
   );
 
   return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;

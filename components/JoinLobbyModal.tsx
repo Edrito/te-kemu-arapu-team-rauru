@@ -69,6 +69,7 @@ const JoinLobbyModal: React.FC<JoinLobbyModalProps> = ({ visible, onClose, onJoi
                 maxLength={1}
                 // keyboardType='numeric'
                 value={digit}
+                autoCapitalize="none"
                 onChangeText={(value) => handleChangeText(index, value)}
                 autoFocus={index === 0}
               />

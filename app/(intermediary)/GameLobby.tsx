@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import PlayerBar from "te-kemu-arapu-compx374-team-rauru/components/PlayerBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LobbyComponent from "te-kemu-arapu-compx374-team-rauru/components/LobbyComponent";
-import { router } from "expo-router"; import {
+import { router } from "expo-router"; 
+import {
   View,
   Text,
   ScrollView,
