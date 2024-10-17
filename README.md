@@ -1,3 +1,21 @@
+https://te-kemu-arapu.web.app/
+
+https://courses-git.cms.waikato.ac.nz/ew193/te-kemu-arapu-compx374-team-rauru/
+
+To deploy the web app to firebase hosting:
+
+- run "npm run predeploy"
+- run "npm run pre-build"
+- copy the content of "./global.css.web.css" to the CSS file located in "./dist/_expo/static/css/web-****.css"
+   - *do not change file names*
+- run "firebase deploy --only hosting"
+
+The folder "./json" contains formatting standards for the jsons that are used in the game_state and player_action requests/documents.
+
+
+# Below are the default instructions on how to deploy the REACT app using expo.
+
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
@@ -34,17 +52,3 @@ npm run reset-project
 ```
 
 This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
