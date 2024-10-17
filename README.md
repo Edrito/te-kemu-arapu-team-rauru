@@ -12,8 +12,13 @@ To deploy the web app to firebase hosting:
 
 The folder "./json" contains formatting standards for the jsons that are used in the game_state and player_action requests/documents.
 
+Below are the default instructions on how to run the REACT app using expo.
 
-# Below are the default instructions on how to deploy the REACT app using expo.
+
+
+
+
+
 
 
 # Welcome to your Expo app 👋
